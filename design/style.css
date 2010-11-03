@@ -138,3 +138,23 @@ label {
 .green {
     background-color: #65ea7a;
 }
+
+/******************* message **************/
+.message {
+    background-color: #8f8;
+    padding: 10px;
+    -moz-border-radius: 0 0 5px 5px;
+    -webkit-border-radius: 0 0 5px 5px;
+    border-radius: 0 0 5px 5px;
+    margin: 0 10px 10px 10px;
+    text-align: center;
+    width: auto;
+}
+
+.message.error {
+    background-color: #f88;
+}
+
+.message.warning {
+    background-color: #ffcc5e;
+}

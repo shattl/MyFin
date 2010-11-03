@@ -27,8 +27,19 @@ Page::addVar( 'event', $event );
 
 Page::draw( 'edit' );
 
-function addEvent( $event ){
+function addEvent($event) {
     $event['tags'] = explode(',', $event['tags']);
 
-    var_export( $event );
+    if ($event['id'] == 0)
+        $result = Db::justQuery('INSERT INTO `events` (`description`, `type`, `value`, `date`)'
+                        . ' VALUES (@s, @i, @i, FROM_UNIXTIME(@i))',
+                        $event['description'], $event['type'], $event['value'] * 100, $event['date']);
+
+    
+
+    if ($result) {
+        Messages::addMessage('Изменения сохранены');
+    } else
+        Messages::addError('Ошибка базы данных<br>' . Db::lastError());
+
 }
