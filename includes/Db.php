@@ -25,7 +25,7 @@ class Db {
         if (func_num_args() == 0)
             return null;
 
-        $sql = self::_build_req( func_get_args() );
+        $sql = self::_buildReq( func_get_args() );
 
         $result = mysql_query($sql);
 
@@ -42,14 +42,21 @@ class Db {
         return $return;
     }
 
-    public static function build_req() {
+    public static function justQuery() {
         if (func_num_args() == 0)
             return null;
 
-        return self::_build_req( func_get_args() );
+        return mysql_query( self::_buildReq( func_get_args() ) );
     }
 
-    private static function _build_req( $arg_list ) {
+    public static function buildReq() {
+        if (func_num_args() == 0)
+            return null;
+
+        return self::_buildReq( func_get_args() );
+    }
+
+    private static function _buildReq( $arg_list ) {
         $template = $arg_list[0];
         unset($arg_list[0]);
 
