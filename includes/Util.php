@@ -20,7 +20,7 @@ class Util {
 
         if ($diff < 0)  // в будущем
             return self::date_ru($default_mask, $time);
-        if ($diff < 60)
+        if ($diff < 120)
             return 'минуту назад';
         if ($diff < 60 * 60)
             return intval ($diff / 60) . ' минут назад';
@@ -66,6 +66,8 @@ class Util {
         return date($formatum, $timestamp);
     }
 
+    public static function getBaseUrl() {
+        $temp = preg_replace('@/[^/]*$@', '', $_SERVER["REQUEST_URI"]);
+        return "http://{$_SERVER["HTTP_HOST"]}{$temp}";
+    }
 }
-
-?>

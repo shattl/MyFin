@@ -44,6 +44,41 @@ class Db {
         return null;
     }
 
+    public static function selectGetVerticalArray() {
+        if (func_num_args() == 0)
+            return null;
+
+        $sql = self::_buildReq(func_get_args());
+
+        $result = mysql_query($sql);
+        self::$_lastQuery = $sql;
+
+        if ($result) {
+            $return = array();
+
+            while ($row = mysql_fetch_array($result))
+                $return[] = $row[0];
+
+            return $return;
+        }
+        return null;
+    }
+
+    public static function selectGetValue() {
+        if (func_num_args() == 0)
+            return null;
+
+        $sql = self::_buildReq(func_get_args());
+
+        $result = mysql_query($sql);
+        self::$_lastQuery = $sql;
+
+        if ($result)
+            return @mysql_result($result, 0);
+        
+        return null;
+    }
+
     public static function justQuery() {
         if (func_num_args() == 0)
             return null;
@@ -63,6 +98,10 @@ class Db {
 
     public static function lastError() {
         return "<pre>" . mysql_error() . "\n\n" . self::$_lastQuery . "</pre>";
+    }
+
+    public static function insertedId() {
+        return mysql_insert_id();
     }
 
     private static function _buildReq( $arg_list ) {
