@@ -1,0 +1,135 @@
+/* 
+    Document   : style.css
+    Created on : 03.11.2010, 11:35:02
+    Author     : roman
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+.clear {
+    clear: both;
+}
+
+body {
+    font-family: sans-serif;
+    font-size: .9em;
+    background-color: #dcdcdc;
+}
+
+#wrap {
+    width: 1000px;
+    margin: 10px auto;
+    background-color: #fff;
+    position: relative;
+}
+
+#side_bar {
+    float: left;
+    width: 150px;
+    margin: 10px;
+}
+
+#content {
+    padding: 10px 10px 10px 170px;
+}
+
+#footer {
+    clear: both;
+    width: 100%;
+    text-align: center;
+    font-size: .8em;
+    position: absolute;
+    bottom: -20px;
+}
+
+/*
+Список событий
+*/
+.events_list {
+    width: 100%;
+    border-spacing: 0;
+    border-collapse: collapse;
+}
+.events_list tr:hover{
+    background-color: #d1defe;
+}
+.events_list td {
+    padding: 3px;
+}
+.tags_list {
+    font-size: .9em;
+}
+.description {
+    width: 100%;
+}
+.value, .date, .buttons {
+    white-space: nowrap;
+    text-align: right;
+}
+.value {
+    padding-right: 10px;
+}
+.money_in {
+    color: #047301;
+}
+.money_out {
+    color: #b00208;
+}
+.tags_list a {
+    text-decoration: none;
+    background-color: #5e70a1;
+    color: #fff;
+    font-size: .8em;
+    padding: .2em .4em;
+    -moz-border-radius: 2px;
+    -webkit-border-radius: 2px;
+    border-radius: 2px;
+}
+.events_list .button{
+    visibility: hidden;
+}
+.events_list tr:hover .button{
+    visibility: visible;
+}
+
+/*
+Формы
+*/
+
+label {
+    margin: 5px 0;
+    display: block;
+}
+
+/*
+Общее
+*/
+
+.button {
+    width: 16px;
+    height: 16px;
+    display: inline-block;
+}
+
+.button.edit {
+    background-image: url('list.png');
+}
+
+.button.remove {
+    background-image: url('delete.png');
+}
+
+.big_button {
+    padding: 5px 10px;
+    font-size: 1.2em;
+    -moz-border-radius: 4px;
+    -webkit-border-radius: 4px;
+    border-radius: 4px;
+    border: 1px solid #555;
+    text-decoration: none;
+    color: #000;
+}
+
+.green {
+    background-color: #65ea7a;
+}

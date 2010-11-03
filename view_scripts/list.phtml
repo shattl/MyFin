@@ -1,0 +1,26 @@
+<table class="events_list">
+<?php foreach ($events_list as $e) : ?>
+    <tr>
+        <td class="description">
+            <?php echo $e['description']?> <span class="tags_list">
+            <?php $tag_list = $e['tag_list']; include 'renderTags.php' ?>
+            </span></td>
+        <td class='value <?php echo ($e['type'] ? 'money_in' : 'money_out') ?>'>
+        <?php echo $e['value']?></td>
+        <td class="date"><?php echo Util::readlyTime($e['date']) ?></td>
+        <td class="buttons">
+            <a class="button edit" href="edit.php?id=<?php echo $e['id']?>" title="правка"></a>
+            <a class="button remove" href="remove.php?id=<?php echo $e['id']?>" title="удалить"></a>
+        </td>
+    </tr>
+<?php endforeach; ?>
+</table>
+<br>Итого:
+<span class='money_in'><?php echo $total_in ?></span>
+<span class='money_out'><?php echo $total_out ?></span>
+
+<div style="text-align: right; padding-right: 42px;">
+<a class="big_button green" href="edit.php?new">Добавить</a>
+</div>
+
+<!-- → ← -->
