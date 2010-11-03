@@ -1,25 +1,30 @@
 <form action="" method="POST">
     <label>Описание
         <br>
-        <input name="description" type="text" style="width: 50em;">
+        <input name="description" type="text" style="width: 50em;" value="<?php echo $event['description']?>">
+        <div class="note">любой текст, не более 300 символов</div>
     </label>
     <label>Теги (через запятую)
         <br>
-        <input name="tags" type="text" style="width: 25em;">
+        <input name="tags" type="text" style="width: 25em;" value="<?php echo $event['tags']?>">
+        <div class="note">пример: зарплата, основная работа, на карточку</div>
     </label>
     <label>Сумма
         <br>
-        <input name="value" type="text" value="100.00" style="width: 7em;">
-        <input name="type" type="radio" value="1" checked>
+        <input name="value" type="text" value="<?php printf('%.2f', $event['value'])?>" style="width: 7em;">
+        <input name="type" type="radio" value="1" <?php echo $event['type'] ? 'checked' : ''?>>
         <span class="money_in">прибыль</span>
-        <input name="type" type="radio" value="1">
+        <input name="type" type="radio" value="0" <?php echo !$event['type'] ? 'checked' : ''?>>
         <span class="money_out">расход</span>
+        <div class="note">число без знака "-", пример: 100.42 или 100,42</div>
     </label>
     <label>Дата
         <br>
-        <input name="value" type="text" value="10.07.2010 10:30" style="width: 10em;">
+        <input name="date" type="text" value="<?php echo date('Y:m:d H:i:s', $event['date'])?>" style="width: 10em;">
+        <div class="note">пример: 2008:08:07 18:11:31</div>
     </label>
     <label>
         <input type="submit" value="Сохранить">
     </label>
+    <input type="hidden" name="id" value="<?php echo $event['id']?>">
 </form>

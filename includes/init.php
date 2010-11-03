@@ -6,6 +6,7 @@ require_once 'Util.php';
 
 date_default_timezone_set( 'Europe/Moscow' );
 setlocale(LC_ALL, 'ru_RU.UTF-8');
+session_start();
 
 defined ( 'APPLICATION_PATH' )
     || define ( 'APPLICATION_PATH', realpath ( dirname ( __FILE__ ) . '/..' ) );
