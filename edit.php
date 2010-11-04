@@ -36,7 +36,10 @@ if (count ($_POST)) {
     $event['tags'] = $_POST['tags'];
     $event['id'] = $_POST['id'] ? $_POST['id'] : 0;
 
-    addEvent( $event );
+    if ( addEvent( $event ) ) {
+        $url = isset($_GET['r']) ? urldecode($_GET['r']) : Util::getBaseUrl();
+        Util::redirect( $url );
+    }
 }
 
 Page::set_title( ($event['id'] == 0 ? 'Добавление' : 'Правка') . ' / Мои финансы' );

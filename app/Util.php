@@ -7,6 +7,11 @@
  */
 class Util {
 
+    public static function redirect( $url ) {
+        header("location: $url");
+        exit ();
+    }
+
     public static function readlyTime($time) {
         if (!is_int($time))
             $time = strtotime($time);

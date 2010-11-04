@@ -33,8 +33,12 @@
         <?php echo $e['value']?></td>
         <td class="date"><?php echo Util::readlyTime($e['date']) ?></td>
         <td class="buttons">
-            <a class="button edit" href="edit.php?id=<?php echo $e['id']?>" title="правка"></a>
-            <a class="button remove" href="remove.php?id=<?php echo $e['id']?>" title="удалить"></a>
+            <?php $r = urlencode( $_SERVER["REQUEST_URI"] ) ?>
+            <a class="button edit" 
+               href="edit.php?id=<?php echo $e['id']?>&r=<?php echo $r?>" title="правка"></a>
+            <a class="button remove" 
+               href="remove.php?id=<?php echo $e['id']?>&r=<?php echo $r?>"
+               onclick="return confirm('Удалить запись?');" title="удалить"></a>
         </td>
     </tr>
 <?php endforeach; ?>
@@ -51,5 +55,5 @@
 </div>
 
 <div style="text-align: right; padding-right: 42px;">
-<a class="big_button green" href="edit.php?new">Добавить</a>
+<a class="big_button green" href="edit.php?new&r=<?php echo $r?>">Добавить</a>
 </div>
