@@ -1,8 +1,6 @@
 <?php
 require_once 'app/init.php';
 
-
-
 if (isset ($_GET['new'])) {
     $event['description'] = 'нет описания ...';
     $event['value'] = 100;

@@ -14,7 +14,6 @@ class Page {
 
     private static $_scripts_dir;
 
-
     public static function draw( $script = null ) {
         if ($script !== null)
             self::$_script = $script;
@@ -26,14 +25,13 @@ class Page {
         include self::$_scripts_dir . '/' . self::$_layout . '.phtml';
     }
 
+    public static function addVar( $name, $value ) {
+        self::$_vars[$name] = $value;
+    }
+
     /*
      * Getters / Setters
      */
-
-    public static function addVar( $name, $value ) {
-        //echo $name .'='. $value;
-        self::$_vars[$name] = $value;
-    }
 
     public static function get_title() {
         return self::$_title;
