@@ -1,7 +1,7 @@
 <?php
 require_once 'app/init.php';
 
-Page::set_title( 'Правка / Мои финансы' );
+
 
 if (isset ($_GET['new'])) {
     $event['description'] = 'нет описания ...';
@@ -41,6 +41,7 @@ if (count ($_POST)) {
     addEvent( $event );
 }
 
+Page::set_title( ($event['id'] == 0 ? 'Добавление' : 'Правка') . ' / Мои финансы' );
 Page::addVar( 'event', $event );
 Page::draw( 'edit' );
 

@@ -1,4 +1,6 @@
-<form action="" method="POST">
+<h1><?php echo ($event['id'] == 0) ? 'Новая запись' : 'Правка' ?></h1>
+
+<form action="edit.php" method="POST">
     <label>Описание
         <br>
         <input name="description" type="text" style="width: 50em;" value="<?php echo $event['description'] ?>">
@@ -14,7 +16,7 @@
         <input name="value" type="text" value="<?php printf('%.2f', $event['value']) ?>" style="width: 7em;">
         <input name="type" type="radio" value="1" <?php echo $event['type'] ? 'checked' : '' ?>>
         <span class="money_in">прибыль</span>
-        <input name="type" type="radio" value="0" <?php echo!$event['type'] ? 'checked' : '' ?>>
+        <input name="type" type="radio" value="0" <?php echo !$event['type'] ? 'checked' : '' ?>>
         <span class="money_out">расход</span>
     </label>
     <div class="note">число без знака "-", примеры: 100.42 или 100,42 или просто 510</div>
