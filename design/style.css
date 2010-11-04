@@ -19,6 +19,7 @@ body {
 #head {
     width: 1000px;
     margin: 0 auto 0 auto;
+    background-color: #fff;
 }
 
 #site_logo {
@@ -155,9 +156,9 @@ label {
 .message {
     background-color: #8f8;
     padding: 10px;
-    -moz-border-radius: 0 0 5px 5px;
-    -webkit-border-radius: 0 0 5px 5px;
-    border-radius: 0 0 5px 5px;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
     margin: 0 10px 10px 10px;
     text-align: center;
     width: auto;

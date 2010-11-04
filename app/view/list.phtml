@@ -1,7 +1,31 @@
+<form action="" method="GET" style="padding-bottom: 20px;">
+    Период:
+    <a href="#">сегодня</a>
+    <a href="#">этот месяц</a>
+    <a href="#">этот год</a>
+    <a href="#">все</a>
+     / с
+    <input name="date_start" type="text" value="<?php echo date('Y:m:d H:i:s') ?>"
+           style="width: 10em;">
+    по
+    <input name="date_end" type="text" value="<?php echo date('Y:m:d H:i:s') ?>"
+           style="width: 10em;">
+    <input type="submit" value="задать">
+    
+    <br>
+    <div class="note">образец: 2010:08:24 18:56:31</div>
+<?php if (isset($_GET['by_tag'])): ?>
+    <input name="by_tag" type="hidden" value="<?php echo $_GET['by_tag'] ?>">
+<?php endif; ?>
+<?php if (isset($_GET['page'])): ?>
+    <input name="page" type="hidden" value="<?php echo $_GET['page'] ?>">
+<?php endif; ?>
+</form>
+
 <table class="events_list">
 <?php foreach ($events_list as $e) : ?>
     <tr>
-        <td class="description">
+        <td class="description <?php echo ($e['type'] ? 'money_in' : 'money_out') ?>">
             <?php echo $e['description']?> <span class="tags_list">
             <?php $tag_list = $e['tag_list']; include 'renderTags.php' ?>
             </span></td>
@@ -15,12 +39,17 @@
     </tr>
 <?php endforeach; ?>
 </table>
+
 <br>Итого:
 <span class='money_in'><?php echo $total_in ?></span>
 <span class='money_out'><?php echo $total_out ?></span>
 
+<div style="text-align: center; padding-top: 1em;">
+<a href="#">← новее</a>
+<a href="#">все</a>
+<a href="#">старее →</a>
+</div>
+
 <div style="text-align: right; padding-right: 42px;">
 <a class="big_button green" href="edit.php?new">Добавить</a>
 </div>
-
-<!-- → ← -->
