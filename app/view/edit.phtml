@@ -17,7 +17,7 @@
         <input name="type" type="radio" value="0" <?php echo!$event['type'] ? 'checked' : '' ?>>
         <span class="money_out">расход</span>
     </label>
-    <div class="note">число без знака "-", примеры: 100.42 или 100,42 или 510</div>
+    <div class="note">число без знака "-", примеры: 100.42 или 100,42 или просто 510</div>
     <label>Дата
         <br>
         <input name="date" type="text" value="<?php echo date('Y:m:d H:i:s', $event['date']) ?>" style="width: 10em;">

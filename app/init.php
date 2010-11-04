@@ -9,10 +9,7 @@ date_default_timezone_set( 'Europe/Moscow' );
 setlocale(LC_ALL, 'ru_RU.UTF-8');
 session_start();
 
-defined ( 'APPLICATION_PATH' )
-    || define ( 'APPLICATION_PATH', realpath ( dirname ( __FILE__ ) . '/..' ) );
+define ( 'APPLICATION_PATH', realpath ( dirname ( __FILE__ ) ) );
 
-Db::connect();
-
-Page::set_scripts_dir( APPLICATION_PATH . '/view_scripts' );
+Page::set_scripts_dir( APPLICATION_PATH . '/view' );
 Page::set_layout( 'layout' );

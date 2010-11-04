@@ -1,5 +1,5 @@
 <?php
-require_once 'includes/init.php';
+require_once 'app/init.php';
 
 Page::set_title( 'Правка / Мои финансы' );
 
@@ -56,34 +56,32 @@ function addEvent(&$event) {
                         . '`date`=FROM_UNIXTIME(@i) WHERE `id`=@i',
                         $event['description'], $event['type'], $event['value'] * 100, $event['date'], $event['id']);
 
-    if (!$result) {
-        Messages::addError('Ошибка базы данных<br>' . Db::lastError());
+    if (!$result) 
         return false;
-    }
+
+    if (!Db::justQuery('DELETE FROM `ev2tag` WHERE `ev_id`=@i', $event['id']))
+        return false;
 
     $tags = explode(',', $event['tags']);
 
     foreach ($tags as $tag) {
         $tag = trim(strtolower($tag));
+        if ($tag == '')
+            continue;
+
         $id = Db::selectGetValue('SELECT `id` FROM `tags` WHERE `name` = @s', $tag);
 
         if ($id == null) {
-            $result = Db::justQuery('INSERT INTO `tags` (`name`) VALUES (@s)', $tag);
-
-            if (!$result) {
-                Messages::addError('Ошибка базы данных<br>' . Db::lastError());
+            if (!Db::justQuery('INSERT INTO `tags` (`name`) VALUES (@s)', $tag))
                 return false;
-            }
 
             $id = Db::insertedId();
         }
 
         $result = Db::justQuery('INSERT IGNORE INTO `ev2tag` VALUES (@i, @i)', $event['id'], $id);
 
-        if (!$result) {
-            Messages::addError('Ошибка базы данных<br>' . Db::lastError());
+        if (!$result)
             return false;
-        }
     }
 
     Messages::addMessage('Изменения сохранены');

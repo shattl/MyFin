@@ -8,20 +8,31 @@
 class Db {
 
     private static $_lastQuery;
+    private static $_link;
 
 
     public static function connect() {
-        if (!mysql_connect(get_config('db_host'),
+        if (self::$_link !== null)
+            return true;
+
+        if (!(self::$_link = mysql_connect(get_config('db_host'),
                         get_config('db_user'),
                         get_config('db_password')
-        ))
-            die('Not connected : ' . mysql_error());
+                ))) {
+            Messages::addError('Ошибка базы данных<br>Не могу соединиться с сервером<br>' . mysql_error());
+            return false;
+        }
 
 
-        if (!mysql_select_db(get_config('db_db_name')))
-            die('Can\'t use foo : ' . mysql_error());
+        if (!mysql_select_db(get_config('db_db_name'), self::$_link)) {
+            Messages::addError('Ошибка базы данных<br>Не могу выбрать базу данных<br>' . mysql_error());
+            return false;
+        }
 
-        mysql_query("SET NAMES utf8");
+        if (false == self::justQuery("SET NAMES utf8"))
+            return false;
+
+        return self::$_link;
     }
 
     public static function selectGetArray() {
@@ -30,8 +41,7 @@ class Db {
 
         $sql = self::_buildReq(func_get_args());
 
-        $result = mysql_query($sql);
-        self::$_lastQuery = $sql;
+        $result = self::justQuery($sql);
 
         if ($result) {
             $return = array();
@@ -50,8 +60,7 @@ class Db {
 
         $sql = self::_buildReq(func_get_args());
 
-        $result = mysql_query($sql);
-        self::$_lastQuery = $sql;
+        $result = self::justQuery($sql);
 
         if ($result) {
             $return = array();
@@ -70,8 +79,7 @@ class Db {
 
         $sql = self::_buildReq(func_get_args());
 
-        $result = mysql_query($sql);
-        self::$_lastQuery = $sql;
+        $result = self::justQuery($sql);
 
         if ($result)
             return @mysql_result($result, 0);
@@ -83,10 +91,18 @@ class Db {
         if (func_num_args() == 0)
             return null;
 
+        if (false === self::connect())
+            return null;
+
         $sql = self::_buildReq(func_get_args());
         self::$_lastQuery = $sql;
 
-        return mysql_query($sql);
+        $result = mysql_query($sql, self::$_link);
+
+        if ($result === false)
+            Messages::addError('Ошибка базы данных<br>' . Db::lastError());
+
+        return $result;
     }
 
     public static function buildReq() {
@@ -97,7 +113,7 @@ class Db {
     }
 
     public static function lastError() {
-        return "<pre>" . mysql_error() . "\n\n" . self::$_lastQuery . "</pre>";
+        return "<code>" . mysql_error() . "\n\n" . self::$_lastQuery . "</code>";
     }
 
     public static function insertedId() {

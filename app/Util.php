@@ -12,24 +12,15 @@ class Util {
             $time = strtotime($time);
 
         $now_time = time();
-        $diff = $now_time - $time;
 
-        $default_mask = 'd л, H:i';
-        if (date('Y', $time) != date('Y', $now_time))
-            $default_mask = 'd л Y, H:i';
-
-        if ($diff < 0)  // в будущем
-            return self::date_ru($default_mask, $time);
-        if ($diff < 120)
-            return 'минуту назад';
-        if ($diff < 60 * 60)
-            return intval ($diff / 60) . ' минут назад';
         if (date('dmY', $time) === date('dmY', $now_time)) // сегодня
             return date('H:i', $time);
         if (date('WY', $time) === date('WY', $now_time)) // на этой неделе
             return self::date_ru('к, H:i', $time);
+        if (date('Y', $time) === date('Y', $now_time)) // в этом году
+            return self::date_ru('d л, H:i', $time);
 
-        return self::date_ru($default_mask, $time);
+        return self::date_ru('d л Y, H:i', $time);
     }
 
     /*

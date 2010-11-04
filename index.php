@@ -3,7 +3,7 @@
  * Список событий
  */
 
-require_once 'includes/init.php';
+require_once 'app/init.php';
 
 Page::set_title( 'Мои финансы' );
 
