@@ -8,27 +8,24 @@
         <link rel="stylesheet" type="text/css" href="design/style.css" />
     </head>
     <body>
-        <div id="head">
-            <a href="<?php echo Util::getBaseUrl() ?>" id="site_logo"></a>
-        </div>
         <div id="wrap">
 
+<?php while (Messages::hasMessages()): ?>
+    <div class="message"><?php echo Messages::popMessage(); ?></div>
+<?php endwhile; ?>
+<?php while (Messages::hasWarnings()): ?>
+    <div class="message warning"><?php echo Messages::popWarning(); ?></div>
+<?php endwhile; ?>
+<?php while (Messages::hasErrors()): ?>
+     <div class="message error"><?php echo Messages::popError(); ?></div>
+<?php endwhile; ?>
 
-            <?php while (Messages::hasMessages()): ?>
-                <div class="message"><?php echo Messages::popMessage(); ?></div>
-            <?php endwhile; ?>
-            <?php while (Messages::hasWarnings()): ?>
-                    <div class="message warning"><?php echo Messages::popWarning(); ?></div>
-            <?php endwhile; ?>
-            <?php while (Messages::hasErrors()): ?>
-                        <div class="message error"><?php echo Messages::popError(); ?></div>
-            <?php endwhile; ?>
-                        <div class="clear"></div>
-
-
-                        <div id="side_bar">
-                        </div>
-                        <div id="content">
+            <a href="<?php echo Util::getBaseUrl() ?>" id="site_logo"></a>
+        
+        
+            <div id="side_bar">
+            </div>
+            <div id="content">
                 <?php echo $content ?>
             </div>
             <div class="clear"></div>
@@ -36,3 +33,5 @@
         </div>
     </body>
 </html>
+
+

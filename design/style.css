@@ -5,15 +5,54 @@
     Description:
         Purpose of the stylesheet follows.
 */
+/* Reset
+- - - - - - - - - -- - - - -- - - - -- - - - -- - - - -- - - - -- - - - -- - - - -*/
+body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,form,fieldset,input,textarea,p,blockquote,th,td {
+    margin:0;
+    padding:0;
+}
+p, blockquote, ul, fieldset, form, ol, dl, dir, menu { margin: 1.12em 0 }
+table {
+    border-collapse:collapse;
+    border-spacing:0;
+}
+fieldset,img { border:0; }
+address,caption,code,dfn,th {
+    font-style:normal;
+    font-weight:normal;
+}
+i,cite,em,var,address { font-style: italic }
+ol,ul { margin-left: 40px; }
+ol ul, ul ol, ul ul, ol ol    { margin-top: 0; margin-bottom: 0 }
+ol  { list-style-type: decimal }
+caption,th { text-align:left; }
+q:before,q:after { content:''; }
+abbr,acronym { border:0; }
+
+h1,h2,h3,h4,h5,h6,b,strong  { font-weight: bolder; }
+h1 { font-size: 2em; margin: .67em 0 }
+h2 { font-size: 1.5em; margin: .75em 0 }
+h3 { font-size: 1.17em; margin: .83em 0 }
+h4 { font-size: 1em; margin: 1.12em 0 }
+h5 { font-size: .83em; margin: 1.5em 0 }
+h6 { font-size: .75em; margin: 1.67em 0 }
+
+/*----------*/
+
 
 .clear {
     clear: both;
 }
 
+h1,h2,h3,h4,h5,h6 {
+    font-family: serif;
+    font-weight: normal;
+}
+
 body {
-    font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
+    font-family: Verdana, sans-serif, Geneva, Arial, Helvetica;
     font-size: .9em;
-    background-color: #dcdcdc;
+    background: #dcdcdc url('bg.png');
 }
 
 #head {
@@ -24,9 +63,10 @@ body {
 
 #site_logo {
     display: inline-block;
-    width: 150px;
-    height: 100px;
+    width: 82px;
+    height: 82px;
     background-image: url('logo.png');
+    margin: 20px;
 }
 
 #wrap {
@@ -156,12 +196,15 @@ label {
 .message {
     background-color: #8f8;
     padding: 10px;
-    -moz-border-radius: 5px;
-    -webkit-border-radius: 5px;
-    border-radius: 5px;
-    margin: 0 10px 10px 10px;
+    -moz-border-radius: 0 0 5px 5px;
+    -webkit-border-radius: 0 0 5px 5px;
+    border-radius: 0 0 5px 5px;
+    margin: 0 20px -35px 20px;
     text-align: center;
     width: auto;
+    position: relative;
+    z-index: 100;
+    opacity: .8;
 }
 
 .message.error {

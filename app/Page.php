@@ -20,7 +20,10 @@ class Page {
 
         header ('Content-type: text/html; charset=utf-8');
 
-        $content = self::_getContent();
+        $content = '';
+
+        if (self::$_script !== null)
+            $content = self::_getContent();
 
         include self::$_scripts_dir . '/' . self::$_layout . '.phtml';
     }

@@ -13,8 +13,11 @@ if (isset ($_GET['new'])) {
 if (isset ($_GET['id'])) {
     $event = Db::selectGetArray('SELECT * FROM `events` WHERE `id` = @i', $_GET['id']);
 
-    if ($event === null) {
+    if (!$event) {
         Messages::addError('Запись не найдена');
+        Page::set_title( 'Правка / Мои финансы' );
+        Page::draw();
+        exit();
     } else {
         $event = $event[0];
 
