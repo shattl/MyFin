@@ -58,21 +58,25 @@ Page::addVar( 'total_out', 0 - $total_out / 100.0 );
 /* Построение ссылок для выборок по времени
  */
 
-$date_links['today'] = '?date_start=' . date('Y:m:d H:i:s', mktime(0, 0, 0))
-        . '&date_end=' . date('Y:m:d H:i:s');
-$date_links['mouth'] = '?date_start=' . date('Y:m:d H:i:s', mktime(0, 0, 0, date("n"), 1))
-        . '&date_end=' . date('Y:m:d H:i:s');
-$date_links['year'] = '?date_start=' . date('Y:m:d H:i:s', mktime(0, 0, 0, 1, 1))
-        . '&date_end=' . date('Y:m:d H:i:s');
-$date_links['all'] = '?date_start=' . date('Y:m:d H:i:s', 0)
-        . '&date_end=' . date('Y:m:d H:i:s', 2147483647);
+$date_links['today']['date_start'] = date('Y:m:d H:i:s', mktime(0, 0, 0));
+$date_links['today']['date_end'] = date('Y:m:d H:i:s');
+$date_links['mouth']['date_start'] = date('Y:m:d H:i:s', mktime(0, 0, 0, date("n"), 1));
+$date_links['mouth']['date_end'] = date('Y:m:d H:i:s');
+$date_links['year']['date_start'] = date('Y:m:d H:i:s', mktime(0, 0, 0, 1, 1));
+$date_links['year']['date_end'] = date('Y:m:d H:i:s');
 
 foreach ($date_links as $key => $value) {
-    if (isset($_GET['by_tag']))
-        $date_links[$key] = $value . '&by_tag=' . $_GET['by_tag'];
-    if (isset($_GET['page']))
-        $date_links[$key] = $value . '&page=' . $_GET['page'];
+    $tmp = $_GET;
+    $tmp['date_start'] = $value['date_start'];
+    $tmp['date_end'] = $value['date_end'];
+
+    $date_links[$key] = linkFromArray( $tmp );
 }
+
+$tmp = $_GET;
+unset($tmp['date_start']);
+unset($tmp['date_end']);
+$date_links['all'] = linkFromArray( $tmp );
 
 Page::addVar( 'date_links', $date_links );
 Page::addVar( 'date_start', isset($_GET['date_start']) ? $_GET['date_start'] : date('Y:m:d H:i:s', 0) );
@@ -81,15 +85,8 @@ Page::addVar( 'date_end', isset($_GET['date_end']) ? $_GET['date_end'] : date('Y
 /* Построение базовой ссылки для тегов
  */
 
-$bl4t = array(); // base link for tags
-if (isset($_GET['date_start']))
-    $bl4t[] = 'date_start=' . $_GET['date_start'];
-
-if (isset($_GET['date_end']))
-    $bl4t[] = 'date_end=' . $_GET['date_end'];
-
-$bl4t = count($bl4t) > 0 ? '?' . implode('&', $bl4t) . '&' : '?';
-
+$bl4t = linkWithoutParam('by_tag'); // base link for tags
+$bl4t .= (strpos($bl4t, '?') === false) ? '?' : '&';
 Page::addVar( 'bl4t', $bl4t );
 
 /* Параметры выборки
@@ -117,17 +114,24 @@ if (isset($_GET['date_end'])) {
     );
 }
 
-function linkWithoutParam ( $param ) {
-    $tmp = $_GET;
-    unset ( $tmp[ $param ] );
-    foreach ($tmp as $key => $value)
-        $tmp[$key] = "$key=$value";
-    return '?' . implode('&', $tmp);
-}
-
 Page::addVar( 'select', $select );
 
 /* Всё готово, осталось отрисовать страницу
  */
 
 Page::draw( 'list' );
+
+/* Функции
+ */
+
+function linkWithoutParam ( $param ) {
+    $tmp = $_GET;
+    unset ( $tmp[ $param ] );
+    return linkFromArray ( $tmp );
+}
+
+function linkFromArray ( $arr ) {
+    foreach ($arr as $key => $value)
+        $arr[$key] = "$key=" . urlencode ($value);
+    return Util::getBaseUrl() . '/' . ((count($arr) > 0) ? '?' . implode('&', $arr) : '');
+}
