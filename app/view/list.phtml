@@ -1,14 +1,14 @@
-<form action="" method="GET" style="padding-bottom: 20px;">
+<form action="" method="GET">
     Период:
-    <a href="#">сегодня</a>
-    <a href="#">этот месяц</a>
-    <a href="#">этот год</a>
-    <a href="#">все</a>
+    <a href="<?php echo $date_links['today'] ?>">сегодня</a>
+    <a href="<?php echo $date_links['mouth'] ?>">этот месяц</a>
+    <a href="<?php echo $date_links['year'] ?>">этот год</a>
+    <a href="<?php echo $date_links['all'] ?>">все</a>
      / с
-    <input name="date_start" type="text" value="<?php echo date('Y:m:d H:i:s') ?>"
+    <input name="date_start" type="text" value="<?php echo $date_start ?>"
            style="width: 10em;">
     по
-    <input name="date_end" type="text" value="<?php echo date('Y:m:d H:i:s') ?>"
+    <input name="date_end" type="text" value="<?php echo $date_end ?>"
            style="width: 10em;">
     <input type="submit" value=" задать ">
     
@@ -22,12 +22,23 @@
 <?php endif; ?>
 </form>
 
+<?php if (count( $select )) {?>
+<div class="select">
+<?php foreach ($select as $value) {
+    echo $value['text']; ?>
+    <a href="<?php echo $value['link']?>">[x]</a><br>
+<?php } ?>
+</div>
+<?php } ?>
+
 <table class="events_list">
 <?php foreach ($events_list as $e) : ?>
     <tr>
         <td class="description <?php echo ($e['type'] ? 'money_in' : 'money_out') ?>">
             <?php echo $e['description']?> <span class="tags_list">
-            <?php $tag_list = $e['tag_list']; include 'renderTags.php' ?>
+            <?php  foreach ($e['tag_list'] as $tag) : ?>
+                <a href="<?php echo $bl4t . 'by_tag=' . $tag['id']?>"><?php echo $tag['name']?></a>
+            <?php endforeach; ?>
             </span></td>
         <td class='value <?php echo ($e['type'] ? 'money_in' : 'money_out') ?>'>
         <?php echo $e['value']?></td>

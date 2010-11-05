@@ -144,6 +144,12 @@ body {
 .events_list tr:hover .button{
     visibility: visible;
 }
+.select {
+    font-size: .9em;
+    padding: 5px;
+    margin: 10px 0;
+    border: dashed 1px #555;
+}
 
 /*
 Правка
