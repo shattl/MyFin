@@ -14,15 +14,13 @@
     
     <br>
     <div class="note">образец: 2010:08:24 18:56:31</div>
-<?php if (isset($_GET['by_tag'])): ?>
-    <input name="by_tag" type="hidden" value="<?php echo $_GET['by_tag'] ?>">
-<?php endif; ?>
-<?php if (isset($_GET['page'])): ?>
-    <input name="page" type="hidden" value="<?php echo $_GET['page'] ?>">
-<?php endif; ?>
+
+<?php foreach ($hidden_inputs as $k => $v) : ?>
+    <input name="<?php echo $k ?>" type="hidden" value="<?php echo $v ?>">
+<?php endforeach; ?>
 </form>
 
-<?php if (count( $select )) {?>
+<?php if (count( $select ) > 0) {?>
 <div class="select">
 <?php foreach ($select as $value) {
     echo $value['text']; ?>
@@ -34,21 +32,20 @@
 <table class="events_list">
 <?php foreach ($events_list as $e) : ?>
     <tr>
-        <td class="description <?php echo ($e['type'] ? 'money_in' : 'money_out') ?>">
+        <td class="description <?php echo $e['type_str'] ?>">
             <?php echo $e['description']?> <span class="tags_list">
             <?php  foreach ($e['tag_list'] as $tag) : ?>
-                <a href="<?php echo $bl4t . 'by_tag=' . $tag['id']?>"><?php echo $tag['name']?></a>
+                <a href="<?php echo $tag['link']?>"><?php echo $tag['name']?></a>
             <?php endforeach; ?>
             </span></td>
-        <td class='value <?php echo ($e['type'] ? 'money_in' : 'money_out') ?>'>
-        <?php echo $e['value']?></td>
+        <td class='value <?php echo $e['type_str'] ?>'>
+        <?php printf($e['symbol'] . '%.0f', $e['value'])?></td>
         <td class="date"><?php echo Util::readlyTime($e['date']) ?></td>
         <td class="buttons">
-            <?php $r = urlencode( $_SERVER["REQUEST_URI"] ) ?>
             <a class="button edit" 
-               href="edit.php?id=<?php echo $e['id']?>&r=<?php echo $r?>" title="правка"></a>
+               href="<?php echo $e['edit_link']?>" title="правка"></a>
             <a class="button remove" 
-               href="remove.php?id=<?php echo $e['id']?>&r=<?php echo $r?>"
+               href="<?php echo $e['remove_link']?>"
                onclick="return confirm('Удалить запись?');" title="удалить"></a>
         </td>
     </tr>
@@ -57,14 +54,15 @@
 
 <br>Итого:
 <span class='money_in'><?php echo $total_in ?></span>
-<span class='money_out'><?php echo $total_out ?></span>
+- <span class='money_out'><?php echo $total_out ?></span>
+= <?php echo $total ?>
 
-<div style="text-align: center; padding-top: 1em;">
+<!--div style="text-align: center; padding-top: 1em;">
 <a href="#">← новее</a>
 <a href="#">все</a>
 <a href="#">старее →</a>
-</div>
+</div-->
 
 <div style="text-align: right; padding-right: 42px;">
-<a class="big_button green" href="edit.php?new&r=<?php echo $r?>">Добавить</a>
+<a class="big_button green" href="<?php echo $new_button_link?>">Добавить</a>
 </div>

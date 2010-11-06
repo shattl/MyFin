@@ -152,6 +152,26 @@ body {
 }
 
 /*
+Облако тегов
+*/
+
+.tag_cloud a {
+    text-decoration: none;
+    color: #444;
+}
+
+.tag_cloud a:hover {
+    background-color: #eee;
+}
+
+.size_5 { font-size: 2em; }
+.size_4 { font-size: 1.5em; }
+.size_3 { font-size: 1.1em; }
+.size_2 { font-size: .85em; }
+.size_1 { font-size: .7em; }
+
+
+/*
 Правка
 */
 

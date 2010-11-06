@@ -7,7 +7,7 @@
  */
 class Util {
 
-    public static function redirect( $url ) {
+    public static function redirect($url) {
         header("location: $url");
         exit ();
     }
@@ -55,7 +55,7 @@ class Util {
 
         if ($timestamp == 0)
             $timestamp = time();
-        
+
         foreach ($q as $key => $value)
             $formatum = str_replace($key, $value[date($value[-1], $timestamp)], $formatum);
 
@@ -66,4 +66,42 @@ class Util {
         $temp = preg_replace('@/[^/]*$@', '', $_SERVER["REQUEST_URI"]);
         return "http://{$_SERVER["HTTP_HOST"]}{$temp}";
     }
+
+    public static function linkWithoutParam($param) {
+        $tmp = $_GET;
+        unset($tmp[$param]);
+        return self::linkFromArray($tmp);
+    }
+
+    public static function linkFromArray($arr) {
+        foreach ($arr as $key => $value)
+            $arr[$key] = "$key=" . urlencode($value);
+        return Util::getBaseUrl() . '/' . ((count($arr) > 0) ? '?' . implode('&', $arr) : '');
+    }
+
+    public static function getTags4Cloud() {
+        $tmp = Db::selectGetArray('SELECT tags.*, count(ev2tag.ev_id) as count FROM ev2tag, tags '
+                        . 'WHERE ev2tag.tag_id = tags.id GROUP BY ev2tag.tag_id ORDER BY count DESC');
+        // SELECT tags.*, sum(events.value) as sum FROM ev2tag, events, tags
+        // WHERE ev2tag.ev_id = events.id AND ev2tag.tag_id = tags.id GROUP BY ev2tag.tag_id
+        // ORDER BY sum DESC
+
+        if (count($tmp) > 0) {
+            $max = $tmp[0]['count'];
+            $min = $tmp[count($tmp) - 1]['count'];
+
+            $steps = 4;
+
+            foreach ($tmp as $key => $value) {
+                if ($max == $min)
+                    $tmp[$key]['size'] = intval($steps / 2) + 1;
+                else
+                    $tmp[$key]['size'] = intval($steps * ($value['count'] - $min) / ($max - $min)) + 1;
+                $tmp[$key]['link'] = self::linkFromArray( array('by_tag' => $value['id']) );
+            }
+        }
+
+        return $tmp;
+    }
+
 }

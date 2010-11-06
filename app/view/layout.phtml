@@ -22,8 +22,20 @@
 
             <a href="<?php echo Util::getBaseUrl() ?>" id="site_logo"></a>
         
-        
+            <div class="clear"></div>
+
             <div id="side_bar">
+                <span class="tag_cloud">
+                    <?php $tags = Util::getTags4Cloud();
+                    //shuffle($tags);
+                    foreach ($tags as $tag): ?>
+
+                    <a href="<?php echo $tag['link']?>" class="size_<?php echo $tag['size']?>">
+                    <?php echo $tag['name']?></a>
+
+                    <?php endforeach; ?>
+                </span>
+                
             </div>
             <div id="content">
                 <?php echo $content ?>
