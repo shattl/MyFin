@@ -76,14 +76,8 @@ body {
     position: relative;
 }
 
-#side_bar {
-    float: left;
-    width: 180px;
-    margin: 10px;
-}
-
-#content {
-    padding: 10px 10px 20px 200px;
+#wrap2 {
+    padding: 10px;
 }
 
 #footer {
@@ -98,6 +92,33 @@ body {
 /*
 Список событий
 */
+#side_bar {
+    float: left;
+    width: 180px;
+    margin: 10px 10px 10px 0;
+}
+
+#side_bar ul {
+    list-style: none;
+    margin: 5px 0;
+}
+
+#side_bar form {
+    margin: 5px 0;
+}
+
+#side_bar h3 {
+    margin: 25px 0 5px 0;
+}
+
+#side_bar input {
+    margin: 0 0 5px 0;
+}
+
+#content {
+    padding: 10px 0 20px 200px;
+}
+
 .events_list {
     width: 100%;
     border-spacing: 0;

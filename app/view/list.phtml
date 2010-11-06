@@ -1,24 +1,57 @@
-<form action="" method="GET">
-    Период:
-    <a href="<?php echo $date_links['today'] ?>">сегодня</a>
-    <a href="<?php echo $date_links['mouth'] ?>">этот месяц</a>
-    <a href="<?php echo $date_links['year'] ?>">этот год</a>
-    <a href="<?php echo $date_links['all'] ?>">все</a>
-     / с
+<div id="side_bar">
+
+    <h3>Теги:</h3>
+    <ul>
+        <?php
+        $tags = Util::getTags4Cloud();
+        //shuffle($tags);
+        foreach ($tags as $tag):
+        ?>
+
+        <li><a href="<?php echo $tag['link'] ?>">
+        <?php echo $tag['name'] ?></a> (<?php echo $tag['count'] ?>)</li>
+
+<?php endforeach; ?>
+        </ul>
+
+    <h3>По типу:</h3>
+    <ul>
+    <li><a href="<?php echo $money_in_type_link?>" class="money_in">прибыль</a></li>
+    <li><a href="<?php echo $money_out_type_link?>" class="money_out">расход</a></li>
+    </ul>
+
+    <h3>Период:</h3>
+    <ul>
+    <li><a href="<?php echo $date_links['today'] ?>">сегодня</a></li>
+    <li><a href="<?php echo $date_links['mouth'] ?>">этот месяц</a></li>
+    <li><a href="<?php echo $date_links['year'] ?>">этот год</a></li>
+    <!--li><a href="<?php echo $date_links['all'] ?>">все</a></li-->
+    </ul>
+     <form action="" method="GET">
+     с<br>
     <input name="date_start" type="text" value="<?php echo $date_start ?>"
-           style="width: 10em;">
-    по
+           style="width: 10em;"><br>
+    по<br>
     <input name="date_end" type="text" value="<?php echo $date_end ?>"
-           style="width: 10em;">
+           style="width: 10em;"><br>
+    <div class="note"><a href="http://www.php.net/manual/en/datetime.formats.php">формат</a>, примеры:
+        <br>2010:08:24 18:56:31
+        <br>1/17/2006
+    </div><br>
     <input type="submit" value=" задать ">
     
-    <br>
-    <div class="note">образец: 2010:08:24 18:56:31</div>
 
 <?php foreach ($hidden_inputs as $k => $v) : ?>
     <input name="<?php echo $k ?>" type="hidden" value="<?php echo $v ?>">
 <?php endforeach; ?>
 </form>
+
+    
+
+</div>
+    <div id="content">
+
+
 
 <?php if (count( $select ) > 0) {?>
 <div class="select">
@@ -42,9 +75,9 @@
         <?php printf($e['symbol'] . '%.0f', $e['value'])?></td>
         <td class="date"><?php echo Util::readlyTime($e['date']) ?></td>
         <td class="buttons">
-            <a class="button edit" 
+            <a class="button edit"
                href="<?php echo $e['edit_link']?>" title="правка"></a>
-            <a class="button remove" 
+            <a class="button remove"
                href="<?php echo $e['remove_link']?>"
                onclick="return confirm('Удалить запись?');" title="удалить"></a>
         </td>
@@ -65,4 +98,6 @@
 
 <div style="text-align: right; padding-right: 42px;">
 <a class="big_button green" href="<?php echo $new_button_link?>">Добавить</a>
+</div>
+
 </div>

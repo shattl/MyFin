@@ -45,11 +45,26 @@ if (count ($_POST)) {
     }
 }
 
+if (count ($_POST))
+    $form_data = $_POST;
+else {
+    $form_data = $event;
+    $form_data['date'] = date('Y:m:d H:i:s', $form_data['date']);
+    $form_data['value'] = sprintf('%.2f', $form_data['value']);
+}
+
 Page::set_title( ($event['id'] == 0 ? 'Добавление' : 'Правка') . ' / Мои финансы' );
-Page::addVar( 'event', $event );
+Page::addVar( 'form_data', $form_data );
 Page::draw( 'edit' );
 
 function addEvent(&$event) {
+    $event['type'] = (bool) $event['type'];
+
+    if ($event['date'] === false){
+        Messages::addError('Неверный формат даты');
+        return false;
+    }
+
     if ($event['id'] == 0) {
         $result = Db::justQuery('INSERT INTO `events` (`description`, `type`, `value`, `date`)'
                         . ' VALUES (@s, @i, @i, FROM_UNIXTIME(@i))',
@@ -70,7 +85,7 @@ function addEvent(&$event) {
     $tags = explode(',', $event['tags']);
 
     foreach ($tags as $tag) {
-        $tag = trim(strtolower($tag));
+        $tag = trim(mb_strtolower($tag,'UTF-8'));
         if ($tag == '')
             continue;
 

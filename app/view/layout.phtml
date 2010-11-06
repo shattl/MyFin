@@ -24,22 +24,10 @@
         
             <div class="clear"></div>
 
-            <div id="side_bar">
-                <span class="tag_cloud">
-                    <?php $tags = Util::getTags4Cloud();
-                    //shuffle($tags);
-                    foreach ($tags as $tag): ?>
-
-                    <a href="<?php echo $tag['link']?>" class="size_<?php echo $tag['size']?>">
-                    <?php echo $tag['name']?></a>
-
-                    <?php endforeach; ?>
-                </span>
-                
+            <div id="wrap2">
+            <?php echo $content ?>
             </div>
-            <div id="content">
-                <?php echo $content ?>
-            </div>
+
             <div class="clear"></div>
             <div id="footer">© gd ∞</div>
         </div>

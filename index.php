@@ -19,6 +19,9 @@ if (isset($_GET['date_start']))
 if (isset($_GET['date_end']))
     $where[] = Db::buildReq('events.date < FROM_UNIXTIME(@i)', strtotime($_GET['date_end']));
 
+if (isset($_GET['mft'])) // money flow type
+    $where[] = Db::buildReq('events.type = @i', (bool)$_GET['mft']);
+
 if (isset($_GET['by_tag']))
     $sql = 'SELECT events.* FROM `events`, `ev2tag` WHERE '
             . Db::buildReq('ev2tag.ev_id = events.id AND ev2tag.tag_id = @i', $_GET['by_tag'])
@@ -100,7 +103,7 @@ unset($tmp['date_end']);
 $date_links['all'] = Util::linkFromArray($tmp);
 
 Page::addVar('date_links', $date_links);
-Page::addVar('date_start', isset($_GET['date_start']) ? $_GET['date_start'] : date('Y:m:d H:i:s', 0));
+Page::addVar('date_start', isset($_GET['date_start']) ? $_GET['date_start'] : date('Y:m:d H:i:s', 1));
 Page::addVar('date_end', isset($_GET['date_end']) ? $_GET['date_end'] : date('Y:m:d H:i:s', 2147483647));
 
 $hidden_inputs = $_GET;
@@ -110,11 +113,34 @@ $hidden_inputs['page'] = 1;
 
 Page::addVar('hidden_inputs', $hidden_inputs);
 
+/* Построение ссылок для выборок по типу
+ */
+
+$money_in_type_link = $_GET;
+$money_in_type_link['mft'] = 1;
+$money_out_type_link['page'] = 1;
+$money_in_type_link = Util::linkFromArray($money_in_type_link);
+
+$money_out_type_link = $_GET;
+$money_out_type_link['mft'] = 0;
+$money_out_type_link['page'] = 1;
+$money_out_type_link = Util::linkFromArray($money_out_type_link);
+
+Page::addVar('money_in_type_link', $money_in_type_link);
+Page::addVar('money_out_type_link', $money_out_type_link);
+
 /* Параметры выборки
  */
 
 $select = array();
 
+if (isset($_GET['mft'])) {
+    $select[] = array(
+        'text' => 'тип: <b class=' . ($_GET['mft'] ? 'money_in' : 'money_out') . '>'
+        . ($_GET['mft'] ? 'прибыль' : 'расход') . '</b>',
+        'link' => Util::linkWithoutParam('mft')
+    );
+}
 if (isset($_GET['by_tag'])) {
     $select[] = array(
         'text' => 'тег: <b>' .
