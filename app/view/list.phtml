@@ -30,10 +30,10 @@
      <form action="" method="GET">
      с<br>
     <input name="date_start" type="text" value="<?php echo $date_start ?>"
-           style="width: 10em;"><br>
+           style="width: 100%;"><br>
     по<br>
     <input name="date_end" type="text" value="<?php echo $date_end ?>"
-           style="width: 10em;"><br>
+           style="width: 100%;"><br>
     <div class="note"><a href="http://www.php.net/manual/en/datetime.formats.php">формат</a>, примеры:
         <br>2010:08:24 18:56:31
         <br>1/17/2006
@@ -88,8 +88,8 @@
 = <?php echo $total ?>
 
 <?php if (isset ($no_limit_link)): ?>
-<center>Ограниченно!<br>
-    <a href="<?php echo $no_limit_link?>">Показать всё</a></center>
+<center>показаны первые <?php echo get_config('items_on_page')?><br>
+    <a href="<?php echo $no_limit_link?>">показать все</a></center>
 <?php endif; ?>
 
 <!--div style="text-align: center; padding-top: 1em;">
