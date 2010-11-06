@@ -14,7 +14,7 @@
 <?php endforeach; ?>
         </ul>
 
-    <h3>По типу:</h3>
+    <h3>Тип:</h3>
     <ul>
     <li><a href="<?php echo $money_in_type_link?>" class="money_in">прибыль</a></li>
     <li><a href="<?php echo $money_out_type_link?>" class="money_out">расход</a></li>
@@ -46,12 +46,9 @@
 <?php endforeach; ?>
 </form>
 
-    
 
 </div>
     <div id="content">
-
-
 
 <?php if (count( $select ) > 0) {?>
 <div class="select">
@@ -89,6 +86,11 @@
 <span class='money_in'><?php echo $total_in ?></span>
 - <span class='money_out'><?php echo $total_out ?></span>
 = <?php echo $total ?>
+
+<?php if (isset ($no_limit_link)): ?>
+<center>Ограниченно!<br>
+    <a href="<?php echo $no_limit_link?>">Показать всё</a></center>
+<?php endif; ?>
 
 <!--div style="text-align: center; padding-top: 1em;">
 <a href="#">← новее</a>

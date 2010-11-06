@@ -8,6 +8,7 @@
 class Db {
 
     private static $_lastQuery;
+    private static $_lastResult;
     private static $_link;
 
 
@@ -97,12 +98,12 @@ class Db {
         $sql = self::_buildReq(func_get_args());
         self::$_lastQuery = $sql;
 
-        $result = mysql_query($sql, self::$_link);
+        self::$_lastResult = mysql_query($sql, self::$_link);
 
-        if ($result === false)
-            Messages::addError('Ошибка базы данных<br>' . Db::lastError());
+        if (self::$_lastResult === false)
+            Messagese::addError('Ошибка базы данных<br>' . Db::lastError());
 
-        return $result;
+        return self::$_lastResult;
     }
 
     public static function buildReq() {
@@ -118,6 +119,10 @@ class Db {
 
     public static function insertedId() {
         return mysql_insert_id();
+    }
+    
+    public static function getNumRows() {
+        return mysql_num_rows( self::$_lastResult );
     }
 
     private static function _buildReq( $arg_list ) {

@@ -23,16 +23,26 @@ if (isset($_GET['mft'])) // money flow type
     $where[] = Db::buildReq('events.type = @i', (bool)$_GET['mft']);
 
 if (isset($_GET['by_tag']))
-    $sql = 'SELECT events.* FROM `events`, `ev2tag` WHERE '
+    $sql = 'SELECT SQL_CALC_FOUND_ROWS events.* FROM `events`, `ev2tag` WHERE '
             . Db::buildReq('ev2tag.ev_id = events.id AND ev2tag.tag_id = @i', $_GET['by_tag'])
             . (count($where) > 0 ? ' AND ' . implode(' AND ', $where) : '')
             . ' ORDER BY events.date DESC';
 else
-    $sql = 'SELECT * FROM `events` '
+    $sql = 'SELECT SQL_CALC_FOUND_ROWS * FROM `events` '
             . (count($where) > 0 ? 'WHERE ' . implode(' AND ', $where) : '')
             . ' ORDER BY date DESC';
 
+if (!isset ($_GET['no_limit']))
+    $sql .= Db::buildReq(' LIMIT @i', get_config('items_on_page'));
+
 $events_list = Db::selectGetArray($sql);
+
+if (!isset ($_GET['no_limit']) && Db::selectGetValue('SELECT FOUND_ROWS()') > get_config('items_on_page')) {
+    $no_limit_link = $_GET;
+    $no_limit_link['no_limit'] = 1;
+    $no_limit_link = Util::linkFromArray( $no_limit_link );
+    Page::addVar('no_limit_link', $no_limit_link);
+}
 
 $total_in = 0;
 $total_out = 0;
@@ -61,7 +71,7 @@ foreach ($events_list as $id => $event) {
 
         $tmp1 = $_GET;
         $tmp1['by_tag'] = $v['id'];
-        $tmp1['page'] = 1;
+        unset($tmp1['no_limit']);
 
         $tmp[$key]['link'] = Util::linkFromArray( $tmp1 );
     }
@@ -92,7 +102,7 @@ foreach ($date_links as $key => $value) {
     $tmp = $_GET;
     $tmp['date_start'] = $value['date_start'];
     $tmp['date_end'] = $value['date_end'];
-    $tmp1['page'] = 1;
+    unset($tmp['no_limit']);
 
     $date_links[$key] = Util::linkFromArray($tmp);
 }
@@ -109,7 +119,7 @@ Page::addVar('date_end', isset($_GET['date_end']) ? $_GET['date_end'] : date('Y:
 $hidden_inputs = $_GET;
 unset ($hidden_inputs['date_start']);
 unset ($hidden_inputs['date_end']);
-$hidden_inputs['page'] = 1;
+unset($hidden_inputs['no_limit']);
 
 Page::addVar('hidden_inputs', $hidden_inputs);
 
@@ -118,12 +128,12 @@ Page::addVar('hidden_inputs', $hidden_inputs);
 
 $money_in_type_link = $_GET;
 $money_in_type_link['mft'] = 1;
-$money_out_type_link['page'] = 1;
+unset($money_in_type_link['no_limit']);
 $money_in_type_link = Util::linkFromArray($money_in_type_link);
 
 $money_out_type_link = $_GET;
 $money_out_type_link['mft'] = 0;
-$money_out_type_link['page'] = 1;
+unset($money_out_type_link['no_limit']);
 $money_out_type_link = Util::linkFromArray($money_out_type_link);
 
 Page::addVar('money_in_type_link', $money_in_type_link);
