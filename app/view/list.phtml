@@ -68,16 +68,17 @@
                 <a href="<?php echo $tag['link']?>"><?php echo $tag['name']?></a>
             <?php endforeach; ?>
             </span></td>
-        <td class='value <?php echo $e['type_str'] ?>'>
-        <?php printf($e['symbol'] . '%.0f', $e['value'])?></td>
-        <td class="date"><?php echo Util::readlyTime($e['date']) ?></td>
-        <td class="buttons">
+            <td class="buttons">
             <a class="button edit"
                href="<?php echo $e['edit_link']?>" title="правка"></a>
             <a class="button remove"
                href="<?php echo $e['remove_link']?>"
                onclick="return confirm('Удалить запись?');" title="удалить"></a>
         </td>
+        <td class='value <?php echo $e['type_str'] ?>'>
+        <?php printf($e['symbol'] . '%.0f', $e['value'])?></td>
+        <td class="date"><?php echo Util::readlyTime($e['date']) ?></td>
+        
     </tr>
 <?php endforeach; ?>
 </table>
