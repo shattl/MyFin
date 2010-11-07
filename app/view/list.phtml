@@ -62,8 +62,12 @@
 <table class="events_list">
 <?php foreach ($events_list as $e) : ?>
     <tr>
-        <td class="description <?php echo $e['type_str'] ?>">
-            <?php echo $e['description']?> <span class="tags_list">
+        <td class="description">
+            <a class="<?php echo $e['type_str'] ?>"
+               href="<?php echo $e['edit_link']?>" title="правка">
+            <?php echo $e['description']?>
+            </a>
+            <span class="tags_list">
             <?php  foreach ($e['tag_list'] as $tag) : ?>
                 <a href="<?php echo $tag['link']?>"><?php echo $tag['name']?></a>
             <?php endforeach; ?>
@@ -83,10 +87,10 @@
 <?php endforeach; ?>
 </table>
 
-<br>Итого:
+<hr>Итого:
 <span class='money_in'><?php echo $total_in ?></span>
 - <span class='money_out'><?php echo $total_out ?></span>
-= <?php echo $total ?>
+= <span class='<?php echo ($total > 0) ? 'money_in' : 'money_out' ?>'><?php echo $total ?></span>
 
 <?php if (isset ($no_limit_link)): ?>
 <center>показаны первые <?php echo get_config('items_on_page')?><br>
@@ -99,7 +103,7 @@
 <a href="#">старее →</a>
 </div-->
 
-<div style="text-align: right; padding-right: 42px;">
+<div style="text-align: right;">
 <a class="big_button green" href="<?php echo $new_button_link?>">Добавить</a>
 </div>
 

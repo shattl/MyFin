@@ -44,6 +44,10 @@ h6 { font-size: .75em; margin: 1.67em 0 }
     clear: both;
 }
 
+a {
+    color: #0070ff;
+}
+
 h1,h2,h3,h4,h5,h6 {
     font-family: serif;
     font-weight: normal;
@@ -71,7 +75,7 @@ body {
 
 #wrap {
     width: 1000px;
-    margin: 0 auto;
+    margin: 0 auto 20px auto;
     background-color: #fff;
     position: relative;
 }
@@ -120,6 +124,7 @@ body {
 
 #side_bar h3 {
     margin: 25px 0 5px 0;
+    color: #555;
 }
 
 #side_bar input {
@@ -135,12 +140,23 @@ body {
     border-spacing: 0;
     border-collapse: collapse;
 }
+.events_list tr {
+    background-color: #fff;
+}
+.events_list tr:nth-child(2n) {
+    background-color: #eee;
+}
 .events_list tr:hover{
     background-color: #d1defe;
 }
 .events_list td {
     padding: 3px;
 }
+
+.events_list a {
+    text-decoration: none;
+}
+
 .tags_list {
     font-size: .9em;
 }
@@ -155,10 +171,10 @@ body {
     padding-right: 10px !important;
 }
 .money_in {
-    color: #047301;
+    color: #047301 !important;
 }
 .money_out {
-    color: #b00208;
+    color: #b00208 !important;
 }
 .tags_list a {
     text-decoration: none;
