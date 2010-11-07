@@ -59,12 +59,6 @@ body {
     background: #dcdcdc url('bg.png');
 }
 
-#head {
-    width: 1000px;
-    margin: 0 auto 0 auto;
-    background-color: #fff;
-}
-
 #site_logo {
     display: inline-block;
     width: 100px;
@@ -127,6 +121,10 @@ body {
     color: #555;
 }
 
+#side_bar h3:first-child {
+    margin-top: 0;
+}
+
 #side_bar input {
     margin: 0 0 5px 0;
 }
@@ -150,7 +148,7 @@ body {
     background-color: #d1defe;
 }
 .events_list td {
-    padding: 3px;
+    padding: 5px;
 }
 
 .events_list a {
