@@ -101,7 +101,7 @@ class Db {
         self::$_lastResult = mysql_query($sql, self::$_link);
 
         if (self::$_lastResult === false)
-            Messagese::addError('Ошибка базы данных<br>' . Db::lastError());
+            Messages::addError('Ошибка базы данных<br>' . Db::lastError());
 
         return self::$_lastResult;
     }
@@ -132,13 +132,20 @@ class Db {
         $result = '';
         for ($i = 0; $i < strlen($template); $i++) {
             $ss = substr($template, $i, 2);
-            if (in_array($ss, array('@i', '@s', '@f')) && count($arg_list) > 0) {
-                if ($ss == '@i')
+            if (in_array($ss, array('@i', '@s', '@f', '@a')) && count($arg_list) > 0) {
+                if ($ss == '@i') // целое
                     $val = intval(array_shift($arg_list));
-                if ($ss == '@s')
+                if ($ss == '@s') // строка
                     $val = "'" . mysql_escape_string(array_shift($arg_list)) . "'";
-                if ($ss == '@f')
+                if ($ss == '@f') // дробное
                     $val = floatval(array_shift($arg_list));
+                if ($ss == '@a') { // массив целых
+                    $tmp = array_shift($arg_list);
+                    foreach ($tmp as $id => $v){
+                        $tmp[$id] = intval(trim($v));
+                    }
+                    $val = '(' . implode($tmp, ', ') . ')';
+                }
 
                 $result .= $val;
                 $i++;

@@ -3,9 +3,7 @@
     <h3>Теги:</h3>
     <ul>
         <?php
-        $tags = Util::getTags4Cloud();
-        //shuffle($tags);
-        foreach ($tags as $tag):
+        foreach ($cloud_tags as $tag):
         ?>
 
         <li><a href="<?php echo $tag['link'] ?>">
@@ -25,7 +23,6 @@
     <li><a href="<?php echo $date_links['today'] ?>">сегодня</a></li>
     <li><a href="<?php echo $date_links['mouth'] ?>">этот месяц</a></li>
     <li><a href="<?php echo $date_links['year'] ?>">этот год</a></li>
-    <!--li><a href="<?php echo $date_links['all'] ?>">все</a></li-->
     </ul>
      <form action="" method="GET">
      с<br>

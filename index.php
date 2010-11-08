@@ -20,28 +20,26 @@ if (isset($_GET['date_end']))
     $where[] = Db::buildReq('events.date < FROM_UNIXTIME(@i)', strtotime($_GET['date_end']));
 
 if (isset($_GET['mft'])) // money flow type
-    $where[] = Db::buildReq('events.type = @i', (bool)$_GET['mft']);
+    $where[] = Db::buildReq('events.type = @i', (bool) $_GET['mft']);
 
-if (isset($_GET['by_tag']))
-    $sql = 'SELECT SQL_CALC_FOUND_ROWS events.* FROM `events`, `ev2tag` WHERE '
-            . Db::buildReq('ev2tag.ev_id = events.id AND ev2tag.tag_id = @i', $_GET['by_tag'])
-            . (count($where) > 0 ? ' AND ' . implode(' AND ', $where) : '')
-            . ' ORDER BY events.date DESC';
-else
-    $sql = 'SELECT SQL_CALC_FOUND_ROWS * FROM `events` '
-            . (count($where) > 0 ? 'WHERE ' . implode(' AND ', $where) : '')
-            . ' ORDER BY date DESC';
+if (isset($_GET['by_tag'])) {
+    $tags = explode(',', $_GET['by_tag']);
+    foreach ($tags as $t)
+        $where[] =
+                Db::buildReq('@i IN (SELECT tag_id FROM ev2tag WHERE ev_id = id)', $t);
+}
+$sql = 'SELECT SQL_CALC_FOUND_ROWS * FROM `events` '
+        . (count($where) > 0 ? 'WHERE ' . implode(' AND ', $where) : '')
+        . ' ORDER BY date DESC';
 
-if (!isset ($_GET['no_limit']))
+if (!isset($_GET['no_limit']))
     $sql .= Db::buildReq(' LIMIT @i', get_config('items_on_page'));
 
 $events_list = Db::selectGetArray($sql);
 
-if (!isset ($_GET['no_limit']) && Db::selectGetValue('SELECT FOUND_ROWS()') > get_config('items_on_page')) {
-    $no_limit_link = $_GET;
-    $no_limit_link['no_limit'] = 1;
-    $no_limit_link = Util::linkFromArray( $no_limit_link );
-    Page::addVar('no_limit_link', $no_limit_link);
+if (!isset($_GET['no_limit']) && Db::selectGetValue('SELECT FOUND_ROWS()') > get_config('items_on_page')) {
+    Page::addVar('no_limit_link', Util::linkReplaceParam(
+                            array('no_limit' => 1)));
 }
 
 $total_in = 0;
@@ -53,13 +51,13 @@ foreach ($events_list as $id => $event) {
 
     if ($event['type']) {
         $total_in += $event['value'];
-        $events_list[ $id ]['type_str'] = 'money_in';
-        $events_list[ $id ]['symbol'] = '+';
+        $events_list[$id]['type_str'] = 'money_in';
+        $events_list[$id]['symbol'] = '+';
     } else {
         $total_out += $event['value'];
         $value = $value;
-        $events_list[ $id ]['type_str'] = 'money_out';
-        $events_list[ $id ]['symbol'] = '-';
+        $events_list[$id]['type_str'] = 'money_out';
+        $events_list[$id]['symbol'] = '-';
     }
 
     $events_list[$id]['value'] = $value;
@@ -68,17 +66,13 @@ foreach ($events_list as $id => $event) {
                     . ' tags.id = ev2tag.tag_id AND ev2tag.ev_id = @i', $event['id']);
 
     foreach ($tmp as $key => $v) {
-
-        $tmp1 = $_GET;
-        $tmp1['by_tag'] = $v['id'];
-        unset($tmp1['no_limit']);
-
-        $tmp[$key]['link'] = Util::linkFromArray( $tmp1 );
+        $tmp[$key]['link'] = Util::linkReplaceParam(array('by_tag' => $v['id']),
+                        array('no_limit'));
     }
 
     $events_list[$id]['tag_list'] = $tmp;
 
-    $tmp = urlencode( $_SERVER["REQUEST_URI"] );
+    $tmp = urlencode($_SERVER["REQUEST_URI"]);
     $events_list[$id]['edit_link'] = "edit.php?id={$event['id']}&r={$tmp}";
     $events_list[$id]['remove_link'] = "remove.php?id={$event['id']}&r={$tmp}";
 }
@@ -94,50 +88,34 @@ Page::addVar('total', ($total_in - $total_out) / 100);
 $date_links['today']['date_start'] = date('Y:m:d H:i:s', mktime(0, 0, 0));
 $date_links['today']['date_end'] = date('Y:m:d H:i:s', mktime(23, 59, 59));
 $date_links['mouth']['date_start'] = date('Y:m:d H:i:s', mktime(0, 0, 0, date("n"), 1));
-$date_links['mouth']['date_end'] = date('Y:m:d H:i:s', mktime(0, 0, 0, date("n")+1, 1));
+$date_links['mouth']['date_end'] = date('Y:m:d H:i:s', mktime(0, 0, 0, date("n") + 1, 1));
 $date_links['year']['date_start'] = date('Y:m:d H:i:s', mktime(0, 0, 0, 1, 1));
 $date_links['year']['date_end'] = date('Y:m:d H:i:s', mktime(0, 0, 0, 1, 1, date("Y") + 1));
 
 foreach ($date_links as $key => $value) {
-    $tmp = $_GET;
-    $tmp['date_start'] = $value['date_start'];
-    $tmp['date_end'] = $value['date_end'];
-    unset($tmp['no_limit']);
-
-    $date_links[$key] = Util::linkFromArray($tmp);
+    $date_links[$key] = Util::linkReplaceParam(
+                    array('date_start' => $value['date_start'],
+                        'date_end' => $value['date_end']),
+                    array('no_limit'));
 }
-
-$tmp = $_GET;
-unset($tmp['date_start']);
-unset($tmp['date_end']);
-$date_links['all'] = Util::linkFromArray($tmp);
 
 Page::addVar('date_links', $date_links);
 Page::addVar('date_start', isset($_GET['date_start']) ? $_GET['date_start'] : date('Y:m:d H:i:s', 1));
 Page::addVar('date_end', isset($_GET['date_end']) ? $_GET['date_end'] : date('Y:m:d H:i:s', 2147483647));
 
 $hidden_inputs = $_GET;
-unset ($hidden_inputs['date_start']);
-unset ($hidden_inputs['date_end']);
+unset($hidden_inputs['date_start']);
+unset($hidden_inputs['date_end']);
 unset($hidden_inputs['no_limit']);
 
 Page::addVar('hidden_inputs', $hidden_inputs);
 
 /* Построение ссылок для выборок по типу
  */
-
-$money_in_type_link = $_GET;
-$money_in_type_link['mft'] = 1;
-unset($money_in_type_link['no_limit']);
-$money_in_type_link = Util::linkFromArray($money_in_type_link);
-
-$money_out_type_link = $_GET;
-$money_out_type_link['mft'] = 0;
-unset($money_out_type_link['no_limit']);
-$money_out_type_link = Util::linkFromArray($money_out_type_link);
-
-Page::addVar('money_in_type_link', $money_in_type_link);
-Page::addVar('money_out_type_link', $money_out_type_link);
+Page::addVar('money_in_type_link',
+                Util::linkReplaceParam(array('mft' => 1), array('no_limit')));
+Page::addVar('money_out_type_link',
+                Util::linkReplaceParam(array('mft' => 0), array('no_limit')));
 
 /* Параметры выборки
  */
@@ -152,11 +130,23 @@ if (isset($_GET['mft'])) {
     );
 }
 if (isset($_GET['by_tag'])) {
-    $select[] = array(
-        'text' => 'тег: <b>' .
-        Db::selectGetValue('SELECT name FROM tags WHERE id = @i', $_GET['by_tag']) . '</b>',
-        'link' => Util::linkWithoutParam('by_tag')
-    );
+    $tags = explode(',', $_GET['by_tag']);
+    foreach ($tags as $t) {
+        $tmp = $tags;
+        foreach ($tmp as $k => $v) {
+            if ($v == $t)
+                unset($tmp[$k]);
+        }
+        if (count($tmp) == 0)
+            $link = Util::linkWithoutParam('by_tag');
+        else
+            $link = Util::linkReplaceParam(array('by_tag' => implode(',', $tmp)));
+        $select[] = array(
+            'text' => 'тег: <b>' .
+            Db::selectGetValue('SELECT name FROM tags WHERE id = @i', $t) . '</b>',
+            'link' => $link
+        );
+    }
 }
 if (isset($_GET['date_start'])) {
     $select[] = array(
@@ -173,10 +163,33 @@ if (isset($_GET['date_end'])) {
 
 Page::addVar('select', $select);
 
+/* Теги для облака
+ */
+
+$tmp = Db::selectGetArray('SELECT tags.*, count(ev2tag.ev_id) as count FROM ev2tag, tags '
+                . 'WHERE ev2tag.tag_id = tags.id GROUP BY ev2tag.tag_id ORDER BY count DESC');
+
+if (count($tmp) > 0) {
+    $max = $tmp[0]['count'];
+    $min = $tmp[count($tmp) - 1]['count'];
+
+    $steps = 4;
+
+    foreach ($tmp as $key => $value) {
+        if ($max == $min)
+            $tmp[$key]['size'] = intval($steps / 2) + 1;
+        else
+            $tmp[$key]['size'] = intval($steps * ($value['count'] - $min) / ($max - $min)) + 1;
+        $tmp[$key]['link'] = Util::linkFromArray(array('by_tag' => $value['id']));
+    }
+}
+
+Page::addVar('cloud_tags', $tmp);
+
 /* Еще по мелочи
  */
 
-Page::addVar('new_button_link', "edit.php?new&r=" . urlencode( $_SERVER["REQUEST_URI"] ));
+Page::addVar('new_button_link', "edit.php?new&r=" . urlencode($_SERVER["REQUEST_URI"]));
 
 /* Всё готово, осталось отрисовать страницу
  */

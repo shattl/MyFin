@@ -67,6 +67,15 @@ class Util {
         return "http://{$_SERVER["HTTP_HOST"]}{$temp}";
     }
 
+    public static function linkReplaceParam($params, $remove=array()) {
+        $tmp = $_GET;
+        foreach ($params as $k => $v)
+            $tmp[$k] = $v;
+        foreach ($remove as $v)
+            unset($tmp[$v]);
+        return self::linkFromArray($tmp);
+    }
+
     public static function linkWithoutParam($param) {
         $tmp = $_GET;
         unset($tmp[$param]);
@@ -79,6 +88,8 @@ class Util {
         return Util::getBaseUrl() . '/' . ((count($arr) > 0) ? '?' . implode('&', $arr) : '');
     }
 
+    /* ненужная функция, пусть пока повисит
+     */
     public static function getTags4Cloud() {
         $tmp = Db::selectGetArray('SELECT tags.*, count(ev2tag.ev_id) as count FROM ev2tag, tags '
                         . 'WHERE ev2tag.tag_id = tags.id GROUP BY ev2tag.tag_id ORDER BY count DESC');
