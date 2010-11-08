@@ -66,7 +66,14 @@ foreach ($events_list as $id => $event) {
                     . ' tags.id = ev2tag.tag_id AND ev2tag.ev_id = @i', $event['id']);
 
     foreach ($tmp as $key => $v) {
-        $tmp[$key]['link'] = Util::linkReplaceParam(array('by_tag' => $v['id']),
+        $tags = array();
+        if (isset($_GET['by_tag']))
+            $tags = explode(',', $_GET['by_tag']);
+
+        if (!in_array($v['id'], $tags))
+            $tags[] = $v['id'];
+
+        $tmp[$key]['link'] = Util::linkReplaceParam(array('by_tag' => implode(',', $tags)),
                         array('no_limit'));
     }
 
@@ -180,7 +187,16 @@ if (count($tmp) > 0) {
             $tmp[$key]['size'] = intval($steps / 2) + 1;
         else
             $tmp[$key]['size'] = intval($steps * ($value['count'] - $min) / ($max - $min)) + 1;
-        $tmp[$key]['link'] = Util::linkFromArray(array('by_tag' => $value['id']));
+
+        $tags = array();
+        if (isset($_GET['by_tag']))
+            $tags = explode(',', $_GET['by_tag']);
+
+        if (!in_array($value['id'], $tags))
+            $tags[] = $value['id'];
+
+        $tmp[$key]['link'] = Util::linkReplaceParam(array('by_tag' => implode(',', $tags)),
+                        array('no_limit'));
     }
 }
 
