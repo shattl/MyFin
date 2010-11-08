@@ -97,6 +97,7 @@ class Db {
 
         $sql = self::_buildReq(func_get_args());
         self::$_lastQuery = $sql;
+        //Messages::addMessage($sql);
 
         self::$_lastResult = mysql_query($sql, self::$_link);
 

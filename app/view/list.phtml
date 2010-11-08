@@ -1,3 +1,26 @@
+<?php
+/*
+ * В этот скрипт передаются следующие переменные:
+ *
+ * $cloud_tags[]
+ * $money_in_type_link
+ * $money_out_type_link
+ * $date_links[]
+ * $date_start
+ * $date_end
+ * $date_links[]
+ * $hidden_inputs[]
+ * $select[]
+ * $events_list[]
+ * $total_in
+ * $total_out
+ * $total
+ * ~$no_limit_link
+ * ~$found_rows
+ * $new_button_link
+ */
+?>
+
 <div id="side_bar">
 
     <h3>Теги:</h3>
@@ -91,14 +114,8 @@
 
 <?php if (isset ($no_limit_link)): ?>
 <center>показаны первые <?php echo get_config('items_on_page')?><br>
-    <a href="<?php echo $no_limit_link?>">показать все</a></center>
+    <a href="<?php echo $no_limit_link?>">показать все</a> (<?php echo $found_rows?>)</center>
 <?php endif; ?>
-
-<!--div style="text-align: center; padding-top: 1em;">
-<a href="#">← новее</a>
-<a href="#">все</a>
-<a href="#">старее →</a>
-</div-->
 
 <div style="text-align: right;">
 <a class="big_button green" href="<?php echo $new_button_link?>">Добавить</a>

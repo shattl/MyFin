@@ -24,22 +24,27 @@ if (isset($_GET['mft'])) // money flow type
 
 if (isset($_GET['by_tag'])) {
     $tags = explode(',', $_GET['by_tag']);
-    foreach ($tags as $t)
-        $where[] =
-                Db::buildReq('@i IN (SELECT tag_id FROM ev2tag WHERE ev_id = id)', $t);
-}
-$sql = 'SELECT SQL_CALC_FOUND_ROWS * FROM `events` '
-        . (count($where) > 0 ? 'WHERE ' . implode(' AND ', $where) : '')
-        . ' ORDER BY date DESC';
+
+    $sql = 'SELECT count(DISTINCT tag_id) AS tid, events.* FROM'
+            . ' ev2tag LEFT JOIN events ON ev2tag.ev_id = events.id'
+            . (count($where) > 0 ? ' WHERE ' . implode(' AND ', $where) . ' AND ' : ' WHERE ')
+            . Db::buildReq('tag_id IN @a GROUP BY ev_id HAVING tid = @i', $tags, count($tags));
+} else
+    $sql = 'SELECT SQL_CALC_FOUND_ROWS * FROM `events` '
+            . (count($where) > 0 ? 'WHERE ' . implode(' AND ', $where) : '')
+            . ' ORDER BY date DESC';
 
 if (!isset($_GET['no_limit']))
     $sql .= Db::buildReq(' LIMIT @i', get_config('items_on_page'));
 
 $events_list = Db::selectGetArray($sql);
 
-if (!isset($_GET['no_limit']) && Db::selectGetValue('SELECT FOUND_ROWS()') > get_config('items_on_page')) {
-    Page::addVar('no_limit_link', Util::linkReplaceParam(
-                            array('no_limit' => 1)));
+if (!isset($_GET['no_limit'])) {
+    $found_rows = Db::selectGetValue('SELECT FOUND_ROWS()');
+    if ($found_rows > get_config('items_on_page')) {
+        Page::addVar('found_rows', $found_rows);
+        Page::addVar('no_limit_link', Util::linkReplaceParam(array('no_limit' => 1)));
+    }
 }
 
 $total_in = 0;
