@@ -194,14 +194,7 @@ if (count($tmp) > 0) {
         else
             $tmp[$key]['size'] = intval($steps * ($value['count'] - $min) / ($max - $min)) + 1;
 
-        $tags = array();
-        if (isset($_GET['by_tag']))
-            $tags = explode(',', $_GET['by_tag']);
-
-        if (!in_array($value['id'], $tags))
-            $tags[] = $value['id'];
-
-        $tmp[$key]['link'] = Util::linkReplaceParam(array('by_tag' => implode(',', $tags)),
+        $tmp[$key]['link'] = Util::linkReplaceParam(array('by_tag' => $value['id']),
                         array('no_limit'));
     }
 }
