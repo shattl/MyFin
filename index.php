@@ -28,7 +28,8 @@ if (isset($_GET['by_tag'])) {
     $sql = 'SELECT count(DISTINCT tag_id) AS tid, events.* FROM'
             . ' ev2tag LEFT JOIN events ON ev2tag.ev_id = events.id'
             . (count($where) > 0 ? ' WHERE ' . implode(' AND ', $where) . ' AND ' : ' WHERE ')
-            . Db::buildReq('tag_id IN @a GROUP BY ev_id HAVING tid = @i', $tags, count($tags));
+            . Db::buildReq('tag_id IN @a GROUP BY ev_id HAVING tid = @i', $tags, count($tags))
+            . ' ORDER BY date DESC';
 } else
     $sql = 'SELECT SQL_CALC_FOUND_ROWS * FROM `events` '
             . (count($where) > 0 ? 'WHERE ' . implode(' AND ', $where) : '')
