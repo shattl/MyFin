@@ -1,124 +1,131 @@
 <?php
 /*
- * В этот скрипт передаются следующие переменные:
- *
- * $cloud_tags[]
- * $money_in_type_link
- * $money_out_type_link
- * $date_links[]
- * $date_start
- * $date_end
- * $date_links[]
- * $hidden_inputs[]
- * $select[]
- * $events_list[]
- * $total_in
- * $total_out
- * $total
- * ~$no_limit_link
- * ~$found_rows
- * $new_button_link
- */
+* В этот скрипт передаются следующие переменные:
+*
+* $cloud_tags[]
+* $money_in_type_link
+* $money_out_type_link
+* $date_links[]
+* $date_start
+* $date_end
+* $date_links[]
+* $hidden_inputs[]
+* $select[]
+* $events_list[]
+* $total_in
+* $total_out
+* $total
+* ~$no_limit_link
+* ~$found_rows
+* $new_button_link
+*/
 ?>
-
 <div id="side_bar">
+
 
     <h3>Теги:</h3>
     <ul>
-        <?php
-        foreach ($cloud_tags as $tag):
-        ?>
-
+<?php foreach ($cloud_tags as $tag): ?>
         <li><a href="<?php echo $tag['link'] ?>">
         <?php echo $tag['name'] ?></a> (<?php echo $tag['count'] ?>)</li>
-
 <?php endforeach; ?>
-        </ul>
+    </ul>
+
 
     <h3>Тип:</h3>
     <ul>
-    <li><a href="<?php echo $money_in_type_link?>" class="money_in">прибыль</a></li>
-    <li><a href="<?php echo $money_out_type_link?>" class="money_out">расход</a></li>
+        <li><a href="<?php echo $money_in_type_link ?>" class="money_in">прибыль</a></li>
+        <li><a href="<?php echo $money_out_type_link ?>" class="money_out">расход</a></li>
     </ul>
+
 
     <h3>Период:</h3>
     <ul>
-    <li><a href="<?php echo $date_links['today'] ?>">сегодня</a></li>
-    <li><a href="<?php echo $date_links['mouth'] ?>">этот месяц</a></li>
-    <li><a href="<?php echo $date_links['year'] ?>">этот год</a></li>
+        <li><a href="<?php echo $date_links['today'] ?>">сегодня</a></li>
+        <li><a href="<?php echo $date_links['mouth'] ?>">этот месяц</a></li>
+        <li><a href="<?php echo $date_links['year'] ?>">этот год</a></li>
     </ul>
-     <form action="" method="GET">
-     с<br>
-    <input name="date_start" type="text" value="<?php echo $date_start ?>"
-           style="width: 100%;"><br>
-    по<br>
-    <input name="date_end" type="text" value="<?php echo $date_end ?>"
-           style="width: 100%;"><br>
-    <div class="note"><a href="http://www.php.net/manual/en/datetime.formats.php">формат</a>, примеры:
-        <br>2010:08:24 18:56:31
-        <br>1/17/2006
-    </div><br>
-    <input type="submit" value=" задать ">
-    
-
+    <form action="" method="GET">
+        с<br>
+        <input name="date_start" type="text" value="<?php echo $date_start ?>"
+        style="width: 100%;"><br>
+        по<br>
+        <input name="date_end" type="text" value="<?php echo $date_end ?>"
+        style="width: 100%;"><br>
+        <div class="note">
+            <a href="http://www.php.net/manual/en/datetime.formats.php">формат</a>, примеры:
+            <br>2010:08:24 18:56:31
+            <br>1/17/2006
+        </div><br>
+        <input type="submit" value=" задать ">
 <?php foreach ($hidden_inputs as $k => $v) : ?>
-    <input name="<?php echo $k ?>" type="hidden" value="<?php echo $v ?>">
+        <input name="<?php echo $k ?>" type="hidden" value="<?php echo $v ?>">
 <?php endforeach; ?>
-</form>
+    </form>
 
 
-</div>
-    <div id="content">
+</div><!-- / #side_bar -->
 
-<?php if (count( $select ) > 0) {?>
-<div class="select">
-<?php foreach ($select as $value) {
-    echo $value['text']; ?>
-    <a href="<?php echo $value['link']?>">[x]</a><br>
-<?php } ?>
-</div>
-<?php } ?>
 
-<table class="events_list">
-<?php foreach ($events_list as $e) : ?>
-    <tr>
-        <td class="description">
-            <a class="<?php echo $e['type_str'] ?>"
-               href="<?php echo $e['edit_link']?>" title="правка">
-            <?php echo $e['description']?>
-            </a>
-            <span class="tags_list">
-            <?php  foreach ($e['tag_list'] as $tag) : ?>
-                <a href="<?php echo $tag['link']?>"><?php echo $tag['name']?></a>
-            <?php endforeach; ?>
-            </span></td>
-            <td class="buttons">
-            <a class="button edit"
-               href="<?php echo $e['edit_link']?>" title="правка"></a>
-            <a class="button remove"
-               href="<?php echo $e['remove_link']?>"
-               onclick="return confirm('Удалить запись?');" title="удалить"></a>
-        </td>
-        <td class='value <?php echo $e['type_str'] ?>'>
-        <?php printf($e['symbol'] . '%.0f', $e['value'])?></td>
-        <td class="date"><?php echo Util::readlyTime($e['date']) ?></td>
-        
-    </tr>
+<div id="content">
+
+<!-- параметры запроса -->
+<?php if (count($select) > 0) : ?>
+    <div class="select">
+<?php foreach ($select as $value) : ?>
+        <?php echo $value['text']; ?> <a href="<?php echo $value['link'] ?>">[x]</a><br>
 <?php endforeach; ?>
-</table>
-
-<hr>Итого:
-<span class='money_in'><?php echo $total_in ?></span>
-- <span class='money_out'><?php echo $total_out ?></span>
-= <span class='<?php echo ($total > 0) ? 'money_in' : 'money_out' ?>'><?php echo $total ?></span>
-
-<?php if (isset ($no_limit_link)): ?>
-<center>показаны первые <?php echo get_config('items_on_page')?><br>
-    <a href="<?php echo $no_limit_link?>">показать все</a> (<?php echo $found_rows?>)</center>
+    </div>
 <?php endif; ?>
 
-<div style="text-align: right;">
-<a class="big_button green" href="<?php echo $new_button_link?>">Добавить</a>
-</div>
+    <!-- основная такблица (с событиями) -->
+    <table class="events_list">
+<?php foreach ($events_list as $e) : ?>
+        <tr>
+            <td class="description">
+                <a class="<?php echo $e['type_str'] ?>"
+                href="<?php echo $e['edit_link'] ?>" title="правка">
+                    <?php echo $e['description'] ?>
+                </a>
+                <span class="tags_list">
+<?php foreach ($e['tag_list'] as $tag) : ?>
+                    <a href="<?php echo $tag['link'] ?>"><?php echo $tag['name'] ?></a>
+<?php endforeach; ?>
+                </span>
+            </td>
+            <td class="buttons">
+                <a class="button edit"
+                href="<?php echo $e['edit_link'] ?>" title="правка"></a>
+                <a class="button remove"
+                href="<?php echo $e['remove_link'] ?>"
+                onclick="return confirm('Удалить запись?');" title="удалить"></a>
+            </td>
+            <td class='value <?php echo $e['type_str'] ?>'>
+                <?php printf($e['symbol'] . '%.0f', $e['value']) ?>
+            </td>
+            <td class="date">
+                <?php echo Util::readlyTime($e['date']) ?>
+            </td>
+        </tr>
+        <?php endforeach; ?>
+    </table>
 
-</div>
+
+    <hr>Итого:
+    <span class='money_in'><?php echo $total_in ?></span>
+    - <span class='money_out'><?php echo $total_out ?></span>
+    = <span class='<?php echo ($total > 0) ? 'money_in' : 'money_out' ?>'><?php echo $total ?></span>
+
+    <!-- ссылка "показать всё", если нужна -->
+    <?php if (isset($no_limit_link)): ?>
+    <center>показаны первые <?php echo get_config('items_on_page') ?><br>
+    <a href="<?php echo $no_limit_link ?>">показать все</a> (<?php echo $found_rows ?>)</center>
+    <?php endif; ?>
+
+    <!-- кнопка "добавить" -->
+    <div style="text-align: right;">
+        <a class="big_button green" href="<?php echo $new_button_link ?>">Добавить</a>
+    </div>
+
+
+</div><!-- / #content -->
