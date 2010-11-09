@@ -1,0 +1,33 @@
+<h1><?php echo ($form_data['id'] == 0) ? 'Новая запись' : 'Правка' ?></h1>
+
+<form action="" method="POST">
+    <label>Описание
+        <br>
+        <input name="description" type="text" style="width: 50em;" value="<?php echo $form_data['description'] ?>">
+    </label>
+    <div class="note">любой текст, не более 300 символов</div>
+    <label>Теги
+        <br>
+        <input name="tags" type="text" style="width: 25em;" value="<?php echo $form_data['tags'] ?>">
+    </label>
+    <div class="note">теги через запятую, пример: зарплата, основная работа, на карточку</div>
+    <label>Сумма
+        <br>
+        <input name="value" type="text" value="<?php echo $form_data['value'] ?>" style="width: 7em;">
+        <input name="type" type="radio" value="1" <?php echo $form_data['type'] ? 'checked' : '' ?>>
+        <span class="money_in">прибыль</span>
+        <input name="type" type="radio" value="0" <?php echo !$form_data['type'] ? 'checked' : '' ?>>
+        <span class="money_out">расход</span>
+    </label>
+    <div class="note">число без знака "-", примеры: 100.42 или 100,42 или просто 510</div>
+    <label>Дата
+        <br>
+        <input name="date" type="text" value="<?php echo $form_data['date'] ?>" style="width: 10em;">
+    </label>
+    <div class="note"><a href="http://www.php.net/manual/en/datetime.formats.php">формат</a>,
+        образец: 2010:08:24 18:56:31</div>
+    <label>
+        <input type="submit" value="Сохранить">
+    </label>
+    <input type="hidden" name="id" value="<?php echo $form_data['id'] ?>">
+</form>
