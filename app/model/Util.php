@@ -88,31 +88,4 @@ class Util {
         return Util::getBaseUrl() . '/' . ((count($arr) > 0) ? '?' . implode('&', $arr) : '');
     }
 
-    /* ненужная функция, пусть пока повисит
-     */
-    public static function getTags4Cloud() {
-        $tmp = Db::selectGetArray('SELECT tags.*, count(ev2tag.ev_id) as count FROM ev2tag, tags '
-                        . 'WHERE ev2tag.tag_id = tags.id GROUP BY ev2tag.tag_id ORDER BY count DESC');
-        // SELECT tags.*, sum(events.value) as sum FROM ev2tag, events, tags
-        // WHERE ev2tag.ev_id = events.id AND ev2tag.tag_id = tags.id GROUP BY ev2tag.tag_id
-        // ORDER BY sum DESC
-
-        if (count($tmp) > 0) {
-            $max = $tmp[0]['count'];
-            $min = $tmp[count($tmp) - 1]['count'];
-
-            $steps = 4;
-
-            foreach ($tmp as $key => $value) {
-                if ($max == $min)
-                    $tmp[$key]['size'] = intval($steps / 2) + 1;
-                else
-                    $tmp[$key]['size'] = intval($steps * ($value['count'] - $min) / ($max - $min)) + 1;
-                $tmp[$key]['link'] = self::linkFromArray( array('by_tag' => $value['id']) );
-            }
-        }
-
-        return $tmp;
-    }
-
 }
