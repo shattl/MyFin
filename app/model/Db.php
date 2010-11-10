@@ -100,11 +100,14 @@ class Db {
 
         $sql = self::_buildReq(func_get_args());
 
+        // Заменяем все вхождения имен таблиц по умолчанию на значения из конфига
+        // Немного опасная реализация, но если осторожно то можно,
+        // и в старом коде ничего менять не надо
         $sql = str_replace(array_keys(get_config( 'db_table' )),
                 get_config( 'db_table' ), $sql);
         
         self::$_lastQuery = $sql;
-        //Messages::addMessage($sql);
+        //Messages::addDebug($sql);
 
         self::$_lastResult = mysql_query($sql, self::$_link);
 
@@ -175,8 +178,6 @@ class Db {
 
     private static function _checkTables() {
         $tables = self::selectGetVerticalArray('show tables');
-
-        //var_export ($tables);
 
         if (!is_array($tables))
             return false;
