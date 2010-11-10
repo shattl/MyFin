@@ -314,6 +314,7 @@ label {
     .tags_list a {
         background: transparent;
         color: black;
+        border: solid 1px #000;
     }
     .money_in {
         color: black !important;
