@@ -293,3 +293,32 @@ label {
 .message.warning {
     background-color: #ffcc5e;
 }
+
+@media print {
+    body {
+        background: white;
+    }
+    #side_bar, #footer, #site_logo, .message, .big_button {
+        display: none;
+    }
+    #wrap {
+        width: 100%;
+        margin: 0;
+    }
+    #content {
+        padding: 0;
+    }
+    .select a {
+        display: none;
+    }
+    .tags_list a {
+        background: transparent;
+        color: black;
+    }
+    .money_in {
+        color: black !important;
+    }
+    .money_out {
+        color: black !important;
+    }
+}
