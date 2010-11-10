@@ -1,11 +1,43 @@
 <?php
-function get_config( $name ) {
-    $config['db_host'] = 'localhost';
-    $config['db_user'] = 'root';
-    $config['db_password'] = '123';
-    $config['db_db_name'] = 'myfin';
+/* Добро пожаловать в конфигурационный файл!
+ */
 
-    $config['items_on_page'] = 10;
+function get_config( $name ) {
+
+    /* Если правильно указать db_host, db_user и db_password,
+     * но не создавать базу и/или таблицы,
+     * то они будут созданы автоматически при первом запуске.
+     *
+     * Но имейте в виду что у пользователя, имя и пароль
+     * которого вы указали должны быть соотвествующие права.
+     */
+    $config['db_host'] = 'localhost'; // имя сервера (хост) базы данных
+    $config['db_user'] = 'root'; // имя пользователя
+    $config['db_password'] = '123'; // пароль
+    $config['db_db_name'] = 'myfin3'; // название базы данных
+
+    /* Можно поменять названия таблиц.
+     * На случай если в указанной базе уже есть таблицы
+     * с такими названиями или еще что ...
+     */
+    $config['db_table']['events'] = 'events';
+    $config['db_table']['tags'] = 'tags';
+    $config['db_table']['ev2tag'] = 'ev2tag';
+
+    /* Если на странице должно быть отображенно большое количество записей,
+     * то по умолчанию будут отображены только первые N, и внизу будет ссылка
+     * "показать все".
+     */
+    $config['items_on_page'] = 100; // количество записей на странице (N)
+
+
+    /* Ниже ничего не трогайте :)
+     */
 
     return $config[ $name ];
+}
+
+function tn( $name ) {
+    $tmp = get_config( 'db_table' );
+    return $tmp[$name];
 }
