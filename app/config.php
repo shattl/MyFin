@@ -14,7 +14,7 @@ function get_config( $name ) {
     $config['db_host'] = 'localhost'; // имя сервера (хост) базы данных
     $config['db_user'] = 'root'; // имя пользователя
     $config['db_password'] = '123'; // пароль
-    $config['db_db_name'] = 'myfin3'; // название базы данных
+    $config['db_db_name'] = 'myfin'; // название базы данных
 
     /* Можно поменять названия таблиц.
      * На случай если в указанной базе уже есть таблицы

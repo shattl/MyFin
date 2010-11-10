@@ -125,7 +125,7 @@ class Db {
     }
 
     public static function lastError() {
-        return "<code>" . mysql_error() . "\n\n" . self::$_lastQuery . "</code>";
+        return "<code>" . mysql_error() . "\n<br/>\nЗапрос: " . self::$_lastQuery . "</code>";
     }
 
     public static function insertedId() {
