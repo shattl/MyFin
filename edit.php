@@ -68,13 +68,13 @@ function addEvent(&$event) {
     if ($event['id'] == 0) {
         $result = Db::justQuery('INSERT INTO `events` (`description`, `type`, `value`, `date`)'
                         . ' VALUES (@s, @i, @i, FROM_UNIXTIME(@i))',
-                        $event['description'], $event['type'], $event['value'] * 100, $event['date']);
+                        htmlspecialchars($event['description']), $event['type'], abs ($event['value'] * 100), $event['date']);
         $event['id'] = Db::insertedId();
     }
     else
         $result = Db::justQuery('UPDATE `events` SET `description`=@s, `type`=@i, `value`=@i, '
                         . '`date`=FROM_UNIXTIME(@i) WHERE `id`=@i',
-                        $event['description'], $event['type'], $event['value'] * 100, $event['date'], $event['id']);
+                        $event['description'], $event['type'], abs ($event['value'] * 100), $event['date'], $event['id']);
 
     if (!$result) 
         return false;
@@ -89,10 +89,10 @@ function addEvent(&$event) {
         if ($tag == '')
             continue;
 
-        $id = Db::selectGetValue('SELECT `id` FROM `tags` WHERE `name` = @s', $tag);
+        $id = Db::selectGetValue('SELECT `id` FROM `tags` WHERE `name` = @s', htmlspecialchars($tag));
 
         if ($id == null) {
-            if (!Db::justQuery('INSERT INTO `tags` (`name`) VALUES (@s)', $tag))
+            if (!Db::justQuery('INSERT INTO `tags` (`name`) VALUES (@s)', htmlspecialchars($tag)))
                 return false;
 
             $id = Db::insertedId();
