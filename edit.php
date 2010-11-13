@@ -4,7 +4,7 @@ require_once 'app/init.php';
 if (isset ($_GET['new'])) {
     $event['description'] = 'нет описания ...';
     $event['value'] = 100;
-    $event['type'] = 1;
+    $event['type'] = 0;
     $event['date'] = time();
     $event['tags'] = '';
     $event['id'] = 0;
