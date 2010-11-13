@@ -101,7 +101,7 @@
                 onclick="return confirm('Удалить запись?');" title="удалить"></a>
             </td>
             <td class='value <?php echo $e['type_str'] ?>'>
-                <?php echo $e['symbol'] . number_format($e['value'], ',', ' '); ?>
+                <?php echo $e['symbol'] . number_format($e['value'], 2, ',', ' '); ?>
             </td>
             <td class="date">
                 <?php echo Util::readlyTime($e['date']) ?>
