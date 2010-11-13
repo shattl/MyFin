@@ -74,7 +74,7 @@ function addEvent(&$event) {
     else
         $result = Db::justQuery('UPDATE `events` SET `description`=@s, `type`=@i, `value`=@i, '
                         . '`date`=FROM_UNIXTIME(@i) WHERE `id`=@i',
-                        $event['description'], $event['type'], abs ($event['value'] * 100), $event['date'], $event['id']);
+                        htmlspecialchars($event['description']), $event['type'], abs ($event['value'] * 100), $event['date'], $event['id']);
 
     if (!$result) 
         return false;
