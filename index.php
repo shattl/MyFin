@@ -91,9 +91,9 @@ foreach ($events_list as $id => $event) {
 }
 
 Page::addVar('events_list', $events_list);
-Page::addVar('total_in', $total_in / 100.0);
-Page::addVar('total_out', $total_out / 100.0);
-Page::addVar('total', ($total_in - $total_out) / 100);
+Page::addVar('total_in', number_format($total_in / 100.0, 2, ',', ' '));
+Page::addVar('total_out', number_format($total_out / 100.0, ',', ' '));
+Page::addVar('total', number_format(($total_in - $total_out) / 100, ',', ' '));
 
 /* Построение ссылок для выборок по времени
  */
