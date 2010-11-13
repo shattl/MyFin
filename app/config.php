@@ -30,6 +30,9 @@ function get_config( $name ) {
      */
     $config['items_on_page'] = 100; // количество записей на странице (то самое N)
 
+    // Ваш часовой пояс
+    // Формат: http://www.php.net/manual/en/timezones.php
+    $config['timezone'] = 'Europe/Moscow';
 
     /* Ниже ничего не трогайте :)
      */
