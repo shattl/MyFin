@@ -36,6 +36,12 @@ class Db {
         if (!self::_checkTables())
             return false;
 
+        // Установка timezone для бд
+        $z = intval( date('Z') );
+        $z = sprintf('%s%02d:%02d', $z < 0 ? '-' : '+', abs( $z ) / 3600, abs( $z ) % 60);
+        if (!self::justQuery("SET time_zone = @s", $z))
+            return false;
+
         return self::$_link;
     }
 

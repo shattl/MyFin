@@ -3,7 +3,10 @@
 <form action="" method="POST">
     <label>Описание
         <br>
-        <input name="description" type="text" style="width: 50em;" value="<?php echo $form_data['description'] ?>">
+        <input
+            onfocus="if(this.value==this.defaultValue)this.value='';"
+            onblur="if(this.value=='') this.value=this.defaultValue;"
+            name="description" type="text" style="width: 50em;" value="<?php echo $form_data['description'] ?>">
     </label>
     <div class="note">любой текст, не более 300 символов</div>
     <label>Теги
