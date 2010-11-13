@@ -3,7 +3,7 @@ require_once 'app/init.php';
 
 if (isset ($_GET['new'])) {
     $event['description'] = 'нет описания ...';
-    $event['value'] = 100;
+    $event['value'] = 0;
     $event['type'] = 0;
     $event['date'] = time();
     $event['tags'] = '';
@@ -33,7 +33,7 @@ if (isset ($_GET['id'])) {
 
 if (count ($_POST)) {
     $event['description'] = $_POST['description'];
-    $event['value'] = floatval( str_replace(',', '.', $_POST['value']) );
+    $event['value'] = floatval( str_replace(array(',', ' '), array('.', ''), $_POST['value']) );
     $event['type'] = (bool) $_POST['type'];
     $event['date'] = strtotime( $_POST['date'] );
     $event['tags'] = $_POST['tags'];
@@ -50,7 +50,9 @@ if (count ($_POST))
 else {
     $form_data = $event;
     $form_data['date'] = date('Y:m:d H:i:s', $form_data['date']);
-    $form_data['value'] = sprintf('%.2f', $form_data['value']);
+    $form_data['value'] = ($form_data['value'] - intval($form_data['value']) != 0) ?
+        number_format($form_data['value'], 2, ',', ' ') :
+        number_format($form_data['value'], 0, ',', ' ');
 }
 
 Page::set_title( ($event['id'] == 0 ? 'Добавление' : 'Правка') . ' / Мои финансы' );
