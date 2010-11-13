@@ -4,8 +4,8 @@
     <label>Описание
         <br>
         <input
-            onfocus="if(this.value==this.defaultValue)this.value='';"
-            onblur="if(this.value=='') this.value=this.defaultValue;"
+            onfocus="if(this.value=='нет описания ...')this.value='';"
+            onblur="if(this.value=='') this.value='нет описания ...';"
             name="description" type="text" style="width: 50em;" value="<?php echo $form_data['description'] ?>">
     </label>
     <div class="note">любой текст, не более 300 символов</div>
@@ -16,7 +16,8 @@
     <div class="note">теги через запятую, пример: зарплата, основная работа, на карточку</div>
     <label>Сумма
         <br>
-        <input name="value" type="text" value="<?php echo $form_data['value'] ?>" style="width: 7em;">
+        <input name="value" type="text" value="<?php echo $form_data['value'] ?>" 
+               style="width: 7em; text-align: right;">
         <input name="type" type="radio" value="1" <?php echo $form_data['type'] ? 'checked' : '' ?>>
         <span class="money_in">прибыль</span>
         <input name="type" type="radio" value="0" <?php echo !$form_data['type'] ? 'checked' : '' ?>>
