@@ -98,13 +98,15 @@ class Db {
         if (false === self::connect())
             return null;
 
-        $sql = self::_buildReq(func_get_args());
+        $tmp = func_get_args();
 
         // Заменяем все вхождения имен таблиц по умолчанию на значения из конфига
         // Немного опасная реализация, но если осторожно то можно,
         // и в старом коде ничего менять не надо
-        $sql = str_replace(array_keys(get_config( 'db_table' )),
-                get_config( 'db_table' ), $sql);
+        $tmp[0] = str_replace(array_keys(get_config( 'db_table' )),
+                get_config( 'db_table' ), $tmp[0]);
+
+        $sql = self::_buildReq($tmp);
         
         self::$_lastQuery = $sql;
         //Messages::addDebug($sql);
@@ -182,7 +184,7 @@ class Db {
         if (!is_array($tables))
             return false;
 
-        $tabl_sql['events'] = 'CREATE TABLE @n (
+        $tabl_sql['events'] = 'CREATE TABLE events (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `type` tinyint(1) NOT NULL,
   `value` bigint(20) NOT NULL,
@@ -191,13 +193,13 @@ class Db {
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8';
 
-        $tabl_sql['ev2tag'] = 'CREATE TABLE @n (
+        $tabl_sql['ev2tag'] = 'CREATE TABLE ev2tag (
   `ev_id` bigint(20) unsigned NOT NULL,
   `tag_id` int(10) unsigned NOT NULL,
   PRIMARY KEY (`ev_id`,`tag_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8';
 
-        $tabl_sql['tags'] = 'CREATE TABLE @n (
+        $tabl_sql['tags'] = 'CREATE TABLE tags (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(30) NOT NULL,
   PRIMARY KEY (`id`),
@@ -207,7 +209,7 @@ class Db {
         foreach ($tabl_sql as $key => $value) {
             $name = tn($key);
             if (!in_array($name, $tables)
-                    && !self::justQuery($value, $name)) {
+                    && !self::justQuery($value)) {
                 Messages::addError('Не удалось создать таблицу ' . $name);
                 return false;
             }
