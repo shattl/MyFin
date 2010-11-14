@@ -231,6 +231,24 @@ label {
     color: #505050;
 }
 
+#tag_list {
+    padding: 5px;
+    background: #eee;
+    margin-top: 10px;
+}
+
+#tag_list span {
+    margin: 0 5px 5px 5px;
+    cursor: pointer;
+    border-bottom: dashed 1px #000;
+    display: inline-block;
+    font-size: .8em;
+}
+
+#tag_list span:hover {
+     border-bottom-style: solid;
+}
+
 /*
 Общее
 */
