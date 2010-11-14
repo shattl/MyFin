@@ -11,9 +11,9 @@
     <div class="note">любой текст, не более 300 символов</div>
     <label>Теги
         <br>
-        <input name="tags" id="tags_input" type="text" style="width: 60%;" value="<?php echo $form_data['tags'] ?>">
+        <input name="tags" id="tags_input" type="text" style="width: 560px;" value="<?php echo $form_data['tags'] ?>">
     </label>
-    <div class="note">теги через запятую, пример: зарплата, основная работа, на карточку</div>
+    <div class="note">через запятую, пример: <i>зарплата, основная работа, на карточку</i></div>
     <div id="tag_list"></div>
     <label>Сумма
         <br>
@@ -24,13 +24,13 @@
         <input name="type" type="radio" value="0" <?php echo !$form_data['type'] ? 'checked' : '' ?>>
         <span class="money_out">расход</span>
     </label>
-    <div class="note">число без знака "-", примеры: 100.42 или 100,42 или просто 510</div>
+    <div class="note">примеры: <i>100.42, 100,42, 5100, 5 100, 9 999.99</i></div>
     <label>Дата
         <br>
         <input name="date" type="text" value="<?php echo $form_data['date'] ?>" style="width: 200px;">
     </label>
     <div class="note"><a href="http://www.php.net/manual/en/datetime.formats.php">формат</a>,
-        образец: 2010:08:24 18:56:31</div>
+        примеры: <i>2010:08:24 18:56:31, 1/17/2006, 10/27</i></div>
     <label>
         <input type="submit" value="Сохранить">
     </label>
