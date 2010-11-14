@@ -8,7 +8,7 @@ if (get_config('auth_login') != '') {
             $_SERVER['PHP_AUTH_PW'] != get_config('auth_password')) {
         header('WWW-Authenticate: Basic realm="MyFin"');
         header('HTTP/1.0 401 Unauthorized');
-        echo "403 Foribdden";
+        echo "403 Forbidden";
         exit;
     }
 }
