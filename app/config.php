@@ -34,6 +34,11 @@ function get_config( $name ) {
     // Формат: http://www.php.net/manual/en/timezones.php
     $config['timezone'] = 'Europe/Moscow';
 
+    /* Авторизация. Если не нужна - оставить поле с логином пустым
+     */
+    $config['auth_login'] = ''; // логин
+    $config['auth_password'] = ''; // пароль
+
     /* Ниже ничего не трогайте :)
      */
 
