@@ -6,14 +6,15 @@
         <input
             onfocus="if(this.value=='нет описания ...')this.value='';"
             onblur="if(this.value=='') this.value='нет описания ...';"
-            name="description" type="text" style="width: 50em;" value="<?php echo $form_data['description'] ?>">
+            name="description" type="text" style="width: 100%;" value="<?php echo $form_data['description'] ?>">
     </label>
     <div class="note">любой текст, не более 300 символов</div>
     <label>Теги
         <br>
-        <input name="tags" type="text" style="width: 25em;" value="<?php echo $form_data['tags'] ?>">
+        <input name="tags" id="tags_input" type="text" style="width: 60%;" value="<?php echo $form_data['tags'] ?>">
     </label>
     <div class="note">теги через запятую, пример: зарплата, основная работа, на карточку</div>
+    <div id="tag_list"></div>
     <label>Сумма
         <br>
         <input name="value" type="text" value="<?php echo $form_data['value'] ?>" 
@@ -26,7 +27,7 @@
     <div class="note">число без знака "-", примеры: 100.42 или 100,42 или просто 510</div>
     <label>Дата
         <br>
-        <input name="date" type="text" value="<?php echo $form_data['date'] ?>" style="width: 10em;">
+        <input name="date" type="text" value="<?php echo $form_data['date'] ?>" style="width: 200px;">
     </label>
     <div class="note"><a href="http://www.php.net/manual/en/datetime.formats.php">формат</a>,
         образец: 2010:08:24 18:56:31</div>
@@ -35,3 +36,24 @@
     </label>
     <input type="hidden" name="id" value="<?php echo $form_data['id'] ?>">
 </form>
+<script type="text/javascript">
+new function() {
+    var tag_list = [<?php echo $tag_list; ?>];
+
+    var tag_list_div = document.getElementById('tag_list');
+    var tags_input = document.getElementById('tags_input');
+
+    var add_tag = function() {
+        tags_input.value += ((tags_input.value == '') ? '' : ', ') + this.innerHTML;
+    }
+
+    for (i = 0; i < tag_list.length; i++) {
+        var newSpan = document.createElement('span');
+        newSpan.innerHTML = tag_list[i];
+        newSpan.onclick = add_tag;
+
+        tag_list_div.appendChild(newSpan);
+        tag_list_div.appendChild(document.createTextNode(" "));
+    }
+}();
+</script>

@@ -57,6 +57,11 @@ else {
 
 Page::set_title( ($event['id'] == 0 ? 'Добавление' : 'Правка') . ' / Мои финансы' );
 Page::addVar( 'form_data', $form_data );
+
+$tag_list = Db::selectGetVerticalArray('SELECT t.name FROM tags AS t, ev2tag AS e2t'
+        . ' WHERE t.id = e2t.tag_id GROUP BY e2t.tag_id');
+Page::addVar( 'tag_list', "'" . implode("', '", $tag_list) . "'" );
+
 Page::draw( 'edit' );
 
 function addEvent(&$event) {
