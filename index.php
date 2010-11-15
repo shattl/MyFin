@@ -68,8 +68,8 @@ foreach ($events_list as $id => $event) {
 
     $events_list[$id]['value'] = $value;
 
-    $tmp = Db::selectGetArray('SELECT tags.* FROM `tags`, `ev2tag` WHERE'
-                    . ' tags.id = ev2tag.tag_id AND ev2tag.ev_id = @i', $event['id']);
+    $tmp = Db::selectGetArray('SELECT t.* FROM `tags` AS t, `ev2tag` AS e2t WHERE'
+                    . ' t.id = e2t.tag_id AND e2t.ev_id = @i ORDER BY t.name', $event['id']);
 
     foreach ($tmp as $key => $v) {
         $tags = array();

@@ -24,9 +24,9 @@ if (isset ($_GET['id'])) {
         $event['value'] = $event['value'] / 100.0;
         $event['date'] = strtotime( $event['date'] );
 
-        $tags = Db::selectGetVerticalArray('SELECT tags.name FROM `tags`, `ev2tag` WHERE'
-            . ' tags.id = ev2tag.tag_id AND ev2tag.ev_id = @i', $event['id']);
-
+        $tags = Db::selectGetVerticalArray('SELECT t.name FROM `tags` AS t, `ev2tag` AS e2t WHERE'
+            . ' t.id = e2t.tag_id AND e2t.ev_id = @i ORDER BY t.name', $event['id']);
+        
         $event['tags'] = implode(', ', $tags);
     }
 }
@@ -60,6 +60,7 @@ Page::addVar( 'form_data', $form_data );
 
 $tag_list = Db::selectGetVerticalArray('SELECT t.name FROM tags AS t, ev2tag AS e2t'
         . ' WHERE t.id = e2t.tag_id GROUP BY e2t.tag_id');
+sort($tag_list);
 Page::addVar( 'tag_list', "'" . implode("', '", $tag_list) . "'" );
 
 Page::draw( 'edit' );
