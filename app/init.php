@@ -15,6 +15,10 @@ setlocale(LC_ALL, 'ru_RU.UTF-8');
 session_start();
 
 define('APPLICATION_PATH', realpath(dirname(__FILE__)));
+define('PUBLIC_PATH', realpath(APPLICATION_PATH . '/..'));
+
+$tmp = file_get_contents(PUBLIC_PATH . '/version');
+define('VERSION', $tmp ? $tmp : 0);
 
 require_once 'config.php';
 
