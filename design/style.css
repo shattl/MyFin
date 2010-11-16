@@ -226,8 +226,11 @@ label {
     display: block;
 }
 
-input[type="text"] {
+input{
     padding: 3px;
+}
+
+input[type="text"] {
     -moz-border-radius: 3px;
     -webkit-border-radius: 3px;
     border-radius: 3px;
@@ -257,6 +260,23 @@ input[type="text"] {
 
 #tag_list span:hover {
      border-bottom-style: solid;
+}
+
+.toggle_cal {
+    display: inline-block;
+    background-color: #eee;
+    margin: 0;
+    padding: 2px;
+    width: 15px;
+    text-align: center;
+    cursor: pointer;
+}
+
+.calendar {
+    position: absolute;
+    margin-top: -25px;
+    margin-left: 15px;
+    z-index: 42;
 }
 
 /*
@@ -350,4 +370,25 @@ input[type="text"] {
     .money_out {
         color: black !important;
     }
+}
+
+/*                              *\
+ *           Kalender           *
+\*                              */
+
+.Kalender {
+    padding: 3px;
+    background-color: #eee;
+    font-size: 12px;
+    font-family: sans-serif;
+}
+
+.Kalender td {
+    width: 20px;
+    height: 20px;
+    text-align: center;
+}
+
+.Kalender th {
+    text-align: center;
 }

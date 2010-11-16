@@ -4,7 +4,7 @@
     <label>Описание
         <br>
         <input
-            onfocus="if(this.value=='нет описания ...')this.value='';"
+            onfocus="if(this.value=='нет описания ...') this.value='';"
             onblur="if(this.value=='') this.value='нет описания ...';"
             name="description" type="text" style="width: 100%;" value="<?php echo $form_data['description'] ?>">
     </label>
@@ -25,19 +25,20 @@
         <span class="money_out">расход</span>
     </label>
     <div class="note">примеры: <i>100.42, 100,42, 5100, 5 100, 9 999.99</i></div>
-    <label>Дата
-        <br>
-        <input name="date" type="text" value="<?php echo $form_data['date'] ?>" style="width: 200px;">
-    </label>
-    <div class="note"><a href="http://www.php.net/manual/en/datetime.formats.php">формат</a>,
-        примеры: <i>2010:08:24 18:56:31, 1/17/2006, 10/27</i></div>
-    <label>
-        <input type="submit" value="Сохранить">
-    </label>
+    <label for="date_input">Дата</label>
+    <input id="date_input" name="date" type="text" value="<?php echo $form_data['date'] ?>" style="width: 200px;">
+    <div id="toggle_cal" class="toggle_cal">+
+        <div id="calendar" class="calendar"></div>
+    </div>
+
+    <br><br><input type="submit" value="Сохранить">
     <input type="hidden" name="id" value="<?php echo $form_data['id'] ?>">
 </form>
 <script type="text/javascript">
 new function() {
+
+    /* Список тегов для удобного добавления
+     */
     var tag_list = [<?php echo $tag_list; ?>];
 
     var tag_list_div = document.getElementById('tag_list');
@@ -55,5 +56,9 @@ new function() {
         tag_list_div.appendChild(newSpan);
         tag_list_div.appendChild(document.createTextNode(" "));
     }
+
+    /* Подключение календарика
+     */
+    new Kalender('date_input', 'calendar', 'toggle_cal');
 }();
 </script>
