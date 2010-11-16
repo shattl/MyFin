@@ -49,7 +49,7 @@ if (count ($_POST))
     $form_data = $_POST;
 else {
     $form_data = $event;
-    $form_data['date'] = date('Y:m:d H:i:s', $form_data['date']);
+    $form_data['date'] = date('Y-m-d H:i:s', $form_data['date']);
     $form_data['value'] = ($form_data['value'] - intval($form_data['value']) != 0) ?
         number_format($form_data['value'], 2, ',', ' ') :
         number_format($form_data['value'], 0, ',', ' ');

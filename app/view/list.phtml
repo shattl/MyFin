@@ -21,24 +21,7 @@
 */
 ?>
 <div id="side_bar">
-
-
-    <h3>Теги:</h3>
-    <ul>
-<?php foreach ($cloud_tags as $tag): ?>
-        <li><a href="<?php echo $tag['link'] ?>">
-        <?php echo $tag['name'] ?></a> (<?php echo $tag['count'] ?>)</li>
-<?php endforeach; ?>
-    </ul>
-
-
-    <h3>Тип:</h3>
-    <ul>
-        <li><a href="<?php echo $money_in_type_link ?>" class="money_in">прибыль</a></li>
-        <li><a href="<?php echo $money_out_type_link ?>" class="money_out">расход</a></li>
-    </ul>
-
-
+    
     <h3>Период:</h3>
     <ul>
         <li><a href="<?php echo $date_links['today'] ?>">сегодня</a></li>
@@ -52,16 +35,27 @@
         по<br>
         <input name="date_end" type="text" value="<?php echo $date_end ?>"
         style="width: 100%;"><br>
-        <div class="note">
-            <a href="http://www.php.net/manual/en/datetime.formats.php">формат</a>, примеры:
-            <br>2010:08:24 18:56:31
-            <br>1/17/2006
-        </div><br>
         <input type="submit" value=" задать ">
 <?php foreach ($hidden_inputs as $k => $v) : ?>
         <input name="<?php echo $k ?>" type="hidden" value="<?php echo $v ?>">
 <?php endforeach; ?>
     </form>
+
+
+    <h3>Тип:</h3>
+    <ul>
+        <li><a href="<?php echo $money_in_type_link ?>" class="money_in">прибыль</a></li>
+        <li><a href="<?php echo $money_out_type_link ?>" class="money_out">расход</a></li>
+    </ul>
+
+
+    <h3>Теги:</h3>
+    <ul>
+<?php foreach ($cloud_tags as $tag): ?>
+        <li><a href="<?php echo $tag['link'] ?>">
+        <?php echo $tag['name'] ?></a> (<?php echo $tag['count'] ?>)</li>
+<?php endforeach; ?>
+    </ul>
 
 
 </div><!-- / #side_bar -->

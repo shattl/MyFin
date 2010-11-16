@@ -98,12 +98,12 @@ Page::addVar('total', number_format(($total_in - $total_out) / 100, 2, ',', ' ')
 /* Построение ссылок для выборок по времени
  */
 
-$date_links['today']['date_start'] = date('Y:m:d H:i:s', mktime(0, 0, 0));
-$date_links['today']['date_end'] = date('Y:m:d H:i:s', mktime(23, 59, 59));
-$date_links['mouth']['date_start'] = date('Y:m:d H:i:s', mktime(0, 0, 0, date("n"), 1));
-$date_links['mouth']['date_end'] = date('Y:m:d H:i:s', mktime(0, 0, 0, date("n") + 1, 1));
-$date_links['year']['date_start'] = date('Y:m:d H:i:s', mktime(0, 0, 0, 1, 1));
-$date_links['year']['date_end'] = date('Y:m:d H:i:s', mktime(0, 0, 0, 1, 1, date("Y") + 1));
+$date_links['today']['date_start'] = date('Y-m-d H:i:s', mktime(0, 0, 0));
+$date_links['today']['date_end'] = date('Y-m-d H:i:s', mktime(23, 59, 59));
+$date_links['mouth']['date_start'] = date('Y-m-d H:i:s', mktime(0, 0, 0, date("n"), 1));
+$date_links['mouth']['date_end'] = date('Y-m-d H:i:s', mktime(0, 0, 0, date("n") + 1, 1));
+$date_links['year']['date_start'] = date('Y-m-d H:i:s', mktime(0, 0, 0, 1, 1));
+$date_links['year']['date_end'] = date('Y-m-d H:i:s', mktime(0, 0, 0, 1, 1, date("Y") + 1));
 
 foreach ($date_links as $key => $value) {
     $date_links[$key] = Util::linkReplaceParam(
@@ -113,8 +113,8 @@ foreach ($date_links as $key => $value) {
 }
 
 Page::addVar('date_links', $date_links);
-Page::addVar('date_start', isset($_GET['date_start']) ? $_GET['date_start'] : date('Y:m:d H:i:s', 1));
-Page::addVar('date_end', isset($_GET['date_end']) ? $_GET['date_end'] : date('Y:m:d H:i:s', 2147483647));
+Page::addVar('date_start', isset($_GET['date_start']) ? $_GET['date_start'] : date('Y-m-d H:i:s', 1));
+Page::addVar('date_end', isset($_GET['date_end']) ? $_GET['date_end'] : date('Y-m-d H:i:s', 2147483647));
 
 $hidden_inputs = $_GET;
 unset($hidden_inputs['date_start']);
