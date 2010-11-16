@@ -51,9 +51,10 @@ function Kalender(input, parent, toggle_button) {
         var d_count = (new Date(me.cur_mouth.getFullYear(), me.cur_mouth.getMonth() + 1, 0)).getDate();
 
         var day = me.cur_mouth.getDay() - 1;
+        if (day == -1)
+            day = 6;
 
         tr = me.create('tr', table);
-        tr.className = 'regular';
         for (var i = 0; i < day; i++)
             me.create('td', tr).className = 'empty';
 
@@ -64,6 +65,12 @@ function Kalender(input, parent, toggle_button) {
             }
             day++;
             var td = me.create('td', tr);
+            td.className = 'regular';
+
+            if (me.cur_mouth.getFullYear() == me.cur_date.getFullYear() &&
+                me.cur_mouth.getMonth() == me.cur_date.getMonth() &&
+                i+1 == me.cur_date.getDate())
+                td.className += ' current';
 
             td.onclick = function() {
                 me.hide();
@@ -113,16 +120,16 @@ function Kalender(input, parent, toggle_button) {
     /* Отображение
      */
     this.show = function() {
-        me.my_div.style.display = 'block';
         me.readAndRepaint();
         me.input.onkeyup = me.checkDatePlus;
+        me.my_div.style.display = 'block';
         me.hidden = false;
     };
     /* Скрытие
      */
     this.hide = function() {
-        me.my_div.style.display = 'none';
         me.input.onkeyup = me.checkDate;
+        me.my_div.style.display = 'none';
         me.hidden = true;
     };
     /* Переключение
@@ -144,7 +151,7 @@ function Kalender(input, parent, toggle_button) {
         if(me.isCorrectInput())
             me.setCurDate( new Date( me.input.value ) );
         else {
-            alert('Не верный формат!\nДата установлена на сегодня');
+            //alert('Не верный формат!\nДата установлена на сегодня');
             me.setCurDate( new Date() );
         }
     };

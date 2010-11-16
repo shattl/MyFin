@@ -262,23 +262,6 @@ input[type="text"] {
      border-bottom-style: solid;
 }
 
-.toggle_cal {
-    display: inline-block;
-    background-color: #eee;
-    margin: 0;
-    padding: 2px;
-    width: 15px;
-    text-align: center;
-    cursor: pointer;
-}
-
-.calendar {
-    position: absolute;
-    margin-top: -25px;
-    margin-left: 15px;
-    z-index: 42;
-}
-
 /*
 Общее
 */
@@ -376,11 +359,60 @@ input[type="text"] {
  *           Kalender           *
 \*                              */
 
+.cal_wrap {
+    display: inline-block;
+    position: relative;
+    width: 24px;
+    height: 24px;
+    vertical-align: middle;
+}
+
+.toggle_cal {
+    background: #eee url('table.png') no-repeat 4px 4px;
+    margin: 0;
+    padding: 4px;
+    width: 16px;
+    height: 16px;
+    text-align: center;
+    cursor: pointer;
+}
+
+.calendar {
+    position: absolute;
+    top: 0;
+    left: 100%;
+    z-index: 42;
+}
+
+#calendar1 {
+    top: auto;
+    bottom: 0;
+}
+
 .Kalender {
     padding: 3px;
     background-color: #eee;
     font-size: 12px;
+    width: 140px;
     font-family: sans-serif;
+    border: 1px solid #777;
+}
+
+.Kalender .ch_month {
+    cursor: pointer;
+    padding: 0 2px;
+}
+
+.Kalender .ch_month.back {
+    -moz-border-radius: 3px 0 0 3px;
+    -webkit-border-radius: 3px 0 0 3px;
+    border-radius: 3px 0 0 3px;
+}
+
+.Kalender .ch_month.forward {
+    -moz-border-radius: 0 3px 3px 0;
+    -webkit-border-radius: 0 3px 3px 0;
+    border-radius: 0 3px 3px 0;
 }
 
 .Kalender td {
@@ -389,6 +421,28 @@ input[type="text"] {
     text-align: center;
 }
 
+.Kalender td.regular {
+    cursor: pointer;
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+    border-radius: 3px;
+}
+
+.Kalender td.regular:hover, .Kalender .ch_month:hover {
+    background-color: #5E70A1;
+    color: #fff;
+}
+
+.Kalender td.current {
+    background-color: #777;
+    color: #fff;
+}
+
 .Kalender th {
     text-align: center;
+    height: 20px;
+}
+
+.Kalender .day_names {
+    font-weight: bold;
 }
