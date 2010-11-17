@@ -125,8 +125,17 @@ body {
     margin-top: 0;
 }
 
-#side_bar input {
+#side_bar .cal_wrap {
     margin: 0 0 5px 0;
+}
+
+.s_po {
+    width: 18px;
+    display: inline-block;
+}
+
+.date_input {
+    width: 140px;
 }
 
 #content {
@@ -360,27 +369,25 @@ input[type="text"] {
 \*                              */
 
 .cal_wrap {
-    display: inline-block;
     position: relative;
-    width: 24px;
-    height: 24px;
-    vertical-align: middle;
+    display: inline-block;
 }
 
 .toggle_cal {
-    background: #eee url('table.png') no-repeat 4px 4px;
-    margin: 0;
-    padding: 4px;
+    background: url('table.png') no-repeat;
     width: 16px;
     height: 16px;
-    text-align: center;
     cursor: pointer;
+    position: absolute;
+    top: 4px;
+    right: 4px;
 }
 
 .calendar {
     position: absolute;
     top: 0;
     left: 100%;
+    margin-left: 3px;
     z-index: 42;
 }
 

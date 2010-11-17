@@ -24,23 +24,23 @@
     
     <h3>Период:</h3>
     <ul>
-        <li><a href="<?php echo $date_links['today'] ?>">сегодня</a></li>
-        <li><a href="<?php echo $date_links['mouth'] ?>">этот месяц</a></li>
-        <li><a href="<?php echo $date_links['year'] ?>">этот год</a></li>
+        <?php foreach ($date_links as $date_link) : ?>
+        <li><a href="<?php echo $date_link['link'] ?>"><?php echo $date_link['name'] ?></a></li>
+        <?php endforeach; ?>
     </ul>
     <form action="" method="GET">
-        с<br>
-        <input id="date_input1" name="date_start" type="text" value="<?php echo $date_start ?>"
-        style="width: 140px;">
+        <span class="s_po">с</span>
         <div class="cal_wrap">
-            <div id="toggle_cal1" class="toggle_cal"></div>
+            <input id="date_input1" class="date_input" name="date_start" type="text"
+                   value="<?php echo $date_start ?>">
+             <div id="toggle_cal1" class="toggle_cal"></div>
             <div id="calendar1" class="calendar"></div>
         </div>
         <br>
-        по<br>
-        <input id="date_input2" name="date_end" type="text" value="<?php echo $date_end ?>"
-        style="width: 140px;">
+        <span class="s_po">по</span>
         <div class="cal_wrap">
+            <input id="date_input2" class="date_input" name="date_end" type="text"
+                   value="<?php echo $date_end ?>">
             <div id="toggle_cal2" class="toggle_cal"></div>
             <div id="calendar2" class="calendar"></div>
         </div>

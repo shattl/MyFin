@@ -175,7 +175,10 @@ function Kalender(input, parent, toggle_button) {
         return (new Date( me.input.value )).getTime();
     };
 
+    this.str2date = function(str) {
+        var gerexp = /([0-9]{4})-([0-9]{2})-([0-9]{2}) ([0-9]{2}):([0-9]{2})/ig;
 
+    }
     
 
     /* * * * * * * * * * *\
