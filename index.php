@@ -98,14 +98,6 @@ Page::addVar('total', number_format(($total_in - $total_out) / 100, 2, ',', ' ')
 /* Построение ссылок для выборок по времени
  */
 
-$date_links['today']['name'] = 'сегодня';
-$date_links['today']['date_start'] = date('Y-m-d H:i', mktime(0, 0, 0));
-$date_links['today']['date_end'] = date('Y-m-d H:i', mktime(23, 59, 59));
-
-/*$date_links['week']['name'] = 'эта неделя';
-$date_links['week']['date_start'] = date('Y-m-d H:i', mktime(0, 0, 0, date("n"), 1));
-$date_links['week']['date_end'] = date('Y-m-d H:i', mktime(0, 0, 0, date("n") + 1, 1));*/
-
 $date_links['mouth']['name'] = 'этот месяц';
 $date_links['mouth']['date_start'] = date('Y-m-d H:i', mktime(0, 0, 0, date("n"), 1));
 $date_links['mouth']['date_end'] = date('Y-m-d H:i', mktime(0, 0, 0, date("n") + 1, 1));
@@ -116,12 +108,23 @@ $date_links['year']['date_end'] = date('Y-m-d H:i', mktime(0, 0, 0, 1, 1, date("
 
 foreach ($date_links as $key => $value) {
     $date_links[$key]['link'] = Util::linkReplaceParam(
-                    array('date_start' => $value['date_start'],
-                        'date_end' => $value['date_end']),
+                    array('date_start' => $value['date_start'], 'date_end' => $value['date_end']),
+                    array('no_limit'));
+}
+
+$today = mktime(23, 59, 59);
+$tmp = array(1, 7, 42, 61, 365, 730);
+
+foreach ($tmp as $value) {
+    $date_links_d[$value]['name'] = $value;
+    $date_links_d[$value]['link'] = Util::linkReplaceParam(
+                    array('date_start' => date('Y-m-d H:i', $today - 60*60*24*$value),
+                          'date_end' => date('Y-m-d H:i', $today)),
                     array('no_limit'));
 }
 
 Page::addVar('date_links', $date_links);
+Page::addVar('date_links_d', $date_links_d);
 Page::addVar('date_start', isset($_GET['date_start']) ? $_GET['date_start'] : date('Y-m-d H:i',
         Db::selectGetValue('SELECT UNIX_TIMESTAMP(date) FROM events ORDER BY date LIMIT 1')));
 Page::addVar('date_end', isset($_GET['date_end']) ? $_GET['date_end'] : date('Y-m-d H:i', time()));
