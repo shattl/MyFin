@@ -98,6 +98,10 @@ Page::addVar('total', number_format(($total_in - $total_out) / 100, 2, ',', ' ')
 /* Построение ссылок для выборок по времени
  */
 
+$date_links['week']['name'] = 'эта неделя';
+$date_links['week']['date_start'] = date('Y-m-d H:i', strtotime('mon', time()-60*60*24*7));
+$date_links['week']['date_end'] = date('Y-m-d H:i', strtotime('mon') - 60);
+
 $date_links['mouth']['name'] = 'этот месяц';
 $date_links['mouth']['date_start'] = date('Y-m-d H:i', mktime(0, 0, 0, date("n"), 1));
 $date_links['mouth']['date_end'] = date('Y-m-d H:i', mktime(0, 0, 0, date("n") + 1, 1));

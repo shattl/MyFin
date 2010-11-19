@@ -28,11 +28,13 @@
         <li><a href="<?php echo $date_link['link'] ?>"><?php echo $date_link['name'] ?></a></li>
         <?php endforeach; ?>
     </ul>
-    за последние<br>
+    
+    <sub>за последние</sub><br>
         <?php foreach ($date_links_d as $date_link) : ?>
         <a href="<?php echo $date_link['link'] ?>"><?php echo $date_link['name'] ?></a>
         <?php endforeach; ?>
-        <br>дней
+        <br><sup>дней</sup>
+
     <form action="" method="GET">
         <span class="s_po">с</span>
         <div class="cal_wrap">
