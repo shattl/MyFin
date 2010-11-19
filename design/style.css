@@ -190,7 +190,6 @@ body {
     font-size: .8em;
     padding: .2em .4em;
     -moz-border-radius: 2px;
-    -webkit-border-radius: 2px;
     border-radius: 2px;
 }
 .events_list .button{
@@ -221,7 +220,6 @@ input{
 
 input[type="text"] {
     -moz-border-radius: 3px;
-    -webkit-border-radius: 3px;
     border-radius: 3px;
     border: solid #aaa 1px;
 }
@@ -269,19 +267,20 @@ input[type="text"] {
     background-image: url('delete.png');
 }
 
-.big_button {
+.add_button {
     padding: 5px 10px;
-    font-size: 1.2em;
+    font-size: 1em;
     -moz-border-radius: 4px;
-    -webkit-border-radius: 4px;
     border-radius: 4px;
-    border: 1px solid #555;
+    border: 1px solid #aaa;
     text-decoration: none;
-    color: #000;
+    color: #333;
+    text-shadow: white 1px 1px 0px;
+    background: #ddd;
 }
 
-.green {
-    background-color: #65ea7a;
+.add_button:hover {
+    border-color: #555;
 }
 
 /******************* message **************/
@@ -289,7 +288,7 @@ input[type="text"] {
     background-color: #8f8;
     padding: 10px;
     -moz-border-radius: 5px;
-    -webkit-border-radius: 5px;
+    
     border-radius: 5px;
     margin: 10px 20px 0 20px;
     text-align: center;
@@ -301,7 +300,6 @@ input[type="text"] {
 
 .message:first-child {
     -moz-border-radius: 0 0 5px 5px;
-    -webkit-border-radius: 0 0 5px 5px;
     border-radius: 0 0 5px 5px;
     margin: 0 20px 0 20px;
 }
@@ -356,7 +354,6 @@ input[type="text"] {
     font-family: sans-serif;
     border: 1px solid #777;
     -moz-border-radius: 3px;
-    -webkit-border-radius: 3px;
     border-radius: 3px;
 }
 
@@ -371,13 +368,11 @@ input[type="text"] {
 
 .Kalender .ch_month.back {
     -moz-border-radius: 3px 0 0 3px;
-    -webkit-border-radius: 3px 0 0 3px;
     border-radius: 3px 0 0 3px;
 }
 
 .Kalender .ch_month.forward {
     -moz-border-radius: 0 3px 3px 0;
-    -webkit-border-radius: 0 3px 3px 0;
     border-radius: 0 3px 3px 0;
 }
 
@@ -390,7 +385,6 @@ input[type="text"] {
 .Kalender td.regular {
     cursor: pointer;
     -moz-border-radius: 3px;
-    -webkit-border-radius: 3px;
     border-radius: 3px;
 }
 
