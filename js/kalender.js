@@ -2,7 +2,7 @@
  * с шахматами и поэтессами
  */
 
-function Kalender(input, parent, toggle_button) {
+function Kalender(input, parent, toggle_button, headerInBottom) {
     var me = this; // магия
 
     /* Перерисовывает
@@ -17,26 +17,26 @@ function Kalender(input, parent, toggle_button) {
         var table = me.create('table', me.my_div);
 
         // Первая строчка (месяц, год и кнопки)
-        var th = me.create('th', me.create('tr', table));
-        th.colSpan = 7;
+        var firthRow = me.create('tr');
+        firthRow.className = 'th';
+        
+        var th = me.create('th', firthRow);
+        th.innerHTML = '←';
+        th.onclick = me.mouthBack;
+        th.className = 'ch_month back';
 
-        var span = me.create('span', th);
-        span.innerHTML = '←';
-        span.onclick = me.mouthBack;
-        span.className = 'ch_month back';
+        th = me.create('th', firthRow);
+        th.colSpan = 5;
+        th.innerHTML = mouths[me.cur_mouth.getMonth()] + ' ' + me.cur_mouth.getFullYear();
+        th.className = 'month_name';
 
-        me.createTN(' ', th);
+        th = me.create('th', firthRow);
+        th.innerHTML = '→';
+        th.onclick = me.mouthForward;
+        th.className = 'ch_month forward';
 
-        span = me.create('span', th);
-        span.innerHTML = mouths[me.cur_mouth.getMonth()] + ' ' + me.cur_mouth.getFullYear();
-        span.className = 'month_name';
-
-        me.createTN(' ', th);
-
-        span = me.create('span', th);
-        span.innerHTML = '→';
-        span.onclick = me.mouthForward;
-        span.className = 'ch_month forward';
+        if( !headerInBottom )
+            table.appendChild(firthRow);
 
         // Вторая строчка (дни недели)
         var tr = me.create('tr', table);
@@ -86,13 +86,15 @@ function Kalender(input, parent, toggle_button) {
 
         for (;day < 7; day++)
             me.create('td', tr).className = 'empty';
+
+        if( headerInBottom )
+            table.appendChild(firthRow);
     };
 
     
     /* Сдвигает календарь на месяц назад
      */
     this.mouthBack = function( evt ) {
-        ( evt ) ? evt.stopPropagation() : window.event.cancelBubble = true;
         me.cur_mouth.setMonth(me.cur_mouth.getMonth() - 1);
         me.repaint();
     };
@@ -100,7 +102,6 @@ function Kalender(input, parent, toggle_button) {
     /* Сдвигает календарь на месяц вперед
      */
     this.mouthForward = function( evt ) {
-        ( evt ) ? evt.stopPropagation() : window.event.cancelBubble = true;
         me.cur_mouth.setMonth(me.cur_mouth.getMonth() + 1);
         me.repaint();
     };
@@ -120,8 +121,7 @@ function Kalender(input, parent, toggle_button) {
 
     /* Отображение
      */
-    this.show = function( evt ) {
-        ( evt ) ? evt.stopPropagation() : window.event.cancelBubble = true;
+    this.show = function() {
         me.readAndRepaint();
         me.input.onkeyup = me.checkDatePlus;
         me.my_div.style.display = 'block';
@@ -133,7 +133,7 @@ function Kalender(input, parent, toggle_button) {
     };
     /* Скрытие
      */
-    this.hide = function( ) {
+    this.hide = function() {
         document.removeEventListener ?
         document.removeEventListener( 'click', me.hide, false ) :
         document.detachEvent( 'onclick', me.hide );
@@ -145,7 +145,8 @@ function Kalender(input, parent, toggle_button) {
     /* Переключение
      */
     this.toggle = function( evt ) {
-        me.hidden ? me.show( evt ) : me.hide();
+        me.stopPropagation(evt);
+        me.hidden ? me.show() : me.hide();
     };
 
 
@@ -170,11 +171,11 @@ function Kalender(input, parent, toggle_button) {
     this.writeDateToInput = function() {
         var cd = me.cur_date;
         me.input.value = me.numberFormat(cd.getFullYear(), 4) + '-' +
-            me.numberFormat(cd.getMonth()+1, 2) + '-' +
-            me.numberFormat(cd.getDate(), 2) + ' ' +
-            me.numberFormat(cd.getHours(), 2) + ':' +
-            me.numberFormat(cd.getMinutes(), 2);
-            me.numberFormat(me.checkDate(), 2);
+        me.numberFormat(cd.getMonth()+1, 2) + '-' +
+        me.numberFormat(cd.getDate(), 2) + ' ' +
+        me.numberFormat(cd.getHours(), 2) + ':' +
+        me.numberFormat(cd.getMinutes(), 2);
+        me.numberFormat(me.checkDate(), 2);
     }
     /* Проверяет корректность даты в инпуте,
      * и делает текст красным если дата не корректна
@@ -189,6 +190,8 @@ function Kalender(input, parent, toggle_button) {
         return me.str2date(me.input.value) != null;
     };
 
+    /* Создает Date из строки формата гггг-мм-дд чч:мм
+     */
     this.str2date = function( str ) {
         var re = new RegExp("([0-9]{4})-([0-9]{2})-([0-9]{2}) ([0-9]{2}):([0-9]{2})", "g");
         var myArray = re.exec(str);
@@ -234,6 +237,7 @@ function Kalender(input, parent, toggle_button) {
     };
 
     /* Добавляет к числу нули слева
+     * Написана плохо
      */
     this.numberFormat = function( number, length ) {
         var result = number;
@@ -244,8 +248,12 @@ function Kalender(input, parent, toggle_button) {
         return result;
     };
 
+    this.stopPropagation = function( evt ) {
+        ( evt ) ? evt.stopPropagation() : window.event.cancelBubble = true;
+    };
 
 
+    
 
     /* * * * * * * * * * *\
     |      Обертки        |
@@ -268,7 +276,6 @@ function Kalender(input, parent, toggle_button) {
 
 
 
-
     /* * * * * * * * * * *\
     |     Конструктор     |
     \* * * * * * * * * * */
@@ -282,12 +289,11 @@ function Kalender(input, parent, toggle_button) {
     this.my_div = this.create('div', this.parent);
     this.my_div.style.display = 'none';
     this.my_div.className = 'Kalender';
-    this.my_div.onclick = function( evt ) {
-        ( evt ) ? evt.stopPropagation() : window.event.cancelBubble = true;
-    };
+    this.my_div.onclick = this.stopPropagation;
 
     this.defaultInputColor = this.input.style.color;
     this.input.onkeyup = this.checkDate;
+    this.input.onclick = this.stopPropagation;
 
     this.toggle_button.onclick = this.toggle;
 }
