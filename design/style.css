@@ -398,16 +398,23 @@ input[type="text"] {
 
 .Kalender {
     padding: 3px;
-    background-color: #eee;
+    background-color: #fefefe;
     font-size: 12px;
     width: 154px;
     font-family: sans-serif;
     border: 1px solid #777;
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+    border-radius: 3px;
 }
 
 .Kalender .ch_month {
     cursor: pointer;
     padding: 0 2px;
+}
+
+.Kalender .th {
+    background: #ccc;
 }
 
 .Kalender .ch_month.back {
