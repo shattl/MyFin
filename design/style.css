@@ -105,10 +105,10 @@ body {
     margin: 5px 0;
 }
 
-#side_bar li a {
+#side_bar a {
     text-decoration: none;
 }
-#side_bar li a:hover {
+#side_bar a:hover {
     background-color: #eee;
 }
 
@@ -205,26 +205,6 @@ body {
     margin: 10px 0;
     border: dashed 1px #555;
 }
-
-/*
-Облако тегов
-*/
-
-.tag_cloud a {
-    text-decoration: none;
-    color: #444;
-}
-
-.tag_cloud a:hover {
-    background-color: #eee;
-}
-
-.size_5 { font-size: 2em; }
-.size_4 { font-size: 1.5em; }
-.size_3 { font-size: 1.1em; }
-.size_2 { font-size: .85em; }
-.size_1 { font-size: .7em; }
-
 
 /*
 Правка
@@ -334,35 +314,7 @@ input[type="text"] {
     background-color: #ffcc5e;
 }
 
-@media print {
-    body {
-        background: white;
-    }
-    #side_bar, #footer, #site_logo, .message, .big_button {
-        display: none;
-    }
-    #wrap {
-        width: 100%;
-        margin: 0;
-    }
-    #content {
-        padding: 0;
-    }
-    .select a {
-        display: none;
-    }
-    .tags_list a {
-        background: transparent;
-        color: black;
-        border: solid 1px #000;
-    }
-    .money_in {
-        color: black !important;
-    }
-    .money_out {
-        color: black !important;
-    }
-}
+
 
 /*                              *\
  *           Kalender           *
@@ -459,4 +411,37 @@ input[type="text"] {
 
 .Kalender .day_names {
     font-weight: bold;
+}
+
+
+/* Для печати
+*/
+@media print {
+    body {
+        background: white;
+    }
+    #side_bar, #footer, #site_logo, .message, .big_button {
+        display: none;
+    }
+    #wrap {
+        width: 100%;
+        margin: 0;
+    }
+    #content {
+        padding: 0;
+    }
+    .select a {
+        display: none;
+    }
+    .tags_list a {
+        background: transparent;
+        color: black;
+        border: solid 1px #000;
+    }
+    .money_in {
+        color: black !important;
+    }
+    .money_out {
+        color: black !important;
+    }
 }
