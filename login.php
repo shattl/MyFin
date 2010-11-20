@@ -1,0 +1,33 @@
+<?php
+require_once 'app/init.php';
+require_once 'app/openid.php';
+
+try {
+    if (!isset($_GET['openid_mode'])) {
+        if (isset($_GET['oi'])) {
+            $openid = new LightOpenID;
+            $openid->identity = $_GET['oi'];
+            $openid->required = array('namePerson/friendly', 'contact/email');
+            Util::redirect($openid->authUrl());
+        }
+    } elseif ($_GET['openid_mode'] == 'cancel') {
+        Messages::addWarning('Вы отменили вход!');
+    } else {
+        $openid = new LightOpenID;
+        if ($openid->validate()) {
+            $_SESSION['user_identity'] = $openid->identity;
+            $_SESSION['user_attributes'] =  $openid->getAttributes();
+
+            var_dump($openid->getAttributes());
+            //Util::redirect(Util::getBaseUrl());
+        } else {
+            Messages::addWarning('Не удолось войти!');
+        }
+    }
+} catch (ErrorException $e) {
+    Messages::addError( $e->getMessage() );
+}
+
+
+Page::set_title('Вход / Мои финансы');
+Page::draw('login');

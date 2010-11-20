@@ -1,8 +1,7 @@
 <?php
 // Убираем слеши понаставленые magic quotes
 if (get_magic_quotes_gpc()) {
-    function stripslashes_gpc(&$value)
-    {
+    function stripslashes_gpc(&$value) {
         $value = stripslashes($value);
     }
     array_walk_recursive($_GET, 'stripslashes_gpc');

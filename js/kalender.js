@@ -296,4 +296,6 @@ function Kalender(input, parent, toggle_button, headerInBottom) {
     this.input.onclick = this.stopPropagation;
 
     this.toggle_button.onclick = this.toggle;
+
+    this.readDateFromInput();
 }
