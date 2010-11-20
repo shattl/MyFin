@@ -14,6 +14,8 @@ Page::set_title('Мои финансы');
 
 $where = array();
 
+$where[] = Db::buildReq('events.user_id = @i', User::getId());
+
 if (isset($_GET['date_start']))
     $where[] = Db::buildReq('events.date > FROM_UNIXTIME(@i)', strtotime($_GET['date_start']));
 
@@ -130,7 +132,9 @@ foreach ($tmp as $value) {
 
 Page::addVar('date_links', $date_links);
 Page::addVar('date_links_d', $date_links_d);
-$tmp = (int) Db::selectGetValue('SELECT UNIX_TIMESTAMP(date) FROM events ORDER BY date LIMIT 1');
+$tmp = (int) 
+    Db::selectGetValue('SELECT UNIX_TIMESTAMP(date) FROM events WHERE user_id = @i ORDER BY date LIMIT 1',
+            User::getId());
 $tmp = $tmp > 0 ? $tmp - 1 : $tmp;
 Page::addVar('date_start', isset($_GET['date_start']) ? $_GET['date_start'] : date('Y-m-d H:i', $tmp));
 Page::addVar('date_end', isset($_GET['date_end']) ? $_GET['date_end'] : date('Y-m-d H:i', time()));
@@ -199,7 +203,8 @@ Page::addVar('select', $select);
  */
 
 $tmp = Db::selectGetArray('SELECT tags.*, count(ev2tag.ev_id) as count FROM ev2tag, tags '
-                . 'WHERE ev2tag.tag_id = tags.id GROUP BY ev2tag.tag_id ORDER BY count DESC');
+                . 'WHERE ev2tag.tag_id = tags.id AND ev2tag.user_id = @i'
+                . ' GROUP BY ev2tag.tag_id ORDER BY count DESC', User::getId());
 
 if (count($tmp) > 0) {
     $max = $tmp[0]['count'];

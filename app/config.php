@@ -29,6 +29,7 @@ function get_config( $name ) {
     $config['db_table']['events'] = 'events';
     $config['db_table']['tags'] = 'tags';
     $config['db_table']['ev2tag'] = 'ev2tag';
+    $config['db_table']['users'] = 'users';
 
 
 
