@@ -24,6 +24,13 @@
 
             <a href="<?php echo Util::getBaseUrl() ?>" id="site_logo"></a>
 
+            <?php  if (get_config('use_openid')): ?>
+            <div id="userbar">
+                <?php echo User::getName() ?>,
+                <a href="logout.php">выйти</a>
+            </div>
+            <?php endif; ?>
+
             <div class="clear"></div>
 
             <div id="wrap2">

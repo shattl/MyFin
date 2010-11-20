@@ -38,6 +38,7 @@ require_once 'model/Page.php';
 require_once 'model/Util.php';
 require_once 'model/Messages.php';
 require_once 'model/Db.php';
+require_once 'model/User.php';
 
 Page::set_scripts_dir(APPLICATION_PATH . '/view');
 Page::set_layout('layout');

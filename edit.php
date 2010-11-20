@@ -1,5 +1,6 @@
 <?php
 require_once 'app/init.php';
+User::init();
 
 if (isset ($_GET['new'])) {
     $event['description'] = 'нет описания ...';
