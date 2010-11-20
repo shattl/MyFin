@@ -75,7 +75,8 @@ class Page {
     private static function _getContent() {
         ob_start();
 
-        extract(self::$_vars);
+        if (self::$_vars)
+            extract(self::$_vars);
 
         include self::$_scripts_dir . '/' . self::$_script . '.phtml';
 

@@ -117,7 +117,7 @@ foreach ($date_links as $key => $value) {
 }
 
 $today = mktime(23, 59, 59);
-$tmp = array(1, 7, 30, 42, 61, 365, 730);
+$tmp = get_config('days4select');
 
 foreach ($tmp as $value) {
     $date_links_d[$value]['name'] = $value;

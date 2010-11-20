@@ -17,7 +17,9 @@
     <div id="tag_list"></div>
     <label>Сумма
         <br>
-        <input name="value" type="text" value="<?php echo $form_data['value'] ?>" 
+        <input onfocus="if(this.value=='0') this.value='';"
+               onblur="if(this.value=='') this.value='0';"
+               name="value" type="text" value="<?php echo $form_data['value'] ?>"
                style="width: 7em; text-align: right;">
         <input name="type" type="radio" value="1" <?php echo $form_data['type'] ? 'checked' : '' ?>>
         <span class="money_in">прибыль</span>
