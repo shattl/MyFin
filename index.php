@@ -5,6 +5,7 @@
  */
 
 require_once 'app/init.php';
+User::init();
 
 Page::set_title('Мои финансы');
 

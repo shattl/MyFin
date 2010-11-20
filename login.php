@@ -17,9 +17,9 @@ try {
         if ($openid->validate()) {
             $_SESSION['user_identity'] = $openid->identity;
             $_SESSION['user_attributes'] =  $openid->getAttributes();
-            var_dump($openid->identity);
-            var_dump($openid->getAttributes());
-            //Util::redirect(Util::getBaseUrl());
+            //var_dump($openid->identity);
+            //var_dump($openid->getAttributes());
+            Util::redirect(Util::getBaseUrl());
         } else {
             Messages::addWarning('Не удолось войти!');
         }

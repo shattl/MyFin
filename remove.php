@@ -1,5 +1,6 @@
 <?php
 require_once 'app/init.php';
+User::init();
 
 if (isset ($_GET['id'])
         && Db::justQuery('DELETE FROM `events` WHERE `id`=@i LIMIT 1', $_GET['id'])
