@@ -201,11 +201,12 @@ class Db {
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8';
 
-        $tabl_sql['ev2tag'] = 'CREATE TABLE ev2tag (
+        $tabl_sql['ev2tag'] = 'CREATE TABLE `ev2tag` (
   `ev_id` bigint(20) unsigned NOT NULL,
   `tag_id` int(10) unsigned NOT NULL,
+  `user_id` int(10) unsigned NOT NULL DEFAULT \'0\',
   PRIMARY KEY (`ev_id`,`tag_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8';
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;';
 
         $tabl_sql['tags'] = 'CREATE TABLE tags (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
