@@ -15,8 +15,8 @@ class User {
             if (is_array($user) && count($user) == 1) // пользователь уже есть
                 self::$_user = $user[0];
             else { // надо создать
-                $email = $_SESSION['user_attributes']["contact/email"];
-                $name = $_SESSION['user_attributes']["namePerson/friendly"];
+                $email = @$_SESSION['user_attributes']["contact/email"];
+                $name = @$_SESSION['user_attributes']["namePerson/friendly"];
 
                 if ($email == '')
                     $email = 'Scrooge.McDuck@wrong.hostname';
