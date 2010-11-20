@@ -4,9 +4,9 @@ require_once 'app/openid.php';
 
 try {
     if (!isset($_GET['openid_mode'])) {
-        if (isset($_GET['oi'])) {
+        if (isset($_GET['openid_identifier'])) {
             $openid = new LightOpenID;
-            $openid->identity = $_GET['oi'];
+            $openid->identity = $_GET['openid_identifier'];
             $openid->required = array('namePerson/friendly', 'contact/email');
             Util::redirect($openid->authUrl());
         }
@@ -17,7 +17,7 @@ try {
         if ($openid->validate()) {
             $_SESSION['user_identity'] = $openid->identity;
             $_SESSION['user_attributes'] =  $openid->getAttributes();
-
+            var_dump($openid->identity);
             var_dump($openid->getAttributes());
             //Util::redirect(Util::getBaseUrl());
         } else {

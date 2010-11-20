@@ -1,0 +1,3 @@
+<?php
+ALTER TABLE  `events` ADD  `user_id` INT UNSIGNED NOT NULL DEFAULT  '0' AFTER  `id`
+ALTER TABLE  `events` ADD  `purse_id` INT UNSIGNED NOT NULL DEFAULT  '0'
