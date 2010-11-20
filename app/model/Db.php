@@ -192,10 +192,12 @@ class Db {
 
         $tabl_sql['events'] = 'CREATE TABLE events (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `user_id` int(10) unsigned NOT NULL DEFAULT \'0\',
   `type` tinyint(1) NOT NULL,
   `value` bigint(20) NOT NULL,
   `date` datetime NOT NULL,
   `description` varchar(300) NOT NULL,
+  `purse_id` int(10) unsigned NOT NULL DEFAULT \'0\',
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8';
 
@@ -211,6 +213,13 @@ class Db {
   PRIMARY KEY (`id`),
   UNIQUE KEY `name` (`name`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8';
+
+        $tabl_sql['users'] = 'CREATE TABLE  `users` (
+`id` INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY ,
+`ident_hash` VARCHAR( 32 ) NOT NULL ,
+`email` VARCHAR( 50 ) NOT NULL ,
+`name` VARCHAR( 50 ) NOT NULL
+) ENGINE = MYISAM DEFAULT CHARSET=utf8';
 
         foreach ($tabl_sql as $key => $value) {
             $name = tn($key);
