@@ -129,8 +129,9 @@ foreach ($tmp as $value) {
 
 Page::addVar('date_links', $date_links);
 Page::addVar('date_links_d', $date_links_d);
-Page::addVar('date_start', isset($_GET['date_start']) ? $_GET['date_start'] : date('Y-m-d H:i',
-        Db::selectGetValue('SELECT UNIX_TIMESTAMP(date) FROM events ORDER BY date LIMIT 1')));
+$tmp = (int) Db::selectGetValue('SELECT UNIX_TIMESTAMP(date) FROM events ORDER BY date LIMIT 1');
+$tmp = $tmp > 0 ? $tmp - 1 : $tmp;
+Page::addVar('date_start', isset($_GET['date_start']) ? $_GET['date_start'] : date('Y-m-d H:i', $tmp));
 Page::addVar('date_end', isset($_GET['date_end']) ? $_GET['date_end'] : date('Y-m-d H:i', time()));
 
 $hidden_inputs = $_GET;
