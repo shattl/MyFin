@@ -21,7 +21,7 @@ try {
             //var_dump($openid->getAttributes());
             Util::redirect(Util::getBaseUrl());
         } else {
-            Messages::addWarning('Не удолось войти!');
+            Messages::addWarning('Не удалось войти!');
         }
     }
 } catch (ErrorException $e) {

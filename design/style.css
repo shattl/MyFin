@@ -99,6 +99,13 @@ body {
     padding: 5px;
 }
 
+hr {
+    height: 0px;
+    background: transparent;
+    border: none;
+    border-top: 1px #555 dashed;
+}
+
 /*
 Список событий
 */
@@ -217,9 +224,13 @@ body {
 Правка
 */
 
-label {
+/*label {
     margin: 1em 0 0 0;
     display: block;
+}*/
+
+.input_block {
+    margin: 1em 0 0 0;
 }
 
 input{
@@ -255,6 +266,19 @@ input[type="text"] {
 
 #tag_list span:hover {
      border-bottom-style: solid;
+}
+
+#description_input {
+    width: 100%;
+}
+
+#tags_input {
+    width: 560px;
+}
+
+#value_input {
+    width: 7em;
+    text-align: right;
 }
 
 /*
