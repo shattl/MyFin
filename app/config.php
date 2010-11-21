@@ -47,7 +47,7 @@ function get_config( $name ) {
      * 1 - включенно
      * 0 - выключенно
      */
-    $config['use_openid'] = 1;
+    $config['use_openid'] = 0;
 
 
 

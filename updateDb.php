@@ -10,7 +10,7 @@ $sql[] = 'ALTER TABLE  `events` ADD  `purse_id` INT UNSIGNED NOT NULL DEFAULT  \
 
 $sql[] = 'ALTER TABLE  `ev2tag` ADD  `user_id` INT UNSIGNED NOT NULL DEFAULT  \'0\'';
 
-$sql[] = 'CREATE TABLE  `users` (
+$sql[] = 'CREATE TABLE IF NOT EXISTS `users` (
 `id` INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY ,
 `ident_hash` VARCHAR( 32 ) NOT NULL ,
 `email` VARCHAR( 50 ) NOT NULL ,
@@ -19,6 +19,7 @@ $sql[] = 'CREATE TABLE  `users` (
 ?>
 <html><head>
         <title>Обновления базы данных с версии 1.0.0 (и старше) до 1.0.27 (и старше)</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     </head>
     <body>
         <h1>Обновления базы данных с версии 1.0.0 (и старше) до 1.0.27 (и старше)</h1>
@@ -39,3 +40,6 @@ else
 ?>
     </body>
 </html>
+<?php
+unset($_SESSION['messages']);
+?>
