@@ -74,6 +74,8 @@ foreach ($events_list as $id => $event) {
     $tmp = Db::selectGetArray('SELECT t.* FROM `tags` AS t, `ev2tag` AS e2t WHERE'
                     . ' t.id = e2t.tag_id AND e2t.ev_id = @i ORDER BY t.name', $event['id']);
 
+    $enc_REQUEST_URI = urlencode($_SERVER["REQUEST_URI"]);
+
     foreach ($tmp as $key => $v) {
         $tags = array();
         if (isset($_GET['by_tag']))
@@ -84,13 +86,14 @@ foreach ($events_list as $id => $event) {
 
         $tmp[$key]['link'] = Util::linkReplaceParam(array('by_tag' => implode(',', $tags)),
                         array('no_limit'));
+        $tmp[$key]['remove_link'] = "remove_tag.php?tag_id={$v['id']}&ev_id={$event['id']}&r="
+            . $enc_REQUEST_URI;
     }
 
     $events_list[$id]['tag_list'] = $tmp;
 
-    $tmp = urlencode($_SERVER["REQUEST_URI"]);
-    $events_list[$id]['edit_link'] = "edit.php?id={$event['id']}&r={$tmp}";
-    $events_list[$id]['remove_link'] = "remove.php?id={$event['id']}&r={$tmp}";
+    $events_list[$id]['edit_link'] = "edit.php?id={$event['id']}&r={$enc_REQUEST_URI}";
+    $events_list[$id]['remove_link'] = "remove.php?id={$event['id']}&r={$enc_REQUEST_URI}";
 }
 
 Page::addVar('events_list', $events_list);
