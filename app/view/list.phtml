@@ -100,7 +100,10 @@
                 </a>
                 <span class="tags_list">
 <?php foreach ($e['tag_list'] as $tag) : ?>
-                    <a href="<?php echo $tag['link'] ?>"><?php echo $tag['name'] ?></a>
+                    <span><a href="<?php echo $tag['link'] ?>"><?php echo $tag['name'] ?></a>
+                        <a class="r_tag" title="удалить тег"
+                           href="<?php echo $tag['remove_link'] ?>">x</a></span>
+                    
 <?php endforeach; ?>
                 </span>
             </td>
