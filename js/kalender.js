@@ -175,7 +175,6 @@ function Kalender(input, parent, toggle_button, headerInBottom) {
         me.numberFormat(cd.getDate(), 2) + ' ' +
         me.numberFormat(cd.getHours(), 2) + ':' +
         me.numberFormat(cd.getMinutes(), 2);
-        me.numberFormat(me.checkDate(), 2);
     }
     /* Проверяет корректность даты в инпуте,
      * и делает текст красным если дата не корректна

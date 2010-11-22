@@ -273,7 +273,7 @@ input[type="text"] {
     color: #505050;
 }
 
-#tag_list {
+.tag_list {
     padding: 5px 10px;
     background: #eee;
     margin-top: 5px;
@@ -282,26 +282,26 @@ input[type="text"] {
     width: 550px;
 }
 
-#tag_list span {
+.tag_list span {
     cursor: pointer;
     border-bottom: dashed 1px #000;
     font-size: .8em;
     word-spacing: normal;
 }
 
-#tag_list span:hover {
+.tag_list span:hover {
      border-bottom-style: solid;
 }
 
-#description_input {
+.description_input {
     width: 100%;
 }
 
-#tags_input {
+.tags_input {
     width: 560px;
 }
 
-#value_input {
+.value_input {
     width: 7em;
     text-align: right;
 }
