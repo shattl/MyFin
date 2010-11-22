@@ -4,7 +4,7 @@
 
     <div class="input_block">
         <label>Описание<br>
-            <input name="description" id="description_input"
+            <input name="description" id="description_input" class="description_input"
                    type="text" value="<?php echo $form_data['description'] ?>">
         </label>
         <div class="note">любой текст, не более 300 символов</div>
@@ -12,15 +12,16 @@
 
     <div class="input_block">
         <label>Теги<br>
-            <input name="tags" id="tags_input" type="text" value="<?php echo $form_data['tags'] ?>">
+            <input name="tags" id="tags_input" type="text" class="tags_input"
+                   value="<?php echo $form_data['tags'] ?>">
         </label>
         <div class="note">через запятую, пример: <i>зарплата, основная работа, на карточку</i></div>
-        <div id="tag_list"></div>
+        <div id="tag_list" class="tag_list"></div>
     </div>
 
     <div class="input_block">
         <label>Сумма<br>
-            <input name="value" type="text" id="value_input"
+            <input name="value" type="text" id="value_input" class="value_input"
                    value="<?php echo $form_data['value'] ?>"></label>
         <label><input name="type" type="radio" value="1" <?php echo $form_data['type'] ? 'checked' : '' ?>>
             <span class="money_in">прибыль</span></label>
@@ -44,6 +45,9 @@
 
     <input type="hidden" name="id" value="<?php echo $form_data['id'] ?>">
 </form>
+
+
+<script type="text/javascript" src="js/kalender.js"></script>
 <script type="text/javascript">
     new function() {
 
@@ -84,15 +88,15 @@
             if(this.value=='0')
                 this.value='';
         };
-        value_input.onblur = function() {
-            if(this.value=='')
-                this.value='0';
-        }
-        // TODO автоматический выбор radio при вводе отрицательной суммы + цветом раскрашивать
+    value_input.onblur = function() {
+        if(this.value=='')
+            this.value='0';
+    }
+// TODO автоматический выбор radio при вводе отрицательной суммы + цветом раскрашивать
 
 
-        /* Подключение календарика
-         */
-        new Kalender('date_input', 'calendar', 'toggle_cal');
-    }();
+/* Подключение календарика
+ */
+new Kalender('date_input', 'calendar', 'toggle_cal');
+}();
 </script>

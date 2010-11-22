@@ -144,9 +144,17 @@
 
 </div><!-- / #content -->
 
+<script type="text/javascript" src="js/kalender.js"></script>
 <script type="text/javascript">
 new function() {
     new Kalender('date_input1', 'calendar1', 'toggle_cal1', true);
     new Kalender('date_input2', 'calendar2', 'toggle_cal2');
+}();
+</script>
+
+<script type="text/javascript" src="js/myfinEditForm.js"></script>
+<script type="text/javascript">
+new function() {
+    (new myfinEditForm({parent: 'content', tag_list: ['раз', 'два', '42']})).draw();
 }();
 </script>
