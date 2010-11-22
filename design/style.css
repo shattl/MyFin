@@ -199,42 +199,37 @@ hr {
     color: #b00208 !important;
 }
 .tags_list span {
-    background-color: #5e70a1;
     font-size: .8em;
-    padding: .2em .4em;
-    -moz-border-radius: 2px;
-    border-radius: 2px;
     margin-right: 4px;
-    /*position: relative;*/
 }
 .tags_list a {
+    padding: 2px .4em;
+    background-color: #5e70a1;
     color: #fff;
     text-decoration: none;
+    -moz-border-radius: 2px;
+    border-radius: 2px;
 }
 .tags_list .r_tag {
     display: none;
     background-color: #fff;
     color: #000;
-    padding: 0 .3em;
-    -moz-border-radius: 2px;
-    border-radius: 2px;
-    /*padding-top: 1px;
-    width: 13px;
-    position: absolute;
-    left: 100%;
-    top: 0;
-    bottom: 0;
-    -moz-border-radius: 0 2px 2px 0;
-    border-radius: 0 2px 2px 0;
-    text-align: center;*/
+    padding: 1px .4em;
+    border: #5e70a1 solid 1px;
+    border-left: none;
+}
+.tags_list span:hover a {
+    -moz-border-radius: 2px 0 0 2px;
+    border-radius: 2px 0 0 2px;
 }
 .tags_list span:hover .r_tag {
-    display: inline-block;
+    display: inline;
+    -moz-border-radius: 0 2px 2px 0;
+    border-radius: 0 2px 2px 0;
 }
-.tags_list span:hover {
-    padding-right: .2em;
-    /*-moz-border-radius: 2px 0 0 2px;
-    border-radius: 2px 0 0 2px;*/
+
+.tags_list .r_tag:hover {
+    background-color: #fda1a1;
 }
 
 .events_list .button{
