@@ -207,7 +207,7 @@ Page::addVar('select', $select);
 
 $tmp = Db::selectGetArray('SELECT tags.*, count(ev2tag.ev_id) as count FROM ev2tag, tags '
                 . 'WHERE ev2tag.tag_id = tags.id AND ev2tag.user_id = @i'
-                . ' GROUP BY ev2tag.tag_id ORDER BY count DESC', User::getId());
+                . ' GROUP BY ev2tag.tag_id ORDER BY count DESC, name', User::getId());
 
 if (count($tmp) > 0) {
     $max = $tmp[0]['count'];
