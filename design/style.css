@@ -144,11 +144,11 @@ input{ padding: .2em 3px; }
     border-spacing: 0;
     border-collapse: collapse;
 }
-    .events_list>tr { background-color: #fff; }
-    .events_list>tr:nth-child(4n),
-    .events_list>tr:nth-child(4n-1) { background-color: #eee; }
-    .events_list>tr:hover { background-color: #d1defe; }
-    .events_list>tr:nth-child(2n):hover { background-color: inherit; }
+    .events_list>tbody>tr { background-color: #fff; }
+    .events_list>tbody>tr:nth-child(4n),
+    .events_list>tbody>tr:nth-child(4n-1) { background-color: #eee; }
+    .events_list>tbody>tr:hover { background-color: #d1defe; }
+    .events_list>tbody>tr:nth-child(2n):hover { background-color: inherit; }
         .events_list td { padding: 5px; }
 
     .events_list a { text-decoration: none; }
@@ -157,15 +157,6 @@ input{ padding: .2em 3px; }
     cursor: pointer;
     text-align: center;
     background: #b6fdbb !important;
-}
-
-.form_container_tr td { padding: 0; }
-
-.form_container_tr form {
-    margin: 5px;
-    padding: 10px;
-    font-size: 90%;
-    border: 1px #ddd dashed;
 }
 
 .tags_list {
@@ -252,6 +243,15 @@ input{ padding: .2em 3px; }
 * Форма правки/добавления
  ********/
 
+.form_container_tr td { padding: 0; }
+
+.form_container_tr form {
+    margin: 5px;
+    padding: 10px;
+    font-size: 90%;
+    border: 1px #555 dashed;
+}
+
 .input_block { margin: 1em 0 0 0; }
 .input_block:first-child { margin: 0; }
 
@@ -272,7 +272,7 @@ input[type="text"] {
     margin-top: 5px;
     line-height: 1.5em;
     word-spacing: 10px;
-    width: 550px;
+    width: 708px;
 }
 
     .form_tag_list span {
@@ -283,9 +283,9 @@ input[type="text"] {
     }
     .form_tag_list span:hover { border-bottom-style: solid; }
 
-.description_input {  width: 730px; }
+.description_input {  width: 720px; }
 
-.tags_input { width: 560px; }
+.tags_input { width: 720px; }
 
 .value_input {
     width: 7em;
