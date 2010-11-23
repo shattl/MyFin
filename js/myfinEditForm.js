@@ -168,7 +168,8 @@ function myfinEditForm(params) {
         me.value_input.onblur = function() {
             if(this.value=='')
                 this.value='0';
-        };        
+        };
+        
     };
 
 
