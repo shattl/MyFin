@@ -20,6 +20,28 @@
 * $new_button_link
 */
 ?>
+<script type="text/javascript" src="js/kalender.js"></script>
+<script type="text/javascript" src="js/myfinEditForm.js"></script>
+<script type="text/javascript">
+function create_show_form ( id ){
+    var form = new myfinEditForm({
+        parent: 'td4_item_form_' + id,
+        tag_list: ['раз', 'два', '42']
+    });
+
+    form.show();
+
+    var tmp = document.getElementById('edit_button_' + id);
+    tmp.onclick = form.toggle;
+    tmp.href = '#';
+    tmp = document.getElementById('description_text_' + id);
+    tmp.onclick = form.toggle;
+    tmp.href = '#';
+
+    return false;
+}
+</script>
+
 <div id="side_bar">
     
     <h3>Период:</h3>
@@ -92,14 +114,17 @@
     <!-- основная такблица (с событиями) -->
     <table class="events_list">
         <tr><td colspan="4" id="new_item_row">Новая запись</td></tr>
-        <tr class="form_container_tr"><td colspan="4" id="td4new_item_form"></td></tr>
+        <tr class="form_container_tr"><td colspan="4" class="td4_item_form"
+                                          id="td4new_item_form"></td></tr>
 
 
 <?php foreach ($events_list as $e) : ?>
         <tr>
             <td class="description">
                 <a class="<?php echo $e['type_str'] ?>"
-                href="<?php echo $e['edit_link'] ?>" title="правка">
+                href="<?php echo $e['edit_link'] ?>" title="правка"
+                id="description_text_<?php echo $e['id'] ?>"
+                onclick="return create_show_form(<?php echo $e['id'] ?>);">
                     <?php echo $e['description'] ?>
                 </a>
                 <span class="tags_list">
@@ -113,7 +138,9 @@
             </td>
             <td class="buttons">
                 <a class="button edit"
-                href="<?php echo $e['edit_link'] ?>" title="правка"></a>
+                   id="edit_button_<?php echo $e['id'] ?>"
+                   onclick="return create_show_form(<?php echo $e['id'] ?>);"
+                   href="<?php echo $e['edit_link'] ?>" title="правка"></a>
                 <a class="button remove"
                 href="<?php echo $e['remove_link'] ?>"
                 onclick="return confirm('Удалить запись?');" title="удалить"></a>
@@ -125,7 +152,12 @@
                 <?php echo Util::readlyTime($e['date']) ?>
             </td>
         </tr>
-        <?php endforeach; ?>
+        <tr class="form_container_tr"><td colspan="4"
+                                          id="td4_item_form_<?php echo $e['id'] ?>"></td></tr>
+<?php endforeach; ?>
+
+
+
     </table>
 
 
@@ -148,17 +180,11 @@
 
 </div><!-- / #content -->
 
-<script type="text/javascript" src="js/kalender.js"></script>
 <script type="text/javascript">
 new function() {
     new Kalender('date_input1', 'calendar1', 'toggle_cal1', true);
     new Kalender('date_input2', 'calendar2', 'toggle_cal2');
-}();
-</script>
-
-<script type="text/javascript" src="js/myfinEditForm.js"></script>
-<script type="text/javascript">
-new function() {
+    
     new myfinEditForm({
         parent: 'td4new_item_form',
         tag_list: ['раз', 'два', '42'],
