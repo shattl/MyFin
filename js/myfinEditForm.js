@@ -200,7 +200,30 @@ function myfinEditForm(params) {
         me.toggle_cal = me.create('div', cal_wrap, {className: "toggle_cal"});
         me.calendar = me.create('div', cal_wrap, {className: "calendar"});
 
-        me.kalender = new Kalender(me.date_input, me.calendar, me.toggle_cal);        
+        me.kalender = new Kalender(me.date_input, me.calendar, me.toggle_cal);
+
+        if (me.date_input.value == 0)
+           me.kalender.writeDateToInput();         
+    };
+
+    this.show = function() {
+        me.hidden = false;
+        if (!me.form)
+            me.draw();
+
+        me.form.display = 'inline';
+    };
+
+    this.hide = function() {
+        me.hidden = true;
+        if (!me.form)
+            return;
+
+        me.form.display = 'none';
+    };
+
+    this.toggle = function() {
+        me.hidden ? me.show() : me.hide();
     };
 
 
@@ -265,6 +288,13 @@ function myfinEditForm(params) {
     this.action = params.action || '';
     this.method = params.method || 'post';
 
+    this.toggle_button = params.toggle_button ? this.byId(params.toggle_button) : null;
+
     // тут тоже лажа (надо не document а body)
     this.parent = params.parent ? this.byId(params.parent) : document;
+
+    this.hidden = true; 
+
+    if (this.toggle_button) 
+        this.toggle_button.onclick = me.toggle;
 }
