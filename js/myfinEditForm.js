@@ -14,14 +14,15 @@ function myfinEditForm(params) {
         });
 
         me.draw_description_input();
-        me.draw_tags_input();
-        me.draw_value_block();
-        me.draw_date_input();
 
-        me.create('input', me.create('div', me.form,
-        {
-            className: 'input_block'
-        }), {
+        var tr = me.create('tr', me.create('table', me.form, {className: 'value_date_tbl'}));
+        me.draw_value_block(me.create('td', tr, {width: '300'}));
+        me.draw_date_input(me.create('td', tr));
+
+        tr = me.create('tr', me.create('table', me.form, {className: 'value_date_tbl'}));
+        me.draw_tags_input(me.create('td', tr));
+        me.create('input', me.create('td', tr, {vAlign: 'bottom', align: 'right'}), {
+            className: 'save_button',
             type: 'submit',
             value: 'Сохранить'
         });
@@ -62,18 +63,18 @@ function myfinEditForm(params) {
                 this.value='нет описания ...';
         };
 
-        me.create('div', input_block, {
+        /*me.create('div', input_block, {
             className: 'note',
             innerHTML: 'любой текст, не более 300 символов'
-        });
+        });*/
     };
 
     // Поле теги
-    this.draw_tags_input = function(){
-        var input_block = me.create('div', me.form,
+    this.draw_tags_input = function(input_block){
+        /*var input_block = me.create('div', me.form,
         {
             className: 'input_block'
-        });
+        });*/
 
         var label = me.create('label', input_block, {
             innerHTML: 'Теги<br>'
@@ -87,13 +88,13 @@ function myfinEditForm(params) {
             className: 'tags_input'
         });
 
-        me.create('div', input_block, {
+        /*me.create('div', input_block, {
             className: 'note',
             innerHTML: 'через запятую, пример: <i>зарплата, основная работа, на карточку</i>'
-        });
+        });*/
 
         me.tag_list_div = me.create('div', input_block, {
-            className: 'tag_list'
+            className: 'form_tag_list'
         });
 
         for (i = 0; i < me.tag_list.length; i++) {
@@ -108,11 +109,11 @@ function myfinEditForm(params) {
         }
     };
 
-    this.draw_value_block = function() {
-        var input_block = me.create('div', me.form,
+    this.draw_value_block = function(input_block) {
+        /*var input_block = me.create('div', parent,
         {
             className: 'input_block'
-        });
+        });*/
 
         var label = me.create('label', input_block, {
             innerHTML: 'Сумма<br>'
@@ -156,10 +157,10 @@ function myfinEditForm(params) {
 
         (me.type ? me.type_radio_in : me.type_radio_out).checked = true;
 
-        me.create('div', input_block, {
+        /*me.create('div', input_block, {
             className: 'note',
             innerHTML: 'примеры: <i>100.42, 100,42, 5100, 5 100, 9 999.99</i>'
-        });
+        });*/
 
         me.value_input.onfocus = function() {
             if(this.value=='0')
@@ -173,11 +174,11 @@ function myfinEditForm(params) {
         
     };
 
-    this.draw_date_input = function() {
-        var input_block = me.create('div', me.form,
+    this.draw_date_input = function(input_block) {
+        /*var input_block = me.create('div', parent,
         {
             className: 'input_block'
-        });
+        });*/
 
         var input_id = 'in' + me.randomString();
 
@@ -186,7 +187,9 @@ function myfinEditForm(params) {
             htmlFor: input_id
         });
 
-        var cal_wrap = me.create('div', input_block, {className: 'cal_wrap'});
+        var cal_wrap = me.create('div', input_block, {
+            className: 'cal_wrap'
+        });
 
         me.date_input = me.create('input', cal_wrap,
         {
@@ -197,13 +200,17 @@ function myfinEditForm(params) {
             id: input_id
         });
 
-        me.toggle_cal = me.create('div', cal_wrap, {className: "toggle_cal"});
-        me.calendar = me.create('div', cal_wrap, {className: "calendar"});
+        me.toggle_cal = me.create('div', cal_wrap, {
+            className: "toggle_cal"
+        });
+        me.calendar = me.create('div', cal_wrap, {
+            className: "calendar"
+        });
 
         me.kalender = new Kalender(me.date_input, me.calendar, me.toggle_cal);
 
         if (me.date_input.value == 0)
-           me.kalender.writeDateToInput();         
+            me.kalender.writeDateToInput();
     };
 
     this.show = function() {
@@ -211,7 +218,7 @@ function myfinEditForm(params) {
         if (!me.form)
             me.draw();
 
-        me.form.display = 'inline';
+        me.form.style.display = 'block';
     };
 
     this.hide = function() {
@@ -219,7 +226,7 @@ function myfinEditForm(params) {
         if (!me.form)
             return;
 
-        me.form.display = 'none';
+        me.form.style.display = 'none';
     };
 
     this.toggle = function() {
@@ -298,3 +305,6 @@ function myfinEditForm(params) {
     if (this.toggle_button) 
         this.toggle_button.onclick = me.toggle;
 }
+
+/* Прошу прощения у всех кому пришлось работать с этим кодом.
+ **/

@@ -1,12 +1,6 @@
-/* 
-    Document   : style.css
-    Created on : 03.11.2010, 11:35:02
-    Author     : roman
-    Description:
-        Purpose of the stylesheet follows.
-*/
-/* Reset
-- - - - - - - - - -- - - - -- - - - -- - - - -- - - - -- - - - -- - - - -- - - - -*/
+/********
+* Сброс
+ ********/
 body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,form,fieldset,input,textarea,p,blockquote,th,td {
     margin:0;
     padding:0;
@@ -37,16 +31,13 @@ h4 { font-size: 1em; margin: 1.12em 0 }
 h5 { font-size: .83em; margin: 1.5em 0 }
 h6 { font-size: .75em; margin: 1.67em 0 }
 
-/*----------*/
+.clear { clear: both; }
 
+/********
+* По имени тега
+ ********/
 
-.clear {
-    clear: both;
-}
-
-a {
-    color: #0070ff;
-}
+a { color: #0070ff; }
 
 h1,h2,h3,h4,h5,h6 {
     font-family: serif;
@@ -58,6 +49,19 @@ body {
     font-size: .9em;
     background: #dcdcdc url('bg.png');
 }
+
+hr {
+    height: 0px;
+    background: transparent;
+    border: none;
+    border-top: 1px #555 dashed;
+}
+
+input{ padding: .2em 3px; }
+
+/********
+* Layout
+ ********/
 
 #site_logo {
     display: inline-block;
@@ -99,84 +103,69 @@ body {
     padding: 5px;
 }
 
-hr {
-    height: 0px;
-    background: transparent;
-    border: none;
-    border-top: 1px #555 dashed;
-}
-
-/*
-Список событий
-*/
+/********
+* Список событий
+ ********/
 #side_bar {
     float: left;
     width: 180px;
     margin: 10px 10px 10px 0;
 }
 
-#side_bar ul {
-    list-style: none;
-    margin: 5px 0;
-}
+    #side_bar ul {
+        list-style: none;
+        margin: 5px 0;
+    }
 
-#side_bar a {
-    text-decoration: none;
-}
-#side_bar a:hover {
-    background-color: #eee;
-}
+    #side_bar a { text-decoration: none; }
+    #side_bar a:hover { background-color: #eee; }
 
-#side_bar form {
-    margin: 5px 0;
-}
+    #side_bar form { margin: 5px 0; }
+        .date_input { width: 140px; }
 
-#side_bar h3 {
-    margin: 25px 0 5px 0;
-    color: #555;
-}
+    #side_bar h3 {
+        margin: 25px 0 5px 0;
+        color: #555;
+    }
 
-#side_bar h3:first-child {
-    margin-top: 0;
-}
+    #side_bar h3:first-child { margin-top: 0; }
 
-#side_bar .cal_wrap {
-    margin: 0 0 5px 0;
-}
+    #side_bar .cal_wrap { margin: 0 0 5px 0; }
 
 .s_po {
     width: 18px;
     display: inline-block;
 }
 
-.date_input {
-    width: 140px;
-}
-
-#content {
-    padding: 10px 0 20px 200px;
-}
+#content { padding: 10px 0 20px 200px; }
 
 .events_list {
     width: 100%;
     border-spacing: 0;
     border-collapse: collapse;
 }
-.events_list tr {
-    background-color: #fff;
-}
-.events_list tr:nth-child(2n) {
-    background-color: #eee;
-}
-.events_list tr:hover{
-    background-color: #d1defe;
-}
-.events_list td {
-    padding: 5px;
+    .events_list>tr { background-color: #fff; }
+    .events_list>tr:nth-child(4n),
+    .events_list>tr:nth-child(4n-1) { background-color: #eee; }
+    .events_list>tr:hover { background-color: #d1defe; }
+    .events_list>tr:nth-child(2n):hover { background-color: inherit; }
+        .events_list td { padding: 5px; }
+
+    .events_list a { text-decoration: none; }
+
+#new_item_row {
+    cursor: pointer;
+    text-align: center;
+    background: #b6fdbb !important;
 }
 
-.events_list a {
-    text-decoration: none;
+.form_container_tr td { padding: 0; }
+
+.form_container_tr form {
+    margin: 5px;
+    padding: 10px;
+    font-size: 90%;
+    border: 1px #ddd dashed;
 }
 
 .tags_list {
@@ -245,71 +234,6 @@ hr {
     border: dashed 1px #555;
 }
 
-/*
-Правка
-*/
-
-/*label {
-    margin: 1em 0 0 0;
-    display: block;
-}*/
-
-.input_block {
-    margin: 1em 0 0 0;
-}
-
-input{
-    padding: 3px;
-}
-
-input[type="text"] {
-    -moz-border-radius: 3px;
-    border-radius: 3px;
-    border: solid #aaa 1px;
-}
-
-.note {
-    font-size: .8em;
-    color: #505050;
-}
-
-.tag_list {
-    padding: 5px 10px;
-    background: #eee;
-    margin-top: 5px;
-    line-height: 1.5em;
-    word-spacing: 10px;
-    width: 550px;
-}
-
-.tag_list span {
-    cursor: pointer;
-    border-bottom: dashed 1px #000;
-    font-size: .8em;
-    word-spacing: normal;
-}
-
-.tag_list span:hover {
-     border-bottom-style: solid;
-}
-
-.description_input {
-    width: 100%;
-}
-
-.tags_input {
-    width: 560px;
-}
-
-.value_input {
-    width: 7em;
-    text-align: right;
-}
-
-/*
-Общее
-*/
-
 .button {
     width: 16px;
     height: 16px;
@@ -324,23 +248,63 @@ input[type="text"] {
     background-image: url('delete.png');
 }
 
-.add_button {
+/********
+* Форма правки/добавления
+ ********/
+
+.input_block { margin: 1em 0 0 0; }
+.input_block:first-child { margin: 0; }
+
+input[type="text"] {
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+    border: solid #aaa 1px;
+}
+
+.note {
+    font-size: .8em;
+    color: #505050;
+}
+
+.form_tag_list {
     padding: 5px 10px;
-    font-size: 1em;
-    -moz-border-radius: 4px;
-    border-radius: 4px;
-    border: 1px solid #aaa;
-    text-decoration: none;
-    color: #333;
-    text-shadow: white 1px 1px 0px;
-    background: #ddd;
+    background: #eee;
+    margin-top: 5px;
+    line-height: 1.5em;
+    word-spacing: 10px;
+    width: 550px;
 }
 
-.add_button:hover {
-    border-color: #555;
+    .form_tag_list span {
+        cursor: pointer;
+        border-bottom: dashed 1px #000;
+        font-size: .8em;
+        word-spacing: normal;
+    }
+    .form_tag_list span:hover { border-bottom-style: solid; }
+
+.description_input {  width: 730px; }
+
+.tags_input { width: 560px; }
+
+.value_input {
+    width: 7em;
+    text-align: right;
 }
 
-/******************* message **************/
+.value_date_tbl {
+    width: 100%;
+    margin-top: 1em;
+}
+
+.save_button {
+    float: right;
+    padding: 8px 15px;
+}
+
+/********
+* Сообщения
+ ********/
 .message {
     background-color: #8f8;
     padding: 10px;
@@ -361,20 +325,13 @@ input[type="text"] {
     margin: 0 20px 0 20px;
 }
 
-.message.error {
-    background-color: #f88;
-}
+.message.error { background-color: #f88; }
 
-.message.warning {
-    background-color: #ffcc5e;
-}
+.message.warning { background-color: #ffcc5e; }
 
-
-
-/*                              *\
- *           Kalender           *
-\*                              */
-
+/********
+* Kalender
+ ********/
 .cal_wrap {
     position: relative;
     display: inline-block;
@@ -419,9 +376,7 @@ input[type="text"] {
     padding: 0 2px;
 }
 
-.Kalender .th {
-    background: #ccc;
-}
+.Kalender .th { background: #ccc; }
 
 .Kalender .ch_month.back {
     -moz-border-radius: 3px 0 0 3px;
@@ -460,13 +415,11 @@ input[type="text"] {
     height: 20px;
 }
 
-.Kalender .day_names {
-    font-weight: bold;
-}
+.Kalender .day_names { font-weight: bold; }
 
-
-/* Для печати
-*/
+/********
+* Для печати
+ ********/
 @media print {
     body {
         background: white;

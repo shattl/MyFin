@@ -91,6 +91,10 @@
 
     <!-- основная такблица (с событиями) -->
     <table class="events_list">
+        <tr><td colspan="4" id="new_item_row">Новая запись</td></tr>
+        <tr class="form_container_tr"><td colspan="4" id="td4new_item_form"></td></tr>
+
+
 <?php foreach ($events_list as $e) : ?>
         <tr>
             <td class="description">
@@ -155,6 +159,10 @@ new function() {
 <script type="text/javascript" src="js/myfinEditForm.js"></script>
 <script type="text/javascript">
 new function() {
-    (new myfinEditForm({parent: 'content', tag_list: ['раз', 'два', '42']})).show();
+    new myfinEditForm({
+        parent: 'td4new_item_form',
+        tag_list: ['раз', 'два', '42'],
+        toggle_button: 'new_item_row'
+    });
 }();
 </script>
