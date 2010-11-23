@@ -16,6 +16,7 @@ function myfinEditForm(params) {
         me.draw_description_input();
         me.draw_tags_input();
         me.draw_value_block();
+        me.draw_date_input();
 
         me.create('input', me.create('div', me.form,
         {
@@ -172,6 +173,36 @@ function myfinEditForm(params) {
         
     };
 
+    this.draw_date_input = function() {
+        var input_block = me.create('div', me.form,
+        {
+            className: 'input_block'
+        });
+
+        var input_id = 'in' + me.randomString();
+
+        me.create('label', input_block, {
+            innerHTML: 'Дата<br>',
+            htmlFor: input_id
+        });
+
+        var cal_wrap = me.create('div', input_block, {className: 'cal_wrap'});
+
+        me.date_input = me.create('input', cal_wrap,
+        {
+            name: 'date',
+            type: 'text',
+            value: me.date,
+            className: 'date_input',
+            id: input_id
+        });
+
+        me.toggle_cal = me.create('div', cal_wrap, {className: "toggle_cal"});
+        me.calendar = me.create('div', cal_wrap, {className: "calendar"});
+
+        me.kalender = new Kalender(me.date_input, me.calendar, me.toggle_cal);        
+    };
+
 
     /* * * * * * * * * * *\
     |     Служебные       |
@@ -198,6 +229,10 @@ function myfinEditForm(params) {
         }
 
         return elem;
+    };
+
+    this.randomString = function () {
+        return (new Date().getTime()).toString(16) + '_' + (Math.floor(Math.random() * 256)).toString(16);
     };
 
     /* Создает TextNode и добавляет его в parent
