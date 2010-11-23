@@ -113,9 +113,62 @@ function myfinEditForm(params) {
             className: 'input_block'
         });
 
-        
+        var label = me.create('label', input_block, {
+            innerHTML: 'Сумма<br>'
+        });
 
+        me.value_input =  me.create('input', label,
+        {
+            name: 'value',
+            type: 'text',
+            value: me.value,
+            className: 'value_input'
+        });
 
+        me.createTN(" ", input_block);
+
+        label = me.create('label', input_block);
+        me.type_radio_in = me.create('input', label, {
+            type: 'radio',
+            name: 'type',
+            value: 1
+        });
+        me.createTN(" ", label);
+        me.create('span', label, {
+            className: 'money_in',
+            innerHTML: 'прибыль'
+        });
+
+        me.createTN(" ", input_block);
+
+        label = me.create('label', input_block);
+        me.type_radio_out = me.create('input', label, {
+            type: 'radio',
+            name: 'type',
+            value: 0
+        });
+        me.createTN(" ", label);
+        me.create('span', label, {
+            className: 'money_out',
+            innerHTML: 'расход'
+        });
+
+        (me.type ? me.type_radio_in : me.type_radio_out).checked = true;
+
+        me.create('div', input_block, {
+            className: 'note',
+            innerHTML: 'примеры: <i>100.42, 100,42, 5100, 5 100, 9 999.99</i>'
+        });
+
+        me.value_input.onfocus = function() {
+            if(this.value=='0')
+                this.value='';
+        };
+
+        me.value_input.onblur = function() {
+            if(this.value=='')
+                this.value='0';
+        };        
     };
 
 
