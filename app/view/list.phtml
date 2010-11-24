@@ -23,20 +23,25 @@
 <script type="text/javascript" src="js/kalender.js"></script>
 <script type="text/javascript" src="js/myfinEditForm.js"></script>
 <script type="text/javascript">
-function create_show_form ( id ){
+function create_show_form ( id, tags, desc, value, type, action_url, date ){
     var form = new myfinEditForm({
         parent: 'td4_item_form_' + id,
-        tag_list: ['раз', 'два', '42']
+        tags: tags,
+        description: desc,
+        value: value,
+        type: type,
+        id: id,
+        action: action_url,
+        date: date,
+        tag_list: <?php echo $tag_list?>
     });
 
     form.show();
 
     var tmp = document.getElementById('edit_button_' + id);
-    tmp.onclick = form.toggle;
-    tmp.href = '#';
+    tmp.onclick = function(){form.toggle(); return false;}
     tmp = document.getElementById('description_text_' + id);
-    tmp.onclick = form.toggle;
-    tmp.href = '#';
+    tmp.onclick = function(){form.toggle(); return false;}
 
     return false;
 }
@@ -124,7 +129,7 @@ function create_show_form ( id ){
                 <a class="<?php echo $e['type_str'] ?>"
                 href="<?php echo $e['edit_link'] ?>" title="правка"
                 id="description_text_<?php echo $e['id'] ?>"
-                onclick="return create_show_form(<?php echo $e['id'] ?>);">
+                onclick="return create_show_form(<?php echo $e['form_params_str'] ?>);">
                     <?php echo $e['description'] ?>
                 </a>
                 <span class="tags_list">
@@ -139,7 +144,7 @@ function create_show_form ( id ){
             <td class="buttons">
                 <a class="button edit"
                    id="edit_button_<?php echo $e['id'] ?>"
-                   onclick="return create_show_form(<?php echo $e['id'] ?>);"
+                   onclick="return create_show_form(<?php echo $e['form_params_str'] ?>);"
                    href="<?php echo $e['edit_link'] ?>" title="правка"></a>
                 <a class="button remove"
                 href="<?php echo $e['remove_link'] ?>"
