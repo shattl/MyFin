@@ -20,7 +20,7 @@ function myfinEditForm(params) {
             className: 'value_date_tbl'
         }));
         me.draw_value_block(me.create('td', tr, {
-            width: '300'
+            width: '280'
         }));
         me.draw_date_input(me.create('td', tr));
         me.create('input', me.create('td', tr, {
