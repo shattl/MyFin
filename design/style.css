@@ -264,8 +264,7 @@ input[type="text"] {
     background: #eee;
     margin-top: 5px;
     line-height: 1.5em;*/
-    word-spacing: 10px;
-    width: 708px;
+    word-spacing: 8px;
 }
 
     .form_tag_list span {
@@ -276,9 +275,8 @@ input[type="text"] {
     }
     .form_tag_list span:hover { border-bottom-style: solid; }
 
-.description_input {  width: 720px; }
-
-.tags_input { width: 720px; }
+.description_input,
+.tags_input {  width: 720px; }
 
 .value_input {
     width: 7em;
