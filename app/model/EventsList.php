@@ -54,7 +54,7 @@ class EventsList {
                 'id' => $event['id'],
                 'tags' => $tag_list_str,
                 'description' => $event['description'],
-                'value' => $event['value'],
+                'value' => $event['value'] / 100,
                 'type' => $event['type'],
                 'action_url' => $events_list[$id]['edit_link'],
                 'date' => date('Y-m-d H:i', strtotime($event['date']))
