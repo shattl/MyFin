@@ -22,15 +22,30 @@ function myfinEditForm(params) {
         me.draw_value_block(me.create('td', tr, {
             width: '280'
         }));
+
         me.draw_date_input(me.create('td', tr));
-        me.create('input', me.create('td', tr, {
+        var td = me.create('td', tr, {
             vAlign: 'bottom',
             align: 'right'
-        }), {
+        });
+
+        if (me.cancel_handler) {
+            me.create('input', td, {
+                className: 'save_button',
+                type: 'button',
+                value: 'Отмена',
+                onclick: me.cancel_handler
+            });
+            me.createTN(" ", td);
+        }
+
+        me.create('input', td, {
             className: 'save_button',
             type: 'submit',
             value: 'Сохранить'
-        });     
+        });
+
+
 
         me.create('input', me.form, {
             type: 'hidden',
@@ -270,6 +285,8 @@ function myfinEditForm(params) {
     this.type = params.type || 0;
     this.date = params.date || 0; //тут лажа, но пока это не нужно (надо не 0 а строку )
     this.id = params.id || 0;
+
+    this.cancel_handler = params.cancel_handler || null;
 
     this.tag_list = params.tag_list || [];
 
