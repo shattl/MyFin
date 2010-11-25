@@ -147,37 +147,29 @@ input{ padding: .2em 3px; }
     .events_list>tbody>tr { background-color: #fff; }
     .events_list>tbody>tr:nth-child(4n),
     .events_list>tbody>tr:nth-child(4n-1) { background-color: #eee; }
-    .events_list>tbody>tr:hover { background-color: #d1defe; }
-    .events_list>tbody>tr:nth-child(2n):hover { background-color: inherit; }
+    /*.events_list>tbody>tr:hover { background-color: #d1defe; }
+    .events_list>tbody>tr:nth-child(2n):hover { background-color: inherit; }*/
         .events_list td { padding: 5px; }
 
     .events_list a { text-decoration: none; }
 
 #new_item_row {
     cursor: pointer;
-    text-align: center;
-    background: #b6fdbb !important;
+    text-align: left;
+    /*background: #b6fdbb !important;*/
+    font-style: italic;
 }
 
-.tags_list {
-    font-size: .9em;
-}
-.description {
-    width: 100%;
-}
+.tags_list { font-size: .9em; }
+/*.description { width: 100%; }*/
 .value, .date, .buttons {
     white-space: nowrap;
     text-align: right;
+    width: 1px;
 }
-.value {
-    padding-right: 10px !important;
-}
-.money_in {
-    color: #047301 !important;
-}
-.money_out {
-    color: #b00208 !important;
-}
+.value { padding-right: 10px !important; }
+.money_in { color: #047301 !important; }
+.money_out { color: #b00208 !important; }
 .tags_list span {
     font-size: .8em;
     margin-right: 4px;
@@ -246,10 +238,10 @@ input{ padding: .2em 3px; }
 .form_container_tr td { padding: 0; }
 
 .form_container_tr form {
-    margin: 5px;
-    padding: 10px;
+    margin: 15px;
+    padding: 0;
     font-size: 90%;
-    border: 1px #555 dashed;
+    /*border: 1px #555 dashed;*/
 }
 
 .input_block { margin: 1em 0 0 0; }
@@ -267,10 +259,10 @@ input[type="text"] {
 }
 
 .form_tag_list {
-    padding: 5px 10px;
+    /*padding: 5px 10px;
     background: #eee;
     margin-top: 5px;
-    line-height: 1.5em;
+    line-height: 1.5em;*/
     word-spacing: 10px;
     width: 708px;
 }
@@ -297,10 +289,13 @@ input[type="text"] {
     margin-top: 1em;
 }
 
-.save_button {
+label { color: #555; }
+label * { color: #000; }
+
+/*.save_button {
     float: right;
     padding: 8px 15px;
-}
+}*/
 
 /********
 * Сообщения
