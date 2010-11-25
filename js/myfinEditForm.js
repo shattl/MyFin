@@ -161,7 +161,7 @@ function myfinEditForm(params) {
             innerHTML: 'расход'
         });
 
-        (me.type ? me.type_radio_in : me.type_radio_out).checked = true;
+        (me.type > 0 ? me.type_radio_in : me.type_radio_out).checked = true;
 
         me.value_input.onfocus = function() {
             if(this.value=='0')
