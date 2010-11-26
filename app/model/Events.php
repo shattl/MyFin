@@ -4,7 +4,7 @@ class Events {
 
     public static function getById($id) {
         return Db::selectGetArray('SELECT * FROM `events` WHERE `id` = @i AND user_id = @i',
-                    $id, User::getId());
+                $id, User::getId());
     }
 
     public static function getByParams($get) {
@@ -44,9 +44,25 @@ class Events {
 
     public static function getMinDate() {
         $tmp = (int) Db::selectGetValue('SELECT UNIX_TIMESTAMP(date)'
-                . ' FROM events WHERE user_id = @i ORDER BY date LIMIT 1',
-                User::getId());
+                        . ' FROM events WHERE user_id = @i ORDER BY date LIMIT 1',
+                        User::getId());
         return $tmp > 0 ? $tmp - 1 : $tmp;
+    }
+
+    public static function insertEvent($description, $type, $value, $date) {
+        if (Db::justQuery('INSERT INTO `events` (`description`, `type`, `value`, `date`, user_id)'
+                        . ' VALUES (@s, @i, @i, FROM_UNIXTIME(@i), @i)',
+                        htmlspecialchars($description), $type,
+                        abs($value * 100), $date, User::getId()))
+            return Db::insertedId();
+        return null;
+    }
+
+    public static function updateEvent($description, $type, $value, $date, $id) {
+        return Db::justQuery('UPDATE `events` SET `description`=@s, `type`=@i, `value`=@i, '
+                        . '`date`=FROM_UNIXTIME(@i) WHERE `id`=@i AND `user_id`=@i',
+                        htmlspecialchars($description), $type, abs($value * 100),
+                $date, $id, User::getId());
     }
 
 }
