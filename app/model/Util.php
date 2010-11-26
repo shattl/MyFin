@@ -102,9 +102,11 @@ class Util {
         $cents = ($abs*100)%100;
         $ceil = (int)($abs-$cents/100);
 
-        return ($value==0 ? '' : (($value > 0) ? ($plus ? '+' : '') : '-'))
-                . number_format($ceil, 0, ',', ' ')
-                . ($cents > 0 ? ("<sup>".$cents."</sup>") : '');
+        return '<span class="MoneyValue">'
+             . ($value==0 ? '' : (($value > 0) ? ($plus ? '+' : '') : '-'))
+             . number_format($ceil, 0, ',', ' ')
+             . ($cents > 0 ? ("<sup>".$cents."</sup>") : '')
+             . '</span>';
     }
 
 }
