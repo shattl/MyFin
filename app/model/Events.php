@@ -2,6 +2,11 @@
 
 class Events {
 
+    public static function getById($id) {
+        return Db::selectGetArray('SELECT * FROM `events` WHERE `id` = @i AND user_id = @i',
+                    $id, User::getId());
+    }
+
     public static function getByParams($get) {
         $where = array();
 
