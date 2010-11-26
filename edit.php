@@ -3,7 +3,7 @@
 require_once 'app/init.php';
 User::init();
 
-if (isset($_GET['new'])) {
+if (isset($_GET['new']) || ( count($_GET) == 0 && count($_POST) == 0 ) ) {
     $event['description'] = 'нет описания ...';
     $event['value'] = 0;
     $event['type'] = 0;
@@ -13,8 +13,7 @@ if (isset($_GET['new'])) {
 }
 
 if (isset($_GET['id'])) {
-    $event = Db::selectGetArray('SELECT * FROM `events` WHERE `id` = @i AND user_id = @i',
-                    $_GET['id'], User::getId());
+    $event = Events::getById($_GET['id']);
 
     if (!$event) {
         Messages::addError('Запись не найдена');
@@ -27,8 +26,7 @@ if (isset($_GET['id'])) {
         $event['value'] = $event['value'] / 100.0;
         $event['date'] = strtotime($event['date']);
 
-        $tags = Db::selectGetVerticalArray('SELECT t.name FROM `tags` AS t, `ev2tag` AS e2t WHERE'
-                        . ' t.id = e2t.tag_id AND e2t.ev_id = @i ORDER BY t.name', $event['id']);
+        $tags = Tags::getOnlyNamesByEvent($event['id']);
 
         $event['tags'] = implode(', ', $tags);
     }
@@ -61,8 +59,8 @@ else {
 Page::set_title(($event['id'] == 0 ? 'Добавление' : 'Правка') . ' / Мои финансы');
 Page::addVar('form_data', $form_data);
 
-$tag_list = Db::selectGetVerticalArray('SELECT t.name FROM tags AS t, ev2tag AS e2t'
-                . ' WHERE t.id = e2t.tag_id AND e2t.user_id = @i GROUP BY e2t.tag_id', User::getId());
+$tag_list = Tags::getAllUsed();
+
 sort($tag_list);
 Page::addVar('tag_list', "'" . implode("', '", $tag_list) . "'");
 
@@ -77,46 +75,19 @@ function addEvent(&$event) {
     }
 
     if ($event['id'] == 0) {
-        $result = Db::justQuery('INSERT INTO `events` (`description`, `type`, `value`, `date`, user_id)'
-                        . ' VALUES (@s, @i, @i, FROM_UNIXTIME(@i), @i)',
-                        htmlspecialchars($event['description']), $event['type'],
-                        abs($event['value'] * 100), $event['date'], User::getId());
-        $event['id'] = Db::insertedId();
+        $result =
+            $event['id'] =
+            Events::insertEvent($event['description'], $event['type'], $event['value'], $event['date']);
     }
     else
-        $result = Db::justQuery('UPDATE `events` SET `description`=@s, `type`=@i, `value`=@i, '
-                        . '`date`=FROM_UNIXTIME(@i) WHERE `id`=@i',
-                        htmlspecialchars($event['description']), $event['type'], abs($event['value'] * 100), $event['date'], $event['id']);
+        $result = Events::updateEvent($event['description'], $event['type'], $event['value'],
+                $event['date'], $event['id']);
 
     if (!$result)
         return false;
 
-    if (!Db::justQuery('DELETE FROM `ev2tag` WHERE `ev_id`=@i AND ev2tag.user_id = @i',
-                    $event['id'], User::getId()))
+    if(!Tags::update4Event($event['id'], explode(',', $event['tags'])))
         return false;
-
-    $tags = explode(',', $event['tags']);
-
-    foreach ($tags as $tag) {
-        $tag = trim(mb_strtolower($tag, 'UTF-8'));
-        if ($tag == '')
-            continue;
-
-        $id = Db::selectGetValue('SELECT `id` FROM `tags` WHERE `name` = @s', htmlspecialchars($tag));
-
-        if ($id == null) {
-            if (!Db::justQuery('INSERT INTO `tags` (`name`) VALUES (@s)', htmlspecialchars($tag)))
-                return false;
-
-            $id = Db::insertedId();
-        }
-
-        $result = Db::justQuery('INSERT IGNORE INTO `ev2tag` VALUES (@i, @i, @i)',
-                $event['id'], $id, User::getId());
-
-        if (!$result)
-            return false;
-    }
 
     Messages::addMessage('Изменения сохранены');
     return true;
