@@ -49,6 +49,20 @@ class Events {
         return $tmp > 0 ? $tmp - 1 : $tmp;
     }
 
+    public static function getCurentBalance() {
+        $tmp = Db::selectGetArray('SELECT type, SUM(value) AS sum FROM `events` WHERE user_id = @i GROUP BY type',
+                User::getId());
+
+        $result = 0;
+
+        foreach ($tmp as $t)
+            $result = ($t['type'] == 0) ?
+                $result - $t['sum'] :
+                $result + $t['sum'];
+
+        return $result / 100;
+    }
+
     public static function insertEvent($description, $type, $value, $date) {
         if (Db::justQuery('INSERT INTO `events` (`description`, `type`, `value`, `date`, user_id)'
                         . ' VALUES (@s, @i, @i, FROM_UNIXTIME(@i), @i)',
@@ -64,5 +78,7 @@ class Events {
                         htmlspecialchars($description), $type, abs($value * 100),
                 $date, $id, User::getId());
     }
+
+
 
 }

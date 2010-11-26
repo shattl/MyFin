@@ -97,4 +97,14 @@ class Util {
         return Util::getBaseUrl() . '/' . ((count($arr) > 0) ? '?' . implode('&', $arr) : '');
     }
 
+    public static function formatMoneyValue ( $value, $plus=false ) {
+        $abs = abs($value);
+        $cents = ($abs*100)%100;
+        $ceil = (int)($abs-$cents/100);
+
+        return ($value==0 ? '' : (($value > 0) ? ($plus ? '+' : '') : '-'))
+                . number_format($ceil, 0, ',', ' ')
+                . ($cents > 0 ? ("<sup>".$cents."</sup>") : '');
+    }
+
 }

@@ -16,16 +16,16 @@ class EventsList {
                 $events_list[$id]['symbol'] = '+';
             } else {
                 $total_out += $event['value'];
-                $value = $value;
                 $events_list[$id]['type_str'] = 'money_out';
                 $events_list[$id]['symbol'] = '-';
             }
 
+            if ($value == 0)
+                $events_list[$id]['type_str'] = 'money_stay';
+
             $events_list[$id]['value'] = $value;
 
-            $events_list[$id]['value_str'] = $events_list[$id]['symbol'] 
-                . number_format($value, 0, ',', ' ')
-                . (($event['value']%100 > 0) ? ("<sup>".($event['value']%100)."</sup>") : '');
+            $events_list[$id]['value_str'] = Util::formatMoneyValue($event['type'] ? $value : 0 - $value, true);
             
             $tmp = Tags::getByEvent($event['id']);
 
