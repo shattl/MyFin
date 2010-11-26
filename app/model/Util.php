@@ -21,7 +21,7 @@ class Util {
         if (date('dmY', $time) === date('dmY', $now_time)) // сегодня
             return date('H:i', $time);
         if (date('WY', $time) === date('WY', $now_time)) // на этой неделе
-            return self::date_ru('к', $time);
+            return self::date_ru('з', $time);
         if (date('Y', $time) === date('Y', $now_time)) // в этом году
             return self::date_ru('d л', $time);
 
@@ -48,6 +48,9 @@ class Util {
         $q['Д'] = array(-1 => 'w', 'Воскресенье', 'Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница', 'Суббота');
         $q['к'] = array(-1 => 'w', 'вс', 'пн', 'вт', 'ср', 'чт', 'пт', 'сб');
         $q['К'] = array(-1 => 'w', 'Вс', 'Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб');
+        $q['з'] = array(-1 => 'w', 'вос', 'пон', 'вто', 'сре', 'чет', 'пят', 'суб');
+        $q['ж'] = array(-1 => 'w', 'воскрес.', 'понед.', 'вторник', 'среда', 'четверг',
+            'пятница', 'суббота');
         $q['м'] = array(-1 => 'n', '', 'января', 'февраля', 'марта', 'апреля', 'мая', 'июня', 'июля', 'августа', 'сентября', 'октября', 'ноября', 'декабря');
         $q['М'] = array(-1 => 'n', '', 'Января', 'Февраля', 'Март', 'Апреля', 'Май', 'Июня', 'Июля', 'Август', 'Сентября', 'Октября', 'Ноября', 'Декабря');
         $q['л'] = array(-1 => 'n', '', 'янв', 'фев', 'мар', 'апр', 'май', 'июн', 'июл', 'авг', 'сен', 'окт', 'ноя', 'дек');
@@ -56,8 +59,14 @@ class Util {
         if ($timestamp == 0)
             $timestamp = time();
 
-        foreach ($q as $key => $value)
-            $formatum = str_replace($key, $value[date($value[-1], $timestamp)], $formatum);
+        $from = array();
+        $to = array();
+        foreach ($q as $key => $value){
+            $from[] = $key;
+            $to[] = $value[date($value[-1], $timestamp)];
+        }
+
+        $formatum = str_replace($from, $to, $formatum);
 
         return date($formatum, $timestamp);
     }
@@ -86,6 +95,16 @@ class Util {
         foreach ($arr as $key => $value)
             $arr[$key] = "$key=" . urlencode($value);
         return Util::getBaseUrl() . '/' . ((count($arr) > 0) ? '?' . implode('&', $arr) : '');
+    }
+
+    public static function formatMoneyValue ( $value, $plus=false ) {
+        $abs = abs($value);
+        $cents = ($abs*100)%100;
+        $ceil = (int)($abs-$cents/100);
+
+        return ($value==0 ? '' : (($value > 0) ? ($plus ? '+' : '') : '-'))
+                . number_format($ceil, 0, ',', ' ')
+                . ($cents > 0 ? ("<sup>".$cents."</sup>") : '');
     }
 
 }

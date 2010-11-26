@@ -26,9 +26,9 @@ if (!isset($_GET['no_limit'])) {
 $events_list = EventsList::prepareEventsList($events_list);
 
 Page::addVar('events_list', $events_list['list']);
-Page::addVar('total_in', number_format($events_list['total_in'] / 100.0, 2, ',', ' '));
-Page::addVar('total_out', number_format($events_list['total_out'] / 100.0, 2, ',', ' '));
-Page::addVar('total', number_format(($events_list['total_in'] - $events_list['total_out']) / 100, 2, ',', ' '));
+Page::addVar('total_in', Util::formatMoneyValue($events_list['total_in'] / 100));
+Page::addVar('total_out', Util::formatMoneyValue($events_list['total_out'] / 100));
+Page::addVar('total',Util::formatMoneyValue(($events_list['total_in'] - $events_list['total_out']) / 100));
 
 /* Построение ссылок для выборок по времени
  */
