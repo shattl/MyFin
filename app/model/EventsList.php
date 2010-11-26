@@ -8,7 +8,7 @@ class EventsList {
 
         foreach ($events_list as $id => $event) {
 
-            $value = $event['value'] / 100.0;
+            $value = $event['value'] / 100;
 
             if ($event['type']) {
                 $total_in += $event['value'];
@@ -16,13 +16,17 @@ class EventsList {
                 $events_list[$id]['symbol'] = '+';
             } else {
                 $total_out += $event['value'];
-                $value = $value;
                 $events_list[$id]['type_str'] = 'money_out';
                 $events_list[$id]['symbol'] = '-';
             }
 
+            if ($value == 0)
+                $events_list[$id]['type_str'] = 'money_stay';
+
             $events_list[$id]['value'] = $value;
 
+            $events_list[$id]['value_str'] = Util::formatMoneyValue($event['type'] ? $value : 0 - $value, true);
+            
             $tmp = Tags::getByEvent($event['id']);
 
             $enc_REQUEST_URI = urlencode($_SERVER["REQUEST_URI"]);
