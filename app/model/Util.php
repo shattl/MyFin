@@ -106,7 +106,7 @@ class Util {
                     (($value > 0) ? 'money_in' : 'money_out')) . '">'
              . ($value == 0 ? '' : (($value > 0) ? ($plus ? '+' : '') : ($minus ? '-' : '')))
              . number_format($ceil, 0, ',', ' ')
-             . ($cents > 0 ? ("<sup>".$cents."</sup>") : '')
+             . ($cents > 0 ? ("<sup>" . sprintf("%02d", $cents) . "</sup>") : '')
              . '</span>';
     }
 
