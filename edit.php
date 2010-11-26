@@ -13,8 +13,7 @@ if (isset($_GET['new'])) {
 }
 
 if (isset($_GET['id'])) {
-    $event = Db::selectGetArray('SELECT * FROM `events` WHERE `id` = @i AND user_id = @i',
-                    $_GET['id'], User::getId());
+    $event = Events::getById($_GET['id']);
 
     if (!$event) {
         Messages::addError('Запись не найдена');
