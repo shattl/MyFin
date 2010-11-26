@@ -8,7 +8,7 @@ class EventsList {
 
         foreach ($events_list as $id => $event) {
 
-            $value = $event['value'] / 100.0;
+            $value = $event['value'] / 100;
 
             if ($event['type']) {
                 $total_in += $event['value'];
@@ -23,6 +23,10 @@ class EventsList {
 
             $events_list[$id]['value'] = $value;
 
+            $events_list[$id]['value_str'] = $events_list[$id]['symbol'] 
+                . number_format($value, 0, ',', ' ')
+                . (($event['value']%100 > 0) ? ("<sup>".($event['value']%100)."</sup>") : '');
+            
             $tmp = Tags::getByEvent($event['id']);
 
             $enc_REQUEST_URI = urlencode($_SERVER["REQUEST_URI"]);

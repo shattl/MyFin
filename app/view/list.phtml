@@ -148,7 +148,8 @@ onclick="return create_show_form(<?php echo $e['form_params_str'] ?>);">
 <span class="tags_list">
 <?php foreach ($e['tag_list'] as $tag) : ?>
 <span><a href="<?php echo $tag['link'] ?>"><?php echo $tag['name'] ?></a><a
-   class="r_tag" title="удалить тег" href="<?php echo $tag['remove_link'] ?>">x</a></span>
+        onclick="return confirm('Удалить тег?');"
+        class="r_tag" title="удалить тег" href="<?php echo $tag['remove_link'] ?>">x</a></span>
 
 <?php endforeach; ?>
 </span>
@@ -163,7 +164,7 @@ href="<?php echo $e['remove_link'] ?>"
 onclick="return confirm('Удалить запись?');" title="удалить"></a>
 </td>
 <td class='value <?php echo $e['type_str'] ?>'>
-<?php echo $e['symbol'] . number_format($e['value'], 2, ',', ' '); ?>
+<?php echo $e['value_str']; ?>
 </td>
 <td class="date">
 <?php echo Util::readlyTime($e['date']) ?>
