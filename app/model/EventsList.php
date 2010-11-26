@@ -66,7 +66,9 @@ class EventsList {
             $events_list[$id]['form_params_str'] = '\'' . implode("', '", $events_list[$id]['form_params']) . '\'';
         }
 
-        return array('list' => $events_list, 'total_in' => $total_in, 'total_out' => $total_out);
+        return array('list' => $events_list,
+            'total_in' => $total_in / 100,
+            'total_out' => $total_out / 100);
     }
 
     public static function makeLinks4SelectByDate() {
