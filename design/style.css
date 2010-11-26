@@ -109,6 +109,15 @@ input{ padding: .2em 3px; }
     padding: 5px;
 }
 
+#curent_balance {
+    position: absolute;
+    right: 20px;
+    /*top: 0;
+    padding-top: 110px;*/
+    margin-top: -20px;
+    font-size: 2em;
+}
+
 /********
 * Список событий
  ********/
@@ -176,6 +185,7 @@ input{ padding: .2em 3px; }
 .value { padding-right: 10px !important; }
 .money_in { color: #047301 !important; }
 .money_out { color: #b00208 !important; }
+.money_stay { color: #000 !important; }
 .tags_list span {
     font-size: .8em;
     margin-right: 4px;

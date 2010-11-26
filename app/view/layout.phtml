@@ -30,6 +30,14 @@
             </div>
             <?php endif; ?>
 
+            <?php $cb = Events::getCurentBalance(); ?>
+            <div id="curent_balance" title="По нашим подсчетам у вас сейчас столько денег">
+                <small>у вас сейчас</small>
+                <span class="<?php echo $cb==0 ? '' : ($cb>0 ? 'money_in' : 'money_out') ?>">
+                <?php echo Util::formatMoneyValue($cb) ?>
+                </span>
+            </div>
+
             <div class="clear"></div>
 
             <div id="wrap2">
