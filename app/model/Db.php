@@ -10,6 +10,8 @@ class Db {
     private static $_lastQuery;
     private static $_lastResult;
     private static $_link;
+    private static $_lastQueryTime = 0;
+    private static $_fullQueryTime = 0;
 
     public static function connect() {
         if (self::$_link !== null)
@@ -115,12 +117,20 @@ class Db {
         $sql = self::_buildReq($tmp);
         
         self::$_lastQuery = $sql;
-        //Messages::addDebug($sql);
 
+        $startTime = Util::microtime_float();
         self::$_lastResult = mysql_query($sql, self::$_link);
+        $endTime = Util::microtime_float();
+        
+        self::$_lastQueryTime = $endTime - $startTime;
+        self::$_fullQueryTime += self::$_lastQueryTime;
 
         if (self::$_lastResult === false)
             Messages::addError('Ошибка базы данных<br>' . Db::lastError());
+
+        Messages::addDebug($sql . "\n" .
+                (self::$_lastResult === false ? Db::lastError() : 'OK') .
+                "\n" . number_format(self::$_lastQueryTime, 10));
 
         return self::$_lastResult;
     }
@@ -142,6 +152,10 @@ class Db {
 
     public static function getNumRows() {
         return mysql_num_rows(self::$_lastResult);
+    }
+
+    public static function getFullQueryTime() {
+        return self::$_fullQueryTime;
     }
 
     private static function _buildReq($arg_list) {

@@ -30,12 +30,9 @@
             </div>
             <?php endif; ?>
 
-            <?php $cb = Events::getCurentBalance(); ?>
-            <div id="curent_balance" title="По нашим подсчетам у вас сейчас столько денег">
-                <small>у вас сейчас</small>
-                <span class="<?php echo $cb==0 ? '' : ($cb>0 ? 'money_in' : 'money_out') ?>">
-                <?php echo Util::formatMoneyValue($cb) ?>
-                </span>
+            <div id="curent_balance" title="по нашим подсчетам, у вас сейчас столько денег">
+                <small>сейчас у вас</small>
+                <?php echo Util::formatMoneyValue(Events::getCurentBalance()) ?>
             </div>
 
             <div class="clear"></div>
@@ -50,3 +47,16 @@
         </div>
     </body>
 </html>
+<!--
+
+Time: <?php echo number_format(Util::whatTimer(), 10)?> seconds
+Db time: <?php echo number_format(Db::getFullQueryTime(), 10)?> seconds
+Memory: <?php echo memory_get_peak_usage() ?> bytes
+
+
+<?php if(get_config('debug')): while (Messages::hasDebug()): ?>
+     <?php echo Messages::popDebug(); ?>
+--------------
+<?php endwhile; endif;?>
+
+-->

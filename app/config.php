@@ -76,6 +76,11 @@ function get_config( $name ) {
     // Формат: http://www.php.net/manual/en/timezones.php
     $config['timezone'] = 'Europe/Moscow';
 
+    /* Включить / выключить отладочный вывод (и более подробные сообщения об ошибках)
+     * true - вкл, false - выкл
+     */
+    $config['debug'] = false;
+
 
 
     /**\

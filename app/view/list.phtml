@@ -177,9 +177,9 @@ onclick="return confirm('Удалить запись?');" title="удалить"
 </table>
 
 <hr>Итого:
-<span class='money_in'><?php echo $total_in ?></span>
-- <span class='money_out'><?php echo $total_out ?></span>
-= <span class='<?php echo ($total > 0) ? 'money_in' : 'money_out' ?>'><?php echo $total ?></span>
+<?php echo $total_in ?> 
+- <?php echo $total_out ?>
+&nbsp;= <?php echo $total ?>
 
 <!-- ссылка "показать всё", если нужна -->
 <?php if (isset($no_limit_link)): ?>
