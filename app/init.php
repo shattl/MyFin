@@ -14,6 +14,14 @@ if (get_magic_quotes_gpc()) {
     array_walk_recursive($_REQUEST, 'stripslashes_gpc');
 }
 
+// Для корректной работы в ISS
+if(!isset($_SERVER['REQUEST_URI'])) {
+  $arr = explode("/", $_SERVER['PHP_SELF']);
+  $_SERVER['REQUEST_URI'] = "/" . $arr[count($arr)-1];
+  if ($_SERVER['argv'][0]!="")
+   $_SERVER['REQUEST_URI'] .= "?" . $_SERVER['argv'][0];
+}
+
 setlocale(LC_ALL, 'ru_RU.UTF-8');
 session_start();
 
