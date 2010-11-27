@@ -21,6 +21,9 @@ class Events {
         if (isset($get['mft'])) // money flow type
             $where[] = Db::buildReq('events.type = @i', (bool) $get['mft']);
 
+        if (isset($get['search']))
+            $where[] = Db::buildReq('events.description LIKE \'%@l%\'', $get['search']);
+
         if (isset($get['by_tag'])) {
             $tags = explode(',', $get['by_tag']);
 

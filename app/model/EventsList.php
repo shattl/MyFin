@@ -144,6 +144,12 @@ class EventsList {
                 'link' => Util::linkWithoutParam('date_end')
             );
         }
+        if (isset($_GET['search'])) {
+            $select[] = array(
+                'text' => 'поиск: <b>' . $_GET['search'] . '</b>',
+                'link' => Util::linkWithoutParam('search')
+            );
+        }
 
         return $select;
     }

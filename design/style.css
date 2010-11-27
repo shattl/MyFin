@@ -141,6 +141,8 @@ input{ padding: .2em 3px; }
 
     #side_bar .cal_wrap { margin: 0 0 5px 0; }
 
+    .submit_button { margin-top: 5px; }
+
 .s_po {
     width: 18px;
     display: inline-block;

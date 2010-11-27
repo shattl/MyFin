@@ -64,6 +64,12 @@ function create_show_form ( id, tags, desc, value, type, action_url, date ){
 
 <div id="side_bar">
 
+<h3>Тип:</h3>
+<ul>
+<li><a href="<?php echo $money_in_type_link ?>" class="money_in">прибыль</a></li>
+<li><a href="<?php echo $money_out_type_link ?>" class="money_out">расход</a></li>
+</ul>
+
 <h3>Период:</h3>
 <ul>
 <?php foreach ($date_links as $date_link) : ?>
@@ -98,12 +104,14 @@ function create_show_form ( id, tags, desc, value, type, action_url, date ){
 <?php endforeach; ?>
 </form>
 
-
-<h3>Тип:</h3>
-<ul>
-<li><a href="<?php echo $money_in_type_link ?>" class="money_in">прибыль</a></li>
-<li><a href="<?php echo $money_out_type_link ?>" class="money_out">расход</a></li>
-</ul>
+<h3>Поиск:</h3>
+<form action="" method="GET">
+    <input type="text" name="search" value="<?php echo $search_str ?>">
+<input type="submit" value="поиск" class="submit_button">
+<?php foreach ($hidden_inputs4search as $k => $v) : ?>
+<input name="<?php echo $k ?>" type="hidden" value="<?php echo $v ?>">
+<?php endforeach; ?>
+</form>
 
 
 <h3>Теги:</h3>
