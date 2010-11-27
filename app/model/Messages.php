@@ -72,4 +72,26 @@ class Messages {
         return isset($_SESSION['messages']['warnings']) && (count($_SESSION['messages']['warnings']) > 0);
     }
 
+    /*
+     * Debug
+     */
+
+    public static function addDebug($text) {
+        if (!isset($_SESSION['messages']['debug']))
+            $_SESSION['messages']['debug'] = array();
+
+        $_SESSION['messages']['debug'][] = $text;
+    }
+
+    public static function popDebug() {
+        if (!isset($_SESSION['messages']['debug']) || count($_SESSION['messages']['debug']) == 0)
+            return null;
+
+        return array_pop($_SESSION['messages']['debug']);
+    }
+
+    public static function hasDebug() {
+        return isset($_SESSION['messages']['debug']) && (count($_SESSION['messages']['debug']) > 0);
+    }
+
 }

@@ -37,12 +37,6 @@ h6 { font-size: .75em; margin: 1.67em 0 }
 * По имени тега
  ********/
 
-sup {
-    font-size: 70%;
-    margin-left: .3em;
-    font-style: italic;
-}
-
 a { color: #0070ff; }
 
 h1,h2,h3,h4,h5,h6 {
@@ -183,9 +177,17 @@ input{ padding: .2em 3px; }
     width: 1px;
 }
 .value { padding-right: 10px !important; }
+
 .money_in { color: #047301 !important; }
 .money_out { color: #b00208 !important; }
 .money_stay { color: #000 !important; }
+
+.MoneyValue sup {
+    font-size: 70%;
+    margin-left: .3em;
+    font-style: italic;
+}
+
 .tags_list span {
     font-size: .8em;
     margin-right: 4px;

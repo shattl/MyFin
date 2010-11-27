@@ -1,4 +1,8 @@
 <?php
+require_once 'model/Util.php';
+
+Util::startTimer();
+
 // Убираем слеши понаставленые magic quotes
 if (get_magic_quotes_gpc()) {
     function stripslashes_gpc(&$value) {
@@ -35,7 +39,6 @@ if (get_config('auth_login') != '') {
 }
 
 require_once 'model/Page.php';
-require_once 'model/Util.php';
 require_once 'model/Messages.php';
 require_once 'model/Db.php';
 require_once 'model/User.php';
