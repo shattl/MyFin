@@ -61,7 +61,7 @@ class Util {
 
         $from = array();
         $to = array();
-        foreach ($q as $key => $value){
+        foreach ($q as $key => $value) {
             $from[] = $key;
             $to[] = $value[date($value[-1], $timestamp)];
         }
@@ -97,17 +97,32 @@ class Util {
         return Util::getBaseUrl() . '/' . ((count($arr) > 0) ? '?' . implode('&', $arr) : '');
     }
 
-    public static function formatMoneyValue ( $value, $plus=false, $minus=true ) {
+    public static function formatMoneyValue($value, $plus=false, $minus=true) {
         $abs = abs($value);
-        $cents = ($abs*100)%100;
-        $ceil = (int)($abs-$cents/100);
+        $cents = ($abs * 100) % 100;
+        $ceil = (int) ($abs - $cents / 100);
 
         return '<span class="MoneyValue ' . ($value == 0 ? 'money_stay' :
-                    (($value > 0) ? 'money_in' : 'money_out')) . '">'
-             . ($value == 0 ? '' : (($value > 0) ? ($plus ? '+' : '') : ($minus ? '-' : '')))
-             . number_format($ceil, 0, ',', ' ')
-             . ($cents > 0 ? ("<sup>" . sprintf("%02d", $cents) . "</sup>") : '')
-             . '</span>';
+                (($value > 0) ? 'money_in' : 'money_out')) . '">'
+        . ($value == 0 ? '' : (($value > 0) ? ($plus ? '+' : '') : ($minus ? '-' : '')))
+        . number_format($ceil, 0, ',', ' ')
+        . ($cents > 0 ? ("<sup>" . sprintf("%02d", $cents) . "</sup>") : '')
+        . '</span>';
+    }
+
+    public static function microtime_float() {
+        list($usec, $sec) = explode(" ", microtime());
+        return ((float) $usec + (float) $sec);
+    }
+
+    private static $_timerTime;
+
+    public static function startTimer() {
+        self::$_timerTime = self::microtime_float();
+    }
+
+    public static function whatTimer() {
+        return self::microtime_float() - self::$_timerTime;
     }
 
 }
