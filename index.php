@@ -48,6 +48,15 @@ unset($hidden_inputs['no_limit']);
 
 Page::addVar('hidden_inputs', $hidden_inputs);
 
+/* Выборка по ключевому слову (поиск)
+ */
+$hidden_inputs4search = $_GET;
+unset($hidden_inputs4search['search']);
+unset($hidden_inputs4search['no_limit']);
+
+Page::addVar('hidden_inputs4search', $hidden_inputs4search);
+Page::addVar('search_str',  isset($_GET['search']) ? $_GET['search'] : '' );
+
 /* Построение ссылок для выборок по типу
  */
 Page::addVar('money_in_type_link',
