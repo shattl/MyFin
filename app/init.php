@@ -14,7 +14,7 @@ if (get_magic_quotes_gpc()) {
     array_walk_recursive($_REQUEST, 'stripslashes_gpc');
 }
 
-// Для корректной работы в ISS
+// Для корректной работы в IIS
 if(!isset($_SERVER['REQUEST_URI'])) {
   $arr = explode("/", $_SERVER['PHP_SELF']);
   $_SERVER['REQUEST_URI'] = "/" . $arr[count($arr)-1];

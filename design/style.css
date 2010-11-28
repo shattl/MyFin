@@ -132,16 +132,35 @@ input{ padding: .2em 3px; }
     #side_bar form { margin: 5px 0; }
         .date_input { width: 140px; }
 
-    #side_bar h3 {
-        margin: 25px 0 5px 0;
-        color: #555;
-    }
-
-    #side_bar h3:first-child { margin-top: 0; }
-
     #side_bar .cal_wrap { margin: 0 0 5px 0; }
 
     .submit_button { margin-top: 5px; }
+
+    .select_param_div {
+        margin: 20px 0 0 0;
+        /*border: 1px solid #aaa;*/
+        padding: 0;
+    }
+    .select_param_div:first-child { margin-top: 0; }
+    .select_param_div h3 {
+        margin: 0;
+        font-size: 1em;
+        background-color: #ccc;
+        -moz-border-radius: 4px 4px 0 0;
+        border-radius: 4px 4px 0 0;
+        padding: 7px;
+        cursor: pointer;
+    }
+    .select_param_div .to_hide {
+        padding: 7px;
+        background-color: #eee;
+        -moz-border-radius: 0 0 4px 4px;
+        border-radius: 0 0 4px 4px;
+        display: none;
+    }
+    .select_param_div.expanded .to_hide {
+        display: block;
+    }
 
 .s_po {
     width: 18px;
