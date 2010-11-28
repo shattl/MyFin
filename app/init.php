@@ -21,7 +21,7 @@ if(!isset($_SERVER['REQUEST_URI'])) {
   if ($_SERVER['argv'][0]!="")
    $_SERVER['REQUEST_URI'] .= "?" . $_SERVER['argv'][0];
 }
-if ($_SERVER['HTTPS'] == 'off')
+if (@$_SERVER['HTTPS'] == 'off')
     unset ($_SERVER['HTTPS']);
 
 setlocale(LC_ALL, 'ru_RU.UTF-8');
