@@ -73,8 +73,7 @@ class Util {
 
     public static function getBaseUrl() {
         $temp = preg_replace('@/[^/]*$@', '', $_SERVER["REQUEST_URI"]);
-        return ( (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off') ?
-                "https://" : "http://") . $_SERVER["HTTP_HOST"] . $temp;
+        return (isset($_SERVER['HTTPS']) ? "https://" : "http://") . $_SERVER["HTTP_HOST"] . $temp;
     }
 
     public static function linkReplaceParam($params, $remove=array()) {
