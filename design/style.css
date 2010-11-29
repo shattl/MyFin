@@ -277,10 +277,10 @@ input{ padding: .2em 3px; }
 .form_container_tr td { padding: 0; }
 
 .form_container_tr form {
-    margin: 15px;
-    padding: 0;
+    margin: 6px;
+    padding: 6px;
     font-size: 90%;
-    /*border: 1px #555 dashed;*/
+    border: 3px #bbb dashed;
 }
 
 .input_block { margin: 1em 0 0 0; }
