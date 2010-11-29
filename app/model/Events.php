@@ -82,6 +82,16 @@ class Events {
                 $date, $id, User::getId());
     }
 
-
-
+    public static function getLast($limit) {
+        return Db::selectGetArray('SELECT UNIX_TIMESTAMP(e.date) AS unix_date, e.*, '
+                . 'GROUP_CONCAT(t.name SEPARATOR  ", ") AS tags '
+                . 'FROM events AS e '
+                . 'INNER JOIN ev2tag e2t ON e.id = e2t.ev_id '
+                . 'INNER JOIN tags t ON t.id = e2t.tag_id '
+                . 'WHERE e.user_id = @i '
+                . 'GROUP BY e.id '
+                . 'ORDER BY e.date '
+                . 'LIMIT @i',
+                User::getId(), $limit);
+    }
 }
