@@ -134,7 +134,7 @@ return false;
 <div class="to_hide">
 <ul>
 <?php foreach ($cloud_tags as $tag): ?>
-<li><a href="<?php echo $tag['link'] ?>">
+<li style="margin-top: 3px;"><a style="padding: 0 3px; color: white; background-color: <?php echo $tag['color'] ?>;" href="<?php echo $tag['link'] ?>">
 <?php echo $tag['name'] ?></a> (<?php echo $tag['count'] ?>)</li>
 <?php endforeach; ?>
 </ul>
@@ -174,7 +174,8 @@ onclick="return create_show_form(<?php echo $e['form_params_str'] ?>);">
 </a>
 <span class="tags_list">
 <?php foreach ($e['tag_list'] as $tag) : ?>
-<span><a href="<?php echo $tag['link'] ?>"><?php echo $tag['name'] ?></a><a
+<span><a style="background-color: <?php echo $tag['color'] ?>;"
+         href="<?php echo $tag['link'] ?>"><?php echo $tag['name'] ?></a><a
 onclick="return confirm('Удалить тег?');"
 class="r_tag" title="удалить тег" href="<?php echo $tag['remove_link'] ?>">x</a></span>
 
