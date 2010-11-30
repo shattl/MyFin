@@ -215,7 +215,7 @@ input{ padding: .2em 3px; }
 }
 .tags_list a {
     padding: 2px .4em;
-    background-color: #5e70a1;
+    /*background-color: #5e70a1;*/
     color: #fff;
     text-decoration: none;
     -moz-border-radius: 2px;
