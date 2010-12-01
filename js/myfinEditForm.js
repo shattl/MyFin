@@ -108,12 +108,12 @@ function myfinEditForm(params) {
         });
 
         for (i = 0; i < me.tag_list.length; i++) {
-            me.create('span', me.tag_list_div, {
-                innerHTML: me.tag_list[i],
+            (me.create('span', me.tag_list_div, {
+                innerHTML: me.tag_list[i].name,
                 onclick: function() {
                     me.tags_input.value += ((me.tags_input.value == '') ? '' : ', ') + this.innerHTML;
                 }
-            });
+            })).style.backgroundColor = me.tag_list[i].color;
 
             me.createTN(" ", me.tag_list_div);
         }

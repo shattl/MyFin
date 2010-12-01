@@ -119,8 +119,10 @@ return false;
 <h3>Поиск</h3>
 <div class="to_hide">
 <form action="" method="GET">
-<input type="text" name="search" value="<?php echo $search_str ?>">
-<input type="submit" value="поиск" class="submit_button">
+<div class="sp_wrap">
+<input class="sp_input" type="text" name="search" value="<?php echo $search_str ?>">
+<input class="sp_submit_button" type="image" src="design/search.png" title="поиск" class="submit_button">
+</div>
 <?php foreach ($hidden_inputs4search as $k => $v) : ?>
 <input name="<?php echo $k ?>" type="hidden" value="<?php echo $v ?>">
 <?php endforeach; ?>
@@ -132,10 +134,10 @@ return false;
 <div class="select_param_div" id="sp_tag">
 <h3>Теги</h3>
 <div class="to_hide">
-<ul>
+<ul class="tags_ul">
 <?php foreach ($cloud_tags as $tag): ?>
-<li style="margin-top: 3px;"><a style="padding: 0 3px; color: white; background-color: <?php echo $tag['color'] ?>;" href="<?php echo $tag['link'] ?>">
-<?php echo $tag['name'] ?></a> (<?php echo $tag['count'] ?>)</li>
+<li><a style="background-color: <?php echo $tag['color'] ?>;" href="<?php echo $tag['link'] ?>">
+<?php echo $tag['name'] ?><span><?php echo $tag['count'] ?></span></a></li>
 <?php endforeach; ?>
 </ul>
 </div>
