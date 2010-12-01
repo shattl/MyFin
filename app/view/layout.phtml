@@ -30,7 +30,7 @@
             </div>
             <?php endif; ?>
 
-            <?php  if (get_config('use_openid') && User::getUser() !== null): ?>
+            <?php  if (!get_config('use_openid') || User::getUser() !== null): ?>
             <div id="curent_balance" title="по нашим подсчетам, у вас сейчас столько денег">
                 <small>сейчас у вас</small>
                 <?php echo Util::formatMoneyValue(Events::getCurentBalance()) ?>
