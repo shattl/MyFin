@@ -70,9 +70,21 @@ class Tags {
         $tmp = substr(md5($name), 0, 6);
         $tmp = str_split($tmp, 2);
         $tmp1 = '';
-        foreach ($tmp as $t)
-            $tmp1 .= sprintf('%02x', intval(hexdec($t) * ($max-$min) / 255) + $min);
-        return '#' . $tmp1;
+        $i_min = 0;
+        $i_max = 0;
+        foreach ($tmp as $i => $t) {
+            $i_min = $tmp[$i_min] > $t ? $i : $i_min;
+            $i_max = $tmp[$i_max] < $t ? $i : $i_max;
+        }
+        foreach ($tmp as $i => $t) {
+            if ($i == $i_min)
+                $tmp[$i] = sprintf('%02x', $min);
+            else if ($i == $i_max)
+                $tmp[$i] = sprintf('%02x', $max);
+            else
+                $tmp[$i] = sprintf('%02x', intval(hexdec($t) * ($max-$min) / 255) + $min);
+        }
+        return '#' . implode('', $tmp);
     }
 
     private static function patchColors(&$tag_list){

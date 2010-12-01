@@ -89,12 +89,12 @@ if (count($tmp) > 0) {
 
         $tmp[$key]['link'] = Util::linkReplaceParam(array('by_tag' => $value['id']),
                         array('no_limit'));
-        $tl[] = $value['name'];
+        $tl[] = "{name: '" . $value['name'] . "', color: '" . $value['color'] . "'}";
     }
 
 }
 
-$tl = count($tl) ? "['" . implode("', '", $tl) . "']" : '[]';
+$tl = count($tl) ? "[" . implode(", ", $tl) . "]" : '[]';
 
 Page::addVar('cloud_tags', $tmp);
 Page::addVar('tag_list', $tl);
