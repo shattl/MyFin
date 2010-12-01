@@ -264,16 +264,20 @@ input{ padding: .2em 3px; font-family: "Arial", arial, Arial; }
     background-color: #5e70a1;
     color: #fff;
     text-decoration: none;
-    -moz-border-radius: 2px;
-    border-radius: 2px;
+    /*-moz-border-radius: 2px;
+    border-radius: 2px;*/
+    -moz-border-radius: 2px 0 0 2px;
+    border-radius: 2px 0 0 2px;
 }
 .tags_list span a.r_tag {
-    display: none;
+    /*display: none;*/
     background-color: #fff !important;
     color: #000;
     padding: 1px .4em;
     border: #5e70a1 solid 1px;
     border-left: none;
+    -moz-border-radius: 0 2px 2px 0;
+    border-radius: 0 2px 2px 0;
 }
 .tags_list span:hover a {
     -moz-border-radius: 2px 0 0 2px;
@@ -281,8 +285,6 @@ input{ padding: .2em 3px; font-family: "Arial", arial, Arial; }
 }
 .tags_list span:hover .r_tag {
     display: inline;
-    -moz-border-radius: 0 2px 2px 0;
-    border-radius: 0 2px 2px 0;
 }
 
 .tags_list span a.r_tag:hover {
@@ -294,7 +296,8 @@ input{ padding: .2em 3px; font-family: "Arial", arial, Arial; }
 .tags_ul { font-size: .8em; }
 
 .tags_ul a {
-    padding: 2px 1px 2px .4em;
+    /*padding: 2px 1px 2px .4em;*/
+    padding: 2px .4em;
     background-color: #5e70a1;
     color: #fff;
     text-decoration: none;
@@ -302,13 +305,13 @@ input{ padding: .2em 3px; font-family: "Arial", arial, Arial; }
     border-radius: 3px;
 }
 .tags_ul span {
-    padding: 1px .4em;
-    margin-left: .4em;
+    padding: 2px .4em;
+    /*margin-left: .4em;
     background-color: #fff;
     color: #000;
     text-decoration: none;
     -moz-border-radius: 3px;
-    border-radius: 3px;
+    border-radius: 3px;*/
 }
 
 .tags_ul li {
