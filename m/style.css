@@ -15,6 +15,14 @@
     font-size: 70%;
     text-align: center;
     color: #555;
+    padding-top: 5px;
+}
+
+hr { border: none; height: 1px; margin: .5em 1em; background: #aaa; }
+table {
+    border-spacing: 0;
+    border-collapse: collapse;
+    width: 100%;
 }
 
 /********
@@ -55,11 +63,7 @@
 /********
 * Список последних событий
  ********/
-.events_tbl {
-    border-spacing: 0;
-    border-collapse: collapse;
-    width: 100%;
-}
+.events_tbl {}
 .tr1 { border-top: 6px solid #fff; }
 .tr2 {
     font-size: 80%;
@@ -93,10 +97,8 @@
     font-weight: bold;
 }
 .button_link {
-    padding: 5px;
-    background: #ddd;
-    display: block;
-    margin: 5px 0;
+    padding: .4em .8em;
+    background: #cafdcd;
     text-decoration: none;
     color: #000;
     -moz-border-radius: 4px;
