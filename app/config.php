@@ -79,7 +79,7 @@ function get_config( $name ) {
     /* Включить / выключить отладочный вывод (и более подробные сообщения об ошибках)
      * true - вкл, false - выкл
      */
-    $config['debug'] = false;
+    $config['debug'] = true;
 
 
 
