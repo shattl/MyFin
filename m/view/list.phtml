@@ -1,40 +1,10 @@
-<style>
-    .events_tbl {
-        border-spacing: 0;
-        border-collapse: collapse;
-        width: 100%;
-    }
-    .tr1 { border-top: 6px solid #fff; }
-    .tr2 {
-        font-size: 80%;
-        color: #444;
-    }
-    .events_tbl tr { background-color: #eee; }
-    .events_tbl tr.odd { background-color: #ddd; }
-    .tr1 td { padding: 3px 5px 0px 5px; }
-    .tr2 td { padding: 0px 5px 3px 5px; }
-    .events_tbl .td_remove {
-        background-color: #fea4a4;
-        padding: 0;
-    }
-    .td_remove a {
-        color: #000;
-        text-decoration: none;
-        font-family: sans-serif;
-        width: 100%;
-        display: block;
-        text-align: center;
-    }
-    .td_remove img { margin: .5em; }
-    .td_dscr,
-    .td_tags { text-align: left; }
-    .td_date,
-    .td_value { text-align: right; }
-    .td_value { white-space: nowrap; }
-    .td_dscr a { text-decoration: none; }
-</style>
-
 <center>
+<?php echo Util::formatMoneyValue(Events::getCurentBalance()) ?>
+<a class="button_link" href="edit.php">Добавить</a>
+</center>
+
+<hr>
+
 <table class="events_tbl">
 
 <?php foreach ($last_events as $e):
@@ -50,7 +20,8 @@
         </td>
         <td class="td_value" valign="top"><?php echo $e['value_str']?></td>
         <td rowspan="2" class="td_remove" valign="middle">
-            <a href="remove.php?id=<?php echo $e['id']?>">
+            <a href="remove.php?id=<?php echo $e['id']?>"
+               onclick="return confirm('Удалить запись?');">
                 <img src="../design/images/delete.png" alt="x">
             </a>
         </td>
@@ -63,4 +34,3 @@
 <?php endforeach; ?>
 
 </table>
-</center>

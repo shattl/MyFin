@@ -1,0 +1,24 @@
+<form action="" method="POST">
+    <label>Описание:<br/>
+        <input class="txt_input" type="text" name="description"
+               value="<?php echo $form_data['description'] ?>"></label>
+    <div class="between_br"></div>
+    <label>Теги:<br/>
+        <input class="txt_input" type="text" name="tags"
+               value="<?php echo $form_data['tags'] ?>"></label>
+        <div class="between_br"></div>
+    <label for="value_input0">Сумма:</label>
+        <label><input type="radio" name="type" value="1"
+               <?php echo $form_data['type'] ? 'checked' : '' ?>>прибыль</label>
+        <label><input type="radio" name="type" value="0" 
+               <?php echo!$form_data['type'] ? 'checked' : '' ?>>расход</label><br>
+        <input id="value_input0" class="txt_input" type="text" name="value"
+               value="<?php echo $form_data['value'] ?>">
+    <div class="between_br"></div>
+    <label>Дата:<br/>
+        <input class="txt_input" type="text" name="date"
+               value="<?php echo $form_data['date'] ?>"></label>
+    <div class="between_br"></div>
+    <input class="btn_input" type="submit" value="сохранить">
+    <input type="hidden" name="id" value="<?php echo $form_data['id'] ?>">
+</form>
