@@ -90,7 +90,7 @@ class Events {
                 . 'INNER JOIN tags t ON t.id = e2t.tag_id '
                 . 'WHERE e.user_id = @i '
                 . 'GROUP BY e.id '
-                . 'ORDER BY e.date '
+                . 'ORDER BY e.date DESC '
                 . 'LIMIT @i',
                 User::getId(), $limit);
     }
