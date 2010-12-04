@@ -3,7 +3,7 @@ require_once 'init.php';
 User::init();
 
 if ( count($_GET) == 0 && count($_POST) == 0 ) {
-    $event['description'] = 'нет описания ...';
+    $event['description'] = '';
     $event['value'] = 0;
     $event['type'] = 0;
     $event['date'] = time();
@@ -55,13 +55,17 @@ else {
             number_format($form_data['value'], 0, ',', ' ');
 }
 
+if ($form_data['value'] == 0)
+    $form_data['value'] = '';
+
 Page::set_title(($event['id'] == 0 ? 'Добавление' : 'Правка') . ' / Мои финансы');
 Page::addVar('form_data', $form_data);
 
 $tag_list = Tags::getAllUsed();
-
-sort($tag_list);
-Page::addVar('tag_list', "'" . implode("', '", $tag_list) . "'");
+$tl = array();
+foreach ($tag_list as $value)
+    $tl[] = "{name: '" . $value['name'] . "', color: '" . $value['color'] . "'}";
+Page::addVar('tag_list', count($tl) ? "[" . implode(", ", $tl) . "]" : '[]');
 
 Page::draw('edit');
 
