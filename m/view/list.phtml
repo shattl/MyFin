@@ -2,6 +2,7 @@
     .events_tbl {
         border-spacing: 0;
         border-collapse: collapse;
+        width: 100%;
     }
     .tr1 { border-top: 6px solid #fff; }
     .tr2 {
@@ -16,12 +17,7 @@
         background-color: #fea4a4;
         padding: 0;
     }
-    .events_tbl .td_edit {
-        background-color: #c2fdc5;
-        padding: 0;
-    }
-    .td_remove a,
-    .td_edit a {
+    .td_remove a {
         color: #000;
         text-decoration: none;
         font-family: sans-serif;
@@ -29,8 +25,7 @@
         display: block;
         text-align: center;
     }
-    .td_remove img,
-    .td_edit img { margin: .5em; }
+    .td_remove img { margin: .5em; }
     .td_dscr,
     .td_tags { text-align: left; }
     .td_date,
@@ -54,11 +49,6 @@
         </a>
         </td>
         <td class="td_value" valign="top"><?php echo $e['value_str']?></td>
-        <td rowspan="2" class="td_edit" valign="middle" valign="top">
-            <a href="edit.php?id=<?php echo $e['id']?>">
-                <img src="../design/images/list.png" alt="e">
-            </a>
-        </td>
         <td rowspan="2" class="td_remove" valign="middle">
             <a href="remove.php?id=<?php echo $e['id']?>">
                 <img src="../design/images/delete.png" alt="x">
