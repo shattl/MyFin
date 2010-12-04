@@ -3,25 +3,15 @@
         border-spacing: 0;
         border-collapse: collapse;
     }
-    .tr1 {
-        border-top: 6px solid #fff;
-    }
+    .tr1 { border-top: 6px solid #fff; }
     .tr2 {
         font-size: 80%;
         color: #444;
     }
-    .events_tbl tr {
-        background-color: #eee;
-    }
-    .events_tbl tr.odd {
-        background-color: #ddd;
-    }
-    .tr1 td {
-        padding: 3px 5px 0px 5px;
-    }
-    .tr2 td {
-        padding: 0px 5px 3px 5px;
-    }
+    .events_tbl tr { background-color: #eee; }
+    .events_tbl tr.odd { background-color: #ddd; }
+    .tr1 td { padding: 3px 5px 0px 5px; }
+    .tr2 td { padding: 0px 5px 3px 5px; }
     .events_tbl .td_remove {
         background-color: #fea4a4;
         padding: 0;
@@ -40,9 +30,13 @@
         text-align: center;
     }
     .td_remove img,
-    .td_edit img {
-        margin: .5em;
-    }
+    .td_edit img { margin: .5em; }
+    .td_dscr,
+    .td_tags { text-align: left; }
+    .td_date,
+    .td_value { text-align: right; }
+    .td_value { white-space: nowrap; }
+    .td_dscr a { text-decoration: none; }
 </style>
 
 <center>
@@ -54,9 +48,13 @@
     ?>
 
     <tr class="tr1 <?php echo $odd?>">
-        <td class="td_dscr <?php echo $type_cls?>"><?php echo $e['description']?></td>
-        <td class="td_value"><?php echo $e['value_str']?></td>
-        <td rowspan="2" class="td_edit" valign="middle">
+        <td class="td_dscr" valign="top">
+        <a href="edit.php?id=<?php echo $e['id']?>" class="<?php echo $type_cls?>">
+        <?php echo $e['description']?>
+        </a>
+        </td>
+        <td class="td_value" valign="top"><?php echo $e['value_str']?></td>
+        <td rowspan="2" class="td_edit" valign="middle" valign="top">
             <a href="edit.php?id=<?php echo $e['id']?>">
                 <img src="../design/images/list.png" alt="e">
             </a>
@@ -68,8 +66,8 @@
         </td>
     </tr>
     <tr class="tr2 <?php echo $odd?>">
-        <td class="td_tags"><?php echo $e['tags']?></td>
-        <td class="td_date"><?php echo $e['date_str']?></td>
+        <td class="td_tags" valign="top"><?php echo $e['tags']?></td>
+        <td class="td_date" valign="top"><?php echo $e['date_str']?></td>
     </tr>
 
 <?php endforeach; ?>
