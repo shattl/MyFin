@@ -1,46 +1,78 @@
 <style>
-.event {
-    margin: 5px 0;
-}
-.edit_event,  .remove_event{
-    padding: 5px;
-    display: block;
-    font-family: sans-serif;
-    color: #000;
-    text-decoration: none;
-}
-.edit_event {
-    margin-right: 25px;
-    background: #efefef;
-    -moz-border-radius: 4px 0 0 4px;
-    border-radius: 4px 0 0 4px;
-}
-.remove_event {
-    background: #fec5c5;
-    width: 15px;
-    float: right;
-    -moz-border-radius: 0 4px 4px 0;
-    border-radius: 0 4px 4px 0;
-}
-
+    .events_tbl {
+        border-spacing: 0;
+        border-collapse: collapse;
+    }
+    .tr1 {
+        border-top: 6px solid #fff;
+    }
+    .tr2 {
+        font-size: 80%;
+        color: #444;
+    }
+    .events_tbl tr {
+        background-color: #eee;
+    }
+    .events_tbl tr.odd {
+        background-color: #ddd;
+    }
+    .tr1 td {
+        padding: 3px 5px 0px 5px;
+    }
+    .tr2 td {
+        padding: 0px 5px 3px 5px;
+    }
+    .events_tbl .td_remove {
+        background-color: #fea4a4;
+        padding: 0;
+    }
+    .events_tbl .td_edit {
+        background-color: #c2fdc5;
+        padding: 0;
+    }
+    .td_remove a,
+    .td_edit a {
+        color: #000;
+        text-decoration: none;
+        font-family: sans-serif;
+        width: 100%;
+        display: block;
+        text-align: center;
+    }
+    .td_remove img,
+    .td_edit img {
+        margin: .5em;
+    }
 </style>
 
-<?php foreach ($last_events as $e): ?>
+<center>
+<table class="events_tbl">
 
-<div class="event">
-    <a class="remove_event" href="remove.php?id=<?php echo $e['id']?>">X</a>
-    <a class="edit_event" href="edit.php?id=<?php echo $e['id']?>">
-        <?php echo $e['description']?>
-        <span class="tags">
-            (<?php echo $e['tags']?>)
-        </span>
-        <span class="value">
-            <?php echo $e['value_str']?>
-        </span>
-        <span class="date">
-            <?php echo $e['date_str']?>
-        </span>
-    </a>
-</div>
+<?php foreach ($last_events as $e):
+    $odd = (@$odd == 'odd') ? '' : 'odd';
+    $type_cls = ($e['type'] == 0) ? 'money_out' : 'money_in';
+    ?>
+
+    <tr class="tr1 <?php echo $odd?>">
+        <td class="td_dscr <?php echo $type_cls?>"><?php echo $e['description']?></td>
+        <td class="td_value"><?php echo $e['value_str']?></td>
+        <td rowspan="2" class="td_edit" valign="middle">
+            <a href="edit.php?id=<?php echo $e['id']?>">
+                <img src="../design/images/list.png" alt="e">
+            </a>
+        </td>
+        <td rowspan="2" class="td_remove" valign="middle">
+            <a href="remove.php?id=<?php echo $e['id']?>">
+                <img src="../design/images/delete.png" alt="x">
+            </a>
+        </td>
+    </tr>
+    <tr class="tr2 <?php echo $odd?>">
+        <td class="td_tags"><?php echo $e['tags']?></td>
+        <td class="td_date"><?php echo $e['date_str']?></td>
+    </tr>
 
 <?php endforeach; ?>
+
+</table>
+</center>
