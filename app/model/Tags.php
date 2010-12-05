@@ -13,7 +13,7 @@ class Tags {
     }
 
     public static function getAllUsed() {
-        return self::patchColors(Db::selectGetVerticalArray('SELECT t.name FROM tags AS t, ev2tag AS e2t'
+        return self::patchColors(Db::selectGetArray('SELECT t.name FROM tags AS t, ev2tag AS e2t'
                 . ' WHERE t.id = e2t.tag_id AND e2t.user_id = @i GROUP BY e2t.tag_id', User::getId()));
     }
 

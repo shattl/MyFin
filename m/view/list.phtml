@@ -1,9 +1,9 @@
-<center>
-<?php echo Util::formatMoneyValue(Events::getCurentBalance()) ?>
-<a class="button_link" href="edit.php">Добавить</a>
-</center>
-
-<hr>
+<table>
+    <tr>
+        <td><a class="button_link" href="edit.php">Добавить</a></td>
+        <td align="right"><?php echo Util::formatMoneyValue(Events::getCurentBalance()) ?></td>
+    </tr>
+</table>
 
 <table class="events_tbl">
 

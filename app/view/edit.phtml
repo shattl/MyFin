@@ -47,25 +47,26 @@
 </form>
 
 
-<script type="text/javascript" src="js/kalender.js"></script>
+<script type="text/javascript" src="js/all_custom.js"></script>
 <script type="text/javascript">
     new function() {
 
         /* Список тегов для удобного добавления
          */
-        var tag_list = [<?php echo $tag_list; ?>];
+        var tag_list = <?php echo $tag_list; ?>;
 
         var tag_list_div = document.getElementById('tag_list');
         var tags_input = document.getElementById('tags_input');
 
         var add_tag = function() {
-            tags_input.value += ((tags_input.value == '') ? '' : ', ') + this.innerHTML;
-        }
+            tags_input.value = myfin_utis.add_or_remove_tag(tags_input.value, this.innerHTML);
+        };
 
         for (i = 0; i < tag_list.length; i++) {
             var newSpan = document.createElement('span');
-            newSpan.innerHTML = tag_list[i];
+            newSpan.innerHTML = tag_list[i].name;
             newSpan.onclick = add_tag;
+            newSpan.style.backgroundColor = tag_list[i].color;
 
             tag_list_div.appendChild(newSpan);
             tag_list_div.appendChild(document.createTextNode(" "));
