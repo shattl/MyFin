@@ -397,14 +397,19 @@ label * { color: #000; }
 }*/
 
 .tag_list_on_edit_page {
-    padding: 10px;
-    word-spacing: 8px;
+    padding: 5px 0;
+    line-height: 1.5em;
 }
 .tag_list_on_edit_page span {
+    background-color: #5E70A1;
+    -moz-border-radius: 2px;
+    border-radius: 2px;
+    color: white;
     cursor: pointer;
-    border-bottom: dashed 1px #000;
     font-size: .8em;
-    word-spacing: normal;
+    padding: 2px 3px;
+    text-decoration: none;
+    white-space: nowrap;
 }
 
 /********
