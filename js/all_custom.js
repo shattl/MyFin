@@ -1,3 +1,29 @@
+var myfin_utis = {
+    add_or_remove_tag: function(selected_tags, tag_to_add) {
+        selected_tags = selected_tags.replace(/(^\s+)|(\s+$)/g, ""); // trim
+        if (selected_tags == '')
+            return tag_to_add;
+        else {
+            selected_tags = selected_tags.split( /\s*,\s*/ );
+            var new_selected_tags = [];
+            var found = false;
+            var i = 0;
+            var j = 0;
+            for (; i < selected_tags.length; i++) {
+                if (selected_tags[i] == tag_to_add)
+                    found = true;
+                else
+                    new_selected_tags[j++] = selected_tags[i];
+            }
+            if (!found)
+                new_selected_tags[j] = tag_to_add;
+
+            new_selected_tags = new_selected_tags.join(', ');
+            return new_selected_tags;
+        }
+    }
+};
+
 /* Форма правки
  **/
 
@@ -111,7 +137,7 @@ function myfinEditForm(params) {
             (me.create('span', me.tag_list_div, {
                 innerHTML: me.tag_list[i].name,
                 onclick: function() {
-                me.tags_input.value += ((me.tags_input.value == '') ? '' : ', ') + this.innerHTML;
+                me.tags_input.value = myfin_utis.add_or_remove_tag(me.tags_input.value, this.innerHTML);
                 }
                 })).style.backgroundColor = me.tag_list[i].color;
 

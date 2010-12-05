@@ -60,9 +60,10 @@ Page::set_title(($event['id'] == 0 ? 'Добавление' : 'Правка') . 
 Page::addVar('form_data', $form_data);
 
 $tag_list = Tags::getAllUsed();
-
-sort($tag_list);
-Page::addVar('tag_list', "'" . implode("', '", $tag_list) . "'");
+$tl = array();
+foreach ($tag_list as $value)
+    $tl[] = "{name: '" . $value['name'] . "', color: '" . $value['color'] . "'}";
+Page::addVar('tag_list', count($tl) ? "[" . implode(", ", $tl) . "]" : '[]');
 
 Page::draw('edit');
 
