@@ -75,7 +75,7 @@ class Util {
         $temp = preg_replace('@/[^/]*$@', '', $_SERVER["REQUEST_URI"]);
         $temp = (isset($_SERVER['HTTPS']) ? "https://" : "http://") . $_SERVER["HTTP_HOST"] . $temp;
 
-        if ($veryBase)
+        if ($veryBase && defined('IN_MOBILE_VERSION'))
             $temp = preg_replace('@/m/?$@', '', $temp);
 
         return $temp;
