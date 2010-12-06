@@ -25,6 +25,11 @@ table {
     width: 100%;
 }
 
+#userbar {
+    text-align: center;
+    margin-bottom: 10px;
+}
+
 /********
 * Сообщения
  ********/

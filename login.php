@@ -19,7 +19,8 @@ try {
             $_SESSION['user_attributes'] =  $openid->getAttributes();
             //var_dump($openid->identity);
             //var_dump($openid->getAttributes());
-            Util::redirect(Util::getBaseUrl());
+            Util::redirect( isset($_SESSION['redirect_after_login']) ? 
+                    $_SESSION['redirect_after_login']  : Util::getBaseUrl() );
         } else {
             Messages::addWarning('Не удалось войти!');
         }
