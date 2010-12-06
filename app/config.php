@@ -77,9 +77,9 @@ function get_config( $name ) {
     $config['timezone'] = 'Europe/Moscow';
 
     /* Включить / выключить отладочный вывод (и более подробные сообщения об ошибках)
-     * true - вкл, false - выкл
+     * 1 - вкл, 0 - выкл
      */
-    $config['debug'] = true;
+    $config['debug'] = 1;
 
 
 

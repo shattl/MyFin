@@ -39,7 +39,8 @@ class User {
             }
 
         } else {
-            Util::redirect( Util::getBaseUrl() . '/login.php' );
+            $_SESSION['redirect_after_login'] = $_SERVER["REQUEST_URI"];
+            Util::redirect( Util::getBaseUrl( true ) . '/login.php' );
         }
     }
 
