@@ -71,9 +71,14 @@ class Util {
         return date($formatum, $timestamp);
     }
 
-    public static function getBaseUrl() {
+    public static function getBaseUrl( $veryBase = false ) {
         $temp = preg_replace('@/[^/]*$@', '', $_SERVER["REQUEST_URI"]);
-        return (isset($_SERVER['HTTPS']) ? "https://" : "http://") . $_SERVER["HTTP_HOST"] . $temp;
+        $temp = (isset($_SERVER['HTTPS']) ? "https://" : "http://") . $_SERVER["HTTP_HOST"] . $temp;
+
+        if ($veryBase)
+            $temp = preg_replace('@/m/?$@', '', $temp);
+
+        return $temp;
     }
 
     public static function linkReplaceParam($params, $remove=array()) {
