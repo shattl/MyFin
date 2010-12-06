@@ -21,6 +21,42 @@ var myfin_utis = {
             new_selected_tags = new_selected_tags.join(', ');
             return new_selected_tags;
         }
+    },
+    /* Возвращает элемент по id
+     */
+    byId: function (node) {
+        return typeof node == 'string' ? document.getElementById(node) : node
+    },
+
+    /* Создает элемент и добавляет его в parent
+    */
+    create: function(type, parent, params) {
+        var elem = document.createElement(type);
+
+        if (params){
+            for(var prop in params) {
+                if (!params.hasOwnProperty(prop)) continue;
+                elem[prop] = params[prop];
+            }
+        }
+
+        if (parent)
+            parent.appendChild(elem);
+
+        return elem;
+    },
+
+    randomString: function () {
+        return (new Date().getTime()).toString(16) + '_' + (Math.floor(Math.random() * 256)).toString(16);
+    },
+
+    /* Создает TextNode и добавляет его в parent
+    */
+    createTN: function(text, parent) {
+        var elem = document.createTextNode(text);
+        if (parent)
+            parent.appendChild(elem);
+        return elem;
     }
 };
 
@@ -33,7 +69,7 @@ function myfinEditForm(params) {
 
     this.draw = function() {
 
-        me.form = me.create('form', me.parent,
+        me.form = myfin_utis.create('form', me.parent,
         {
             action: me.action,
             method: me.method
@@ -42,30 +78,30 @@ function myfinEditForm(params) {
         me.draw_description_input();
         me.draw_tags_input();
 
-        var tr = me.create('tr', me.create('table', me.form, {
+        var tr = myfin_utis.create('tr', myfin_utis.create('table', me.form, {
             className: 'value_date_tbl'
         }));
-        me.draw_value_block(me.create('td', tr, {
+        me.draw_value_block(myfin_utis.create('td', tr, {
             width: '280'
         }));
 
-        me.draw_date_input(me.create('td', tr));
-        var td = me.create('td', tr, {
+        me.draw_date_input(myfin_utis.create('td', tr));
+        var td = myfin_utis.create('td', tr, {
             vAlign: 'bottom',
             align: 'right'
         });
 
         if (me.cancel_handler) {
-            me.create('input', td, {
+            myfin_utis.create('input', td, {
                 className: 'save_button',
                 type: 'button',
                 value: 'Отмена',
                 onclick: me.cancel_handler
             });
-            me.createTN(" ", td);
+            myfin_utis.createTN(" ", td);
         }
 
-        me.create('input', td, {
+        myfin_utis.create('input', td, {
             className: 'save_button',
             type: 'submit',
             value: 'Сохранить'
@@ -73,7 +109,7 @@ function myfinEditForm(params) {
 
 
 
-        me.create('input', me.form, {
+        myfin_utis.create('input', me.form, {
             type: 'hidden',
             name: 'id',
             value: me.id
@@ -82,16 +118,16 @@ function myfinEditForm(params) {
 
     // Поле описание
     this.draw_description_input = function(){
-        var input_block = me.create('div', me.form,
+        var input_block = myfin_utis.create('div', me.form,
         {
             className: 'input_block'
         });
 
-        var label = me.create('label', input_block, {
+        var label = myfin_utis.create('label', input_block, {
             innerHTML: 'Описание<br>'
         });
 
-        me.description_input = me.create('input', label,
+        me.description_input = myfin_utis.create('input', label,
         {
             name: 'description',
             type: 'text',
@@ -112,16 +148,16 @@ function myfinEditForm(params) {
 
     // Поле теги
     this.draw_tags_input = function(){
-        var input_block = me.create('div', me.form,
+        var input_block = myfin_utis.create('div', me.form,
         {
             className: 'input_block'
         });
 
-        var label = me.create('label', input_block, {
+        var label = myfin_utis.create('label', input_block, {
             innerHTML: 'Теги<br>'
         });
 
-        me.tags_input =  me.create('input', label,
+        me.tags_input =  myfin_utis.create('input', label,
         {
             name: 'tags',
             type: 'text',
@@ -129,29 +165,29 @@ function myfinEditForm(params) {
             className: 'tags_input'
         });
 
-        me.tag_list_div = me.create('div', input_block, {
+        me.tag_list_div = myfin_utis.create('div', input_block, {
             className: 'form_tag_list'
         });
 
         for (i = 0; i < me.tag_list.length; i++) {
-            (me.create('span', me.tag_list_div, {
+            (myfin_utis.create('span', me.tag_list_div, {
                 innerHTML: me.tag_list[i].name,
                 onclick: function() {
                 me.tags_input.value = myfin_utis.add_or_remove_tag(me.tags_input.value, this.innerHTML);
                 }
                 })).style.backgroundColor = me.tag_list[i].color;
 
-            me.createTN(" ", me.tag_list_div);
+            myfin_utis.createTN(" ", me.tag_list_div);
         }
     };
 
     // Рисует поле ссумы (с радио)
     this.draw_value_block = function(input_block) {
-        var label = me.create('label', input_block, {
+        var label = myfin_utis.create('label', input_block, {
             innerHTML: 'Сумма<br>'
         });
 
-        me.value_input =  me.create('input', label,
+        me.value_input =  myfin_utis.create('input', label,
         {
             name: 'value',
             type: 'text',
@@ -159,30 +195,30 @@ function myfinEditForm(params) {
             className: 'value_input'
         });
 
-        me.createTN(" ", input_block);
+        myfin_utis.createTN(" ", input_block);
 
-        label = me.create('label', input_block);
-        me.type_radio_in = me.create('input', label, {
+        label = myfin_utis.create('label', input_block);
+        me.type_radio_in = myfin_utis.create('input', label, {
             type: 'radio',
             name: 'type',
             value: 1
         });
-        me.createTN(" ", label);
-        me.create('span', label, {
+        myfin_utis.createTN(" ", label);
+        myfin_utis.create('span', label, {
             className: 'money_in',
             innerHTML: 'прибыль'
         });
 
-        me.createTN(" ", input_block);
+        myfin_utis.createTN(" ", input_block);
 
-        label = me.create('label', input_block);
-        me.type_radio_out = me.create('input', label, {
+        label = myfin_utis.create('label', input_block);
+        me.type_radio_out = myfin_utis.create('input', label, {
             type: 'radio',
             name: 'type',
             value: 0
         });
-        me.createTN(" ", label);
-        me.create('span', label, {
+        myfin_utis.createTN(" ", label);
+        myfin_utis.create('span', label, {
             className: 'money_out',
             innerHTML: 'расход'
         });
@@ -202,18 +238,18 @@ function myfinEditForm(params) {
     };
 
     this.draw_date_input = function(input_block) {
-        var input_id = 'in' + me.randomString();
+        var input_id = 'in' + myfin_utis.randomString();
 
-        me.create('label', input_block, {
+        myfin_utis.create('label', input_block, {
             innerHTML: 'Дата<br>',
             htmlFor: input_id
         });
 
-        var cal_wrap = me.create('div', input_block, {
+        var cal_wrap = myfin_utis.create('div', input_block, {
             className: 'cal_wrap'
         });
 
-        me.date_input = me.create('input', cal_wrap,
+        me.date_input = myfin_utis.create('input', cal_wrap,
         {
             name: 'date',
             type: 'text',
@@ -222,10 +258,10 @@ function myfinEditForm(params) {
             id: input_id
         });
 
-        me.toggle_cal = me.create('div', cal_wrap, {
+        me.toggle_cal = myfin_utis.create('div', cal_wrap, {
             className: "toggle_cal"
         });
-        me.calendar = me.create('div', cal_wrap, {
+        me.calendar = myfin_utis.create('div', cal_wrap, {
             className: "calendar"
         });
 
@@ -257,48 +293,6 @@ function myfinEditForm(params) {
 
 
     /* * * * * * * * * * *\
-    |     Служебные       |
-    \* * * * * * * * * * */
-
-    /* Возвращает элемент по id
-     */
-    this.byId = function (node) {
-        return typeof node == 'string' ? document.getElementById(node) : node
-    };
-
-    /* Создает элемент и добавляет его в parent
-    */
-    this.create = function(type, parent, params) {
-        var elem = document.createElement(type);
-        if (parent)
-            parent.appendChild(elem);
-
-        if (params){
-            for(var prop in params) {
-                if (!params.hasOwnProperty(prop)) continue
-                elem[prop] = params[prop]
-            }
-        }
-
-        return elem;
-    };
-
-    this.randomString = function () {
-        return (new Date().getTime()).toString(16) + '_' + (Math.floor(Math.random() * 256)).toString(16);
-    };
-
-    /* Создает TextNode и добавляет его в parent
-    */
-    this.createTN = function(text, parent) {
-        var elem = document.createTextNode(text);
-        if (parent)
-            parent.appendChild(elem);
-        return elem;
-    };
-
-
-
-    /* * * * * * * * * * *\
     |     Конструктор     |
     \* * * * * * * * * * */
 
@@ -319,10 +313,10 @@ function myfinEditForm(params) {
     this.action = params.action || '';
     this.method = params.method || 'post';
 
-    this.toggle_button = params.toggle_button ? this.byId(params.toggle_button) : null;
+    this.toggle_button = params.toggle_button ? myfin_utis.byId(params.toggle_button) : null;
 
     // тут тоже лажа (надо не document а body)
-    this.parent = params.parent ? this.byId(params.parent) : document;
+    this.parent = params.parent ? myfin_utis.byId(params.parent) : document;
 
     this.hidden = true;
 
@@ -391,23 +385,23 @@ function Kalender(input, parent, toggle_button, headerInBottom) {
 
         me.my_div.innerHTML = ''; // вместо removeAllChilds()
 
-        var table = me.create('table', me.my_div);
+        var table = myfin_utis.create('table', me.my_div);
 
         // Первая строчка (месяц, год и кнопки)
-        var firthRow = me.create('tr');
+        var firthRow = myfin_utis.create('tr');
         firthRow.className = 'th';
 
-        var th = me.create('th', firthRow);
+        var th = myfin_utis.create('th', firthRow);
         th.innerHTML = '←';
         th.onclick = me.mouthBack;
         th.className = 'ch_month back';
 
-        th = me.create('th', firthRow);
+        th = myfin_utis.create('th', firthRow);
         th.colSpan = 5;
         th.innerHTML = mouths[me.cur_mouth.getMonth()] + ' ' + me.cur_mouth.getFullYear();
         th.className = 'month_name';
 
-        th = me.create('th', firthRow);
+        th = myfin_utis.create('th', firthRow);
         th.innerHTML = '→';
         th.onclick = me.mouthForward;
         th.className = 'ch_month forward';
@@ -416,10 +410,10 @@ function Kalender(input, parent, toggle_button, headerInBottom) {
             table.appendChild(firthRow);
 
         // Вторая строчка (дни недели)
-        var tr = me.create('tr', table);
+        var tr = myfin_utis.create('tr', table);
         tr.className = 'day_names'
         for (var i = 0; i < 7; i++){
-            var td = me.create('td', tr);
+            var td = myfin_utis.create('td', tr);
             td.innerHTML = days[i];
         }
 
@@ -431,17 +425,17 @@ function Kalender(input, parent, toggle_button, headerInBottom) {
         if (day == -1)
             day = 6;
 
-        tr = me.create('tr', table);
+        tr = myfin_utis.create('tr', table);
         for (var i = 0; i < day; i++)
-            me.create('td', tr).className = 'empty';
+            myfin_utis.create('td', tr).className = 'empty';
 
         for (var i = 0; i < d_count; i++) {
             if (day == 7) {
                 day = 0;
-                tr = me.create('tr', table);
+                tr = myfin_utis.create('tr', table);
             }
             day++;
-            var td = me.create('td', tr);
+            var td = myfin_utis.create('td', tr);
             td.className = 'regular';
 
             if (me.cur_mouth.getFullYear() == me.cur_date.getFullYear() &&
@@ -462,7 +456,7 @@ function Kalender(input, parent, toggle_button, headerInBottom) {
         }
 
         for (;day < 7; day++)
-            me.create('td', tr).className = 'empty';
+            myfin_utis.create('td', tr).className = 'empty';
 
         if( headerInBottom )
             table.appendChild(firthRow);
@@ -528,7 +522,6 @@ function Kalender(input, parent, toggle_button, headerInBottom) {
 
 
 
-
     /* * * * * * * * * * * * * * * * * * * * * *\
     |             Работа с input'ом             |
     \* * * * * * * * * * * * * * * * * * * * * */
@@ -584,34 +577,6 @@ function Kalender(input, parent, toggle_button, headerInBottom) {
 
 
 
-    /* * * * * * * * * * *\
-    |     Служебные       |
-    \* * * * * * * * * * */
-
-    /* Возвращает элемент по id
-     */
-    this.byId = function (node) {
-        return typeof node == 'string' ? document.getElementById(node) : node
-    };
-
-    /* Создает элемент и добавляет его в parent
-     */
-    this.create = function(type, parent) {
-        var elem = document.createElement(type);
-        if (parent)
-            parent.appendChild(elem);
-        return elem;
-    };
-
-    /* Создает TextNode и добавляет его в parent
-     */
-    this.createTN = function(text, parent) {
-        var elem = document.createTextNode(text);
-        if (parent)
-            parent.appendChild(elem);
-        return elem;
-    };
-
     /* Добавляет к числу нули слева
      * Написана плохо
      */
@@ -651,18 +616,17 @@ function Kalender(input, parent, toggle_button, headerInBottom) {
     };
 
 
-
     /* * * * * * * * * * *\
     |     Конструктор     |
     \* * * * * * * * * * */
 
-    this.input = this.byId(input);
-    this.parent = this.byId(parent);
-    this.toggle_button = this.byId(toggle_button);
+    this.input = myfin_utis.byId(input);
+    this.parent = myfin_utis.byId(parent);
+    this.toggle_button = myfin_utis.byId(toggle_button);
 
     this.hidden = true;
 
-    this.my_div = this.create('div', this.parent);
+    this.my_div = myfin_utis.create('div', this.parent);
     this.my_div.style.display = 'none';
     this.my_div.className = 'Kalender';
     this.my_div.onclick = this.stopPropagation;
