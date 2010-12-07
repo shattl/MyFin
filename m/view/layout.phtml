@@ -45,7 +45,8 @@ Memory: <?php echo memory_get_peak_usage() ?> bytes
 
 <?php if(get_config('debug')): while (Messages::hasDebug()): ?>
 <?php echo Messages::popDebug(); ?>
---------------
+
+
 <?php endwhile; endif;?>
 
 -->
