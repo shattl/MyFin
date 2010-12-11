@@ -44,8 +44,8 @@ function get_config( $name ) {
 
     /* Поддержка авторизации по Open Id
      * (Если будет 1 пользователь то это не нужно, если несколько то надо включить)
-     * 1 - включенно
-     * 0 - выключенно
+     * 1 - включено
+     * 0 - выключено
      */
     $config['use_openid'] = 0;
 
@@ -66,6 +66,18 @@ function get_config( $name ) {
      */
     $config['days4select'] = array(1, 7, 30, 42, 61, 365, 730);
 
+    /* Сортировка тегов
+     * 0 - по популярности
+     * 1 - по алфавиту
+     */
+    $config['tags_sort_by'] = 1;
+
+    /* Раскрашенные теги
+     * 0 - включено
+     * 1 - выключено
+     */
+    $config['dis_colored_tags'] = 0;
+
 
 
     /**\
@@ -77,9 +89,10 @@ function get_config( $name ) {
     $config['timezone'] = 'Europe/Moscow';
 
     /* Включить / выключить отладочный вывод (и более подробные сообщения об ошибках)
-     * 1 - вкл, 0 - выкл
+     * 1 - вкл
+     * 0 - выкл
      */
-    $config['debug'] = 1;
+    $config['debug'] = 0;
 
 
 
@@ -87,7 +100,7 @@ function get_config( $name ) {
      * Ниже ничего не трогайте :)
     \**/
 
-    return $config[ $name ];
+    return @$config[ $name ];
 }
 
 function tn( $name ) {
