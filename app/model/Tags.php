@@ -24,7 +24,9 @@ class Tags {
     public static function tags4Cloud() {
         return self::patchColors(Db::selectGetArray('SELECT tags.*, count(ev2tag.ev_id) as count FROM ev2tag, tags '
                 . 'WHERE ev2tag.tag_id = tags.id AND ev2tag.user_id = @i'
-                . ' GROUP BY ev2tag.tag_id ORDER BY count DESC, name', User::getId()));
+                . ' GROUP BY ev2tag.tag_id ORDER BY '
+                . ( get_config('tags_sort_by') ? 'name ASC' :  'count DESC')
+                . ', name', User::getId()));
     }
 
     public static function getIdByName($tag_name) {
@@ -88,9 +90,11 @@ class Tags {
     }
 
     private static function patchColors(&$tag_list){
+        $is_disabled = get_config('dis_colored_tags');
+
         foreach ($tag_list as $i => $t) {
-            $tag_list[$i]['color'] = self::colorByName($t['name']);
-            $tag_list[$i]['color_i'] = self::colorByName($t['name']);
+            $tag_list[$i]['color'] = $is_disabled ? '#5e70a1' : self::colorByName($t['name']);
+            //$tag_list[$i]['color_i'] = self::colorByName($t['name']);
         }
         return $tag_list;
     }
