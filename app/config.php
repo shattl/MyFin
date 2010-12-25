@@ -70,7 +70,7 @@ function get_config( $name ) {
      * 0 - по популярности
      * 1 - по алфавиту
      */
-    $config['tags_sort_by'] = 1;
+    $config['tags_sort_by'] = 0;
 
     /* Раскрашенные теги
      * 0 - включено
