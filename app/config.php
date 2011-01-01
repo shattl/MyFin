@@ -78,6 +78,12 @@ function get_config( $name ) {
      */
     $config['dis_colored_tags'] = 0;
 
+    /* Не показывать год в датах событий
+     * 0 - показывать
+     * 1 - не показывать
+     */
+    $config['noYear'] = 1;
+
 
 
     /**\
