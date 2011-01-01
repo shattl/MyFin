@@ -30,10 +30,12 @@
             </div>
             <?php endif; ?>
 
-            <?php  if (!get_config('use_openid') || User::getUser() !== null): ?>
-            <div id="curent_balance" title="по нашим подсчетам, у вас сейчас столько денег">
+            <?php  if (!get_config('use_openid') || User::getUser() !== null):
+                $balance = Events::getCurentBalance(); ?>
+            <div id="curent_balance" title="<?php echo number_format($balance[1], 2, ',', ' ') .
+                    ' - ' . number_format($balance[2], 2, ',', ' ') ?>">
                 <small>сейчас у вас</small>
-                <?php echo Util::formatMoneyValue(Events::getCurentBalance()) ?>
+                <?php echo Util::formatMoneyValue($balance[0]) ?>
             </div>
             <?php endif; ?>
 
