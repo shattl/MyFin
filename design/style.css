@@ -251,6 +251,14 @@ input{ padding: .2em 3px; font-family: "Arial", arial, Arial; }
     top: 2px;
 }
 
+.date_layout {
+    float: right;
+    font-size: .75em;
+    margin: -0.25em 0;
+    margin-left: 1em;
+    white-space: normal;
+}
+
 /********
 * Теги
  ********/

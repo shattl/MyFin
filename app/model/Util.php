@@ -12,7 +12,7 @@ class Util {
         exit ();
     }
 
-    public static function readlyTime($time) {
+    public static function readlyTime($time, $plainText = true) {
         if (!is_int($time))
             $time = strtotime($time);
 
@@ -25,7 +25,14 @@ class Util {
         if (date('Y', $time) === date('Y', $now_time)) // в этом году
             return self::date_ru('d л', $time);
 
-        return self::date_ru('d л Y', $time);
+        if ($plainText)
+            return self::date_ru('d л Y', $time);
+        else {
+            return self::date_ru('d', $time) .
+                   '<div class="date_layout">' .
+                   self::date_ru('л', $time) . '<br>' .
+                   self::date_ru('Y', $time) . '</div>';
+        }
     }
 
     /*
@@ -41,6 +48,9 @@ class Util {
      */
 
     public static function date_ru($formatum, $timestamp=0) {
+        if (!is_int($timestamp))
+            $timestamp = strtotime($timestamp);
+
         if (($timestamp <= -1) || !is_numeric($timestamp))
             return '';
 

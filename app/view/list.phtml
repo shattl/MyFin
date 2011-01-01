@@ -157,7 +157,7 @@ onclick="return confirm('Удалить запись?');" title="удалить"
 <td class='value <?php echo $e['type_str'] ?>'>
 <?php echo $e['value_str']; ?>
 </td>
-<td class="date">
+<td class="date" title="<?php echo Util::date_ru('H:i, d л Y (з)', $e['date']) ?>">
 <?php echo Util::readlyTime($e['date']) ?>
 </td>
 </tr>
