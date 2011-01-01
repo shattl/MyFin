@@ -121,7 +121,7 @@ var myfin_global_tag_list = <?php echo $tag_list?>;
 </div>
 <?php endif; ?>
 
-<!-- основная такблица (с событиями) -->
+<!-- основная таблица (с событиями) -->
 <table class="events_list">
 <tr><td colspan="4" id="new_item_row">Новая запись</td></tr>
 <tr class="form_container_tr">
@@ -157,8 +157,8 @@ onclick="return confirm('Удалить запись?');" title="удалить"
 <td class='value <?php echo $e['type_str'] ?>'>
 <?php echo $e['value_str']; ?>
 </td>
-<td class="date" title="<?php echo Util::date_ru('H:i, d л Y (з)', $e['date']) ?>">
-<?php echo Util::readlyTime($e['date']) ?>
+<td class="date" title="<?php echo Util::readlyTime($e['date'], true) ?>">
+<?php echo Util::readlyTime($e['date'], false, get_config('noYear')) ?>
 </td>
 </tr>
 <tr class="form_container_tr"><td colspan="4" id="td4_item_form_<?php echo $e['id'] ?>"></td>

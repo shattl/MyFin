@@ -57,13 +57,15 @@ class Events {
                 User::getId());
 
         $result = 0;
+        $plus = 0;
+        $minus = 0;
 
         foreach ($tmp as $t)
             $result = ($t['type'] == 0) ?
-                $result - $t['sum'] :
-                $result + $t['sum'];
+                $result - ($minus+=$t['sum']/100) :
+                $result + ($plus+=$t['sum']/100);
 
-        return $result / 100;
+        return array($result, $plus, $minus);
     }
 
     public static function insertEvent($description, $type, $value, $date) {

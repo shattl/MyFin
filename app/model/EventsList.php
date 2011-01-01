@@ -134,13 +134,17 @@ class EventsList {
         }
         if (isset($_GET['date_start'])) {
             $select[] = array(
-                'text' => 'дата с: <b>' . Util::readlyTime(strtotime($_GET['date_start'])) . '</b>',
+                'text' => 'дата с: <b title="'.
+                Util::readlyTime($_GET['date_start'], true)
+                .'">' . Util::readlyTime($_GET['date_start']) . '</b>',
                 'link' => Util::linkWithoutParam('date_start')
             );
         }
         if (isset($_GET['date_end'])) {
             $select[] = array(
-                'text' => 'дата по: <b>' . Util::readlyTime(strtotime($_GET['date_end'])) . '</b>',
+                'text' => 'дата по: <b title="'.
+                Util::readlyTime($_GET['date_end'], true)
+                .'">' . Util::readlyTime($_GET['date_end']) . '</b>',
                 'link' => Util::linkWithoutParam('date_end')
             );
         }

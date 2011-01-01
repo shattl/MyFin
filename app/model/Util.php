@@ -12,9 +12,12 @@ class Util {
         exit ();
     }
 
-    public static function readlyTime($time, $plainText = true) {
+    public static function readlyTime($time, $full = false, $noYear = false, $plainText = true) {
         if (!is_int($time))
             $time = strtotime($time);
+
+        if ($full)
+            return Util::date_ru('H:i, d л Y (з)', $time);
 
         $now_time = time();
 
@@ -22,7 +25,7 @@ class Util {
             return date('H:i', $time);
         if (date('WY', $time) === date('WY', $now_time)) // на этой неделе
             return self::date_ru('з', $time);
-        if (date('Y', $time) === date('Y', $now_time)) // в этом году
+        if (date('Y', $time) === date('Y', $now_time) || $noYear) // в этом году
             return self::date_ru('d л', $time);
 
         if ($plainText)
