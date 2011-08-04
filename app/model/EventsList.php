@@ -63,7 +63,11 @@ class EventsList {
                 'action_url' => $events_list[$id]['edit_link'],
                 'date' => date('Y-m-d H:i', strtotime($event['date']))
             );
-            $events_list[$id]['form_params_str'] = '\'' . implode("', '", $events_list[$id]['form_params']) . '\'';
+            $form_params = $events_list[$id]['form_params'];
+            foreach ($form_params as &$param) {
+                $param = addcslashes($param, "'\\");
+            }
+            $events_list[$id]['form_params_str'] = '\'' . implode("', '", $form_params) . '\'';
         }
 
         return array('list' => $events_list,
