@@ -120,7 +120,7 @@ class Events {
 		
 		// Импорт
 		foreach($events as $event) {
-			$id = Events::insertEvent($event['description'], $event['type'], $event['value'], strtotime($event['date']));
+			$id = Events::insertEvent($event['description'], $event['type'], $event['value'] / 100, strtotime($event['date']));
 			Tags::update4Event($id, explode(',', $event['tags']));
 		}
 		
