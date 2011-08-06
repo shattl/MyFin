@@ -24,6 +24,9 @@ if (isset($_FILES['import_it'])) {
 	header('Content-Disposition: attachment; filename="' . date('Y_m_d__H_i_s') . '_myfin.json"');
 	
 	$events = Events::export();
+	foreach ($events as &$event) {
+		$event['value'] = $event['value'] / 100;
+	}
 	
 	echo json_encode(array('version' => 1,
 						   'data' => $events));

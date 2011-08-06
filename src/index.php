@@ -89,7 +89,7 @@ if (count($tmp) > 0) {
 
         $tmp[$key]['link'] = Util::linkReplaceParam(array('by_tag' => $value['id']),
                         array('no_limit'));
-        $tl[] = "{name: '" . $value['name'] . "', color: '" . $value['color'] . "'}";
+        $tl[] = "{name: '" . addcslashes($value['name'], "'\\") . "', color: '" . $value['color'] . "'}";
     }
 
 }
