@@ -33,6 +33,10 @@ define('PUBLIC_PATH', realpath(APPLICATION_PATH . '/..'));
 $tmp = file_get_contents(PUBLIC_PATH . '/version');
 define('VERSION', $tmp ? $tmp : 0);
 
+if (!file_exists(APPLICATION_PATH . '/config.php')) {
+	die ('Нет файла config.php!<br/>Переименуйте app/example_config.php в config.php и отредактируйте его в соответствии с подсказаками внутри.<br/>См. также install.txt');
+}
+
 require_once 'config.php';
 
 date_default_timezone_set(get_config('timezone'));
