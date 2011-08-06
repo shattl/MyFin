@@ -134,16 +134,6 @@ function myfinEditForm(params) {
             value: me.description,
             className: 'description_input'
         });
-
-        me.description_input.onfocus = function() {
-            if(this.value=='нет описания ...')
-                this.value='';
-        };
-
-        me.description_input.onblur = function() {
-            if(this.value=='')
-                this.value='нет описания ...';
-        };
     };
 
     // Поле теги
@@ -299,7 +289,7 @@ function myfinEditForm(params) {
     if (params === undefined)
         params = {};
 
-    this.description = params.description || 'нет описания ...';
+    this.description = params.description || '';
     this.tags = params['tags'] || '';
     this.value = params['value'] || 0;
     this.type = params.type || 0;
