@@ -96,4 +96,34 @@ class Events {
                 . 'LIMIT @i',
                 User::getId(), $limit);
     }
+	
+	public static function export() {
+		return Db::selectGetArray('SELECT e.type, e.value, e.date, e.description, '
+                . 'GROUP_CONCAT(t.name SEPARATOR  ", ") AS tags '
+                . 'FROM events AS e '
+                . 'LEFT JOIN ev2tag e2t ON e.id = e2t.ev_id '
+                . 'LEFT JOIN tags t ON t.id = e2t.tag_id '
+                . 'WHERE e.user_id = @i '
+                . 'GROUP BY e.id '
+                . 'ORDER BY e.date DESC ',
+                User::getId());
+	}
+	
+	public static function reset($events) {
+		
+		// Удаление всего добра текущего пользователя
+		$ids = Db::selectGetVerticalArray('select id from events where user_id = @i', User::getId());
+		if (!empty($ids)) {
+			Db::justQuery('DELETE FROM `events` WHERE id in @a', $ids);
+			Db::justQuery('DELETE FROM `ev2tag` WHERE `ev_id` in @a', $ids);
+		}
+		
+		// Импорт
+		foreach($events as $event) {
+			$id = Events::insertEvent($event['description'], $event['type'], $event['value'], strtotime($event['date']));
+			Tags::update4Event($id, explode(',', $event['tags']));
+		}
+		
+		return true;
+	}
 }
