@@ -117,7 +117,7 @@ class Util {
 
     public static function formatMoneyValue($value, $plus=false, $minus=true) {
         $abs = abs($value);
-        $cents = ($abs * 100) % 100;
+        $cents = (int)(string)($abs * 100) % 100;
         $ceil = (int) ($abs - $cents / 100);
 
         return '<span class="MoneyValue ' . ($value == 0 ? 'money_stay' :
