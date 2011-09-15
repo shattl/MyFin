@@ -167,7 +167,7 @@ class Db {
             $ss = substr($template, $i, 2);
             if (in_array($ss, array('@i', '@s', '@f', '@a', '@n', '@l')) && count($arg_list) > 0) {
                 if ($ss == '@i') // целое
-                    $val = intval(array_shift($arg_list));
+                    $val = intval((string)array_shift($arg_list));
                 if ($ss == '@s') // строка
                     $val = "'" . mysql_escape_string(array_shift($arg_list)) . "'";
                 if ($ss == '@l') // строка без кавычек
