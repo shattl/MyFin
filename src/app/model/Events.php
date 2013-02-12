@@ -27,11 +27,79 @@ class Events {
         if (isset($get['by_tag'])) {
             $tags = explode(',', $get['by_tag']);
 
-            $sql = 'SELECT SQL_CALC_FOUND_ROWS count(DISTINCT tag_id) AS tid, events.* FROM'
-                    . ' ev2tag LEFT JOIN events ON ev2tag.ev_id = events.id'
-                    . (count($where) > 0 ? ' WHERE ' . implode(' AND ', $where) . ' AND ' : ' WHERE ')
-                    . Db::buildReq('tag_id IN @a GROUP BY ev_id HAVING tid = @i', $tags, count($tags))
-                    . ' ORDER BY date DESC';
+	    sort($tags, SORT_NUMERIC);
+	    for($i = 0; $i < count($tags); $i++) {
+		if ($tags[$i] < 0) {
+		    $tags_minus[] = abs($tags[$i]);
+		} else {
+		    $tags_plus[] = (int)$tags[$i];
+		}
+	    }
+	    $sql =
+		'SELECT SQL_CALC_FOUND_ROWS events.* '.
+		'FROM events '.
+		    'JOIN '.
+			'('.
+			    'SELECT DISTINCT ev.id '.
+			    'FROM '.
+				(
+				    count($where) > 0
+					?
+					    '('.
+						'SELECT * '.
+						'FROM events '.
+						'WHERE '.
+						    implode(' AND ', $where).
+					    ')'
+					:
+					    'events'
+				).
+				' AS ev '.
+				'LEFT JOIN '.
+				    (
+					count($tags_plus) > 0
+					    ?
+						'('.
+						    'SELECT * '.
+						    'FROM ev2tag '.
+						    'WHERE '.
+							'tag_id IN ('.implode(', ', $tags_plus).')'.
+						')'
+					    :
+						'ev2tag'
+				    ).
+				    ' AS e2t '.
+				    'ON e2t.ev_id = ev.id '.
+				'LEFT JOIN '.
+				    '('.
+					'SELECT * '.
+					'FROM ev2tag '.
+					'WHERE '.
+					    (
+						count($tags_minus) > 0
+						    ?
+							'tag_id IN ('.implode(', ', $tags_minus).')'
+						    :
+							'tag_id IN (-1)'
+					    ).
+					') AS e2t_minus '.
+				    'ON e2t_minus.ev_id = ev.id '.
+			    'WHERE '.
+				'e2t.tag_id IS NOT NULL AND '.
+				'e2t_minus.tag_id IS NULL '.
+			    (
+				count($tags_plus) > 0
+				    ?
+					'GROUP BY ev.id '.
+					'HAVING COUNT(id) = '.count($tags_plus)
+				    :
+					''
+			    ).
+			') AS ok '.
+		    'USING (id)'.
+		'ORDER BY date DESC';
+
+//            echo $sql."<BR>";
         } else
             $sql = 'SELECT SQL_CALC_FOUND_ROWS * FROM `events` '
                     . (count($where) > 0 ? 'WHERE ' . implode(' AND ', $where) : '')
@@ -72,7 +140,7 @@ class Events {
         if (Db::justQuery('INSERT INTO `events` (`description`, `type`, `value`, `date`, user_id)'
                         . ' VALUES (@s, @i, @i, FROM_UNIXTIME(@i), @i)',
                         htmlspecialchars($description), $type,
-                        abs($value * 100), $date, User::getId()))
+                        abs(strval($value * 100)), $date, User::getId()))
             return Db::insertedId();
         return null;
     }
@@ -80,7 +148,7 @@ class Events {
     public static function updateEvent($description, $type, $value, $date, $id) {
         return Db::justQuery('UPDATE `events` SET `description`=@s, `type`=@i, `value`=@i, '
                         . '`date`=FROM_UNIXTIME(@i) WHERE `id`=@i AND `user_id`=@i',
-                        htmlspecialchars($description), $type, abs($value * 100),
+                        htmlspecialchars($description), $type, abs(strval($value * 100)),
                 $date, $id, User::getId());
     }
 

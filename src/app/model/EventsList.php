@@ -6,7 +6,51 @@ class EventsList {
         $total_in = 0;
         $total_out = 0;
 
+	$st = array();
+	if (isset($_GET['st'])) {
+	    $st_prev_date = time();
+	    $st_curr_event_id = -1;
+	}
+
         foreach ($events_list as $id => $event) {
+
+	    if (isset($_GET['st'])) {
+		if (strtotime($event['date']) < $st_prev_date) {
+
+		    $st_curr_event_id = $event['id'];
+
+		    $st[$st_curr_event_id]['date'] = strtotime("today first day of next month", strtotime($event['date']));
+		    $st_prev_date = strtotime("today first day of this month", strtotime($event['date']));
+		    switch ($_GET['st']) {
+			case 1:
+			    $st[$st_curr_event_id]['date'] = strtotime("tomorrow", strtotime($event['date']));
+			    $st_prev_date = strtotime("today", strtotime($event['date']));
+			    break;
+			case 2:
+			    $st[$st_curr_event_id]['date'] = strtotime("monday", strtotime($event['date']));
+			    $st_prev_date = strtotime("monday -1 week", strtotime($event['date']));
+			    break;
+			case 3:
+			    // default
+			    break;
+			case 4:
+			    $st[$st_curr_event_id]['date'] = strtotime("1/1 next year", strtotime($event['date']));
+			    $st_prev_date = strtotime("1/1 this year", strtotime($event['date']));
+			    break;
+		    }
+		    $st[$st_curr_event_id]['subtotal_len'] = round(($st[$st_curr_event_id]['date'] - $st_prev_date) / 86400);
+		}
+		if ($event['type']) {
+		    $st[$st_curr_event_id]['subtotal_in'] += $event['value'];
+		} else {
+		    $st[$st_curr_event_id]['subtotal_out'] += $event['value'];
+		}
+		if (isset($_GET['st_only']) && $_GET['st_only'] > 0) {
+		    $st[$event['id']]['st_only'] = true;
+		} else {
+		    $st[$event['id']]['st_only'] = false;
+		}
+	    }
 
             $value = $event['value'] / 100;
 
@@ -71,6 +115,7 @@ class EventsList {
         }
 
         return array('list' => $events_list,
+	    'st' => $st,
             'total_in' => $total_in / 100,
             'total_out' => $total_out / 100);
     }
@@ -130,13 +175,17 @@ class EventsList {
                     if ($v == $t)
                         unset($tmp[$k]);
                 }
-                if (count($tmp) == 0)
+                if (count($tmp) == 0) {
                     $link = Util::linkWithoutParam('by_tag');
-                else
+                    $link_inversion = Util::linkReplaceParam(array('by_tag' => (-1 * $t)));
+                } else {
                     $link = Util::linkReplaceParam(array('by_tag' => implode(',', $tmp)));
+                    $link_inversion = Util::linkReplaceParam(array('by_tag' => implode(',', $tmp).','.(-1 * $t)));
+                }
                 $select[] = array(
-                    'text' => 'тег: <b>' . Tags::nameById($t) . '</b>',
-                    'link' => $link
+                    'text' => 'тег: <b>' . (abs($t) == $t ? "" : "<S>") . Tags::nameById(abs($t)) . (abs($t) == $t ? "" : "</S>") . '</b>',
+                    'link' => $link,
+                    'link_inversion' => $link_inversion
                 );
             }
         }
@@ -161,6 +210,31 @@ class EventsList {
                 'text' => 'поиск: <b>' . $_GET['search'] . '</b>',
                 'link' => Util::linkWithoutParam('search')
             );
+        }
+        if (isset($_GET['st'])) {
+	    $tmp = 'месячный';
+	    switch ($_GET['st']) {
+		case 1:
+		    $tmp = 'дневной';
+		    break;
+		case 2:
+		    $tmp = 'недельный';
+		    break;
+		case 3:
+		    // default
+		    break;
+		case 4:
+		    $tmp = 'годовой';
+		    break;
+	    }
+	    if ($tmp != '') {
+		$select[] = array(
+		    'text' => 'подитог: <b>'.($_GET['st_only'] ? '<U>'.$tmp.'</U>' : $tmp).'</b>',
+		    'link' => Util::linkWithoutParam('st'),
+		    'link_only_inversion' =>
+			Util::linkReplaceParam(array('st_only' => ($_GET['st_only'] ? '0' : '1')))
+		);
+	    }
         }
 
         return $select;
