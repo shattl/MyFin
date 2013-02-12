@@ -26,6 +26,7 @@ if (!isset($_GET['no_limit'])) {
 $events_list = EventsList::prepareEventsList($events_list);
 
 Page::addVar('events_list', $events_list['list']);
+Page::addVar('events_list_st', $events_list['st']);
 Page::addVar('total_in', Util::formatMoneyValue($events_list['total_in'], false, false));
 Page::addVar('total_out', Util::formatMoneyValue(0 - $events_list['total_out'], false, false));
 Page::addVar('total', Util::formatMoneyValue($events_list['total_in'] - $events_list['total_out']));
@@ -98,6 +99,17 @@ $tl = count($tl) ? "[" . implode(", ", $tl) . "]" : '[]';
 
 Page::addVar('cloud_tags', $tmp);
 Page::addVar('tag_list', $tl);
+
+/* Построение ссылок для ПодИтогов
+ */
+Page::addVar('SubTotal_Daily_link',
+                Util::linkReplaceParam(array('st' => 1), array('no_limit', 'st_only')));
+Page::addVar('SubTotal_Weekly_link',
+                Util::linkReplaceParam(array('st' => 2), array('no_limit', 'st_only')));
+Page::addVar('SubTotal_Monthly_link',
+                Util::linkReplaceParam(array('st' => 3), array('no_limit', 'st_only')));
+Page::addVar('SubTotal_Yearly_link',
+                Util::linkReplaceParam(array('st' => 4), array('no_limit', 'st_only')));
 
 /* Еще по мелочи
  */

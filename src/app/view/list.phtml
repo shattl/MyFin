@@ -18,6 +18,10 @@
 * ~$no_limit_link
 * ~$found_rows
 * $new_button_link
+* $SubTotal_Daily_link
+* $SubTotal_Weekly_link
+* $SubTotal_Monthly_link
+* $SubTotal_Yearly_link
 */
 ?>
 <script type="text/javascript">
@@ -107,6 +111,20 @@ var myfin_global_tag_list = <?php echo $tag_list?>;
 </div>
 
 
+<div class="select_param_div" id="sp_type">
+<h3>ПодИтог</h3>
+<div class="to_hide">
+<ul>
+<li><a href="<?php echo $SubTotal_Daily_link ?>">дневной</a></li>
+<li><a href="<?php echo $SubTotal_Weekly_link ?>">недельный</a></li>
+<li><a href="<?php echo $SubTotal_Monthly_link ?>">месячный</a></li>
+<li><a href="<?php echo $SubTotal_Yearly_link ?>">годовой</a></li>
+</ul>
+</div>
+</div>
+
+
+
 </div><!-- / #side_bar -->
 
 
@@ -116,7 +134,7 @@ var myfin_global_tag_list = <?php echo $tag_list?>;
 <?php if (count($select) > 0) : ?>
 <div class="select">
 <?php foreach ($select as $value) : ?>
-<?php echo $value['text']; ?> <a href="<?php echo $value['link'] ?>">[x]</a><br>
+<?php echo $value['text']; ?> <?php if ($value['link_inversion']) { echo "<a href='".$value['link_inversion']."'>[+/-]</a>"; } ?><?php if ($value['link_only_inversion']) { echo "<a href='".$value['link_only_inversion']."'>[со списком/без]</a>"; } ?><a href="<?php echo $value['link'] ?>">[x]</a><br>
 <?php endforeach; ?>
 </div>
 <?php endif; ?>
@@ -129,6 +147,22 @@ var myfin_global_tag_list = <?php echo $tag_list?>;
 </tr>
 
 <?php foreach ($events_list as $e) : ?>
+<?php if (array_key_exists($e['id'], $events_list_st)) { ?>
+<?php if (array_key_exists('subtotal_len', $events_list_st[$e['id']])) { ?>
+<tr>
+<td class="description" colspan="3">
+<B><U>ПодИтог: <?php echo Util::formatMoneyValue($events_list_st[$e['id']]['subtotal_in'] / 100, false, false); ?>  - <?php echo Util::formatMoneyValue(0 - $events_list_st[$e['id']]['subtotal_out'] / 100, false, false); ?> &nbsp;= <?php echo Util::formatMoneyValue(($events_list_st[$e['id']]['subtotal_in'] - $events_list_st[$e['id']]['subtotal_out']) / 100); ?></U></B><?php if ($events_list_st[$e['id']]['subtotal_len'] > 1) { echo "&nbsp;(".Util::formatMoneyValue(($events_list_st[$e['id']]['subtotal_in'] - $events_list_st[$e['id']]['subtotal_out']) / 100 / $events_list_st[$e['id']]['subtotal_len'])." в день)"; } ?>
+</td>
+<td class="date" title="<?php echo Util::readlyTime($events_list_st[$e['id']]['date'], true) ?>">
+<?php echo Util::readlyTime($events_list_st[$e['id']]['date'], false, get_config('noYear')) ?>
+</td>
+</tr>
+<tr class="form_container_tr"><td colspan="4"></td>
+</tr>
+<?php } /* if (array_key_exists('subtotal_lenin', $events_list_st[$e['id']]) { */ ?>
+<?php if (array_key_exists('st_only', $events_list_st[$e['id']]) &&
+    $events_list_st[$e['id']]['st_only'] == true) continue; ?>
+<?php } /* if (array_key_exists($e['id'], $events_list_st)) */ ?>
 <tr id="event_tr_<?php echo $e['id'] ?>">
 <td class="description">
 <a class="<?php echo $e['type_str'] ?>"
