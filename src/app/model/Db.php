@@ -17,11 +17,11 @@ class Db {
         if (self::$_link !== null)
             return true;
 
-        if (!(self::$_link = mysql_connect(get_config('db_host'),
+        if (!(self::$_link = mysqli_connect(get_config('db_host'),
                         get_config('db_user'),
                         get_config('db_password')
                 ))) {
-            Messages::addError('Ошибка базы данных<br>Не могу соединиться с сервером<br>' . mysql_error());
+            Messages::addError('Ошибка базы данных<br>Не могу соединиться с сервером<br>' . mysqli_error(self::$_link));
             return false;
         }
 
@@ -29,9 +29,9 @@ class Db {
             return false;
 
 
-        if (!mysql_select_db(get_config('db_db_name'), self::$_link)
+        if (!mysqli_select_db(self::$_link, get_config('db_db_name'))
                 && !self::_tryCreateDb()) {
-            Messages::addError('Ошибка базы данных<br>Не могу выбрать базу данных<br>' . mysql_error());
+            Messages::addError('Ошибка базы данных<br>Не могу выбрать базу данных<br>' . mysqli_error(self::$_link));
             return false;
         }
 
@@ -58,7 +58,7 @@ class Db {
         if ($result) {
             $return = array();
 
-            while ($row = mysql_fetch_assoc($result))
+            while ($row = mysqli_fetch_assoc($result))
                 $return[] = $row;
 
             return $return;
@@ -77,7 +77,7 @@ class Db {
         if ($result) {
             $return = array();
 
-            while ($row = mysql_fetch_array($result))
+            while ($row = mysqli_fetch_array($result))
                 $return[] = $row[0];
 
             return $return;
@@ -94,7 +94,7 @@ class Db {
         $result = self::justQuery($sql);
 
         if ($result)
-            return @mysql_result($result, 0);
+            return mysqli_fetch_row($result)[0];
 
         return null;
     }
@@ -115,13 +115,13 @@ class Db {
                 get_config( 'db_table' ), $tmp[0]);
 
         $sql = self::_buildReq($tmp);
-        
+
         self::$_lastQuery = $sql;
 
         $startTime = Util::microtime_float();
-        self::$_lastResult = mysql_query($sql, self::$_link);
+        self::$_lastResult = mysqli_query(self::$_link, $sql);
         $endTime = Util::microtime_float();
-        
+
         self::$_lastQueryTime = $endTime - $startTime;
         self::$_fullQueryTime += self::$_lastQueryTime;
 
@@ -143,15 +143,15 @@ class Db {
     }
 
     public static function lastError() {
-        return "<code>" . mysql_error() . "\n<br/>\nЗапрос: " . self::$_lastQuery . "</code>";
+        return "<code>" . mysqli_error(self::$_link) . "\n<br/>\nЗапрос: " . self::$_lastQuery . "</code>";
     }
 
     public static function insertedId() {
-        return mysql_insert_id();
+        return mysqli_insert_id(self::$_link);
     }
 
     public static function getNumRows() {
-        return mysql_num_rows(self::$_lastResult);
+        return mysqli_num_rows(self::$_lastResult);
     }
 
     public static function getFullQueryTime() {
@@ -169,9 +169,9 @@ class Db {
                 if ($ss == '@i') // целое
                     $val = intval((string)array_shift($arg_list));
                 if ($ss == '@s') // строка
-                    $val = "'" . mysql_escape_string(array_shift($arg_list)) . "'";
+                    $val = "'" . mysqli_real_escape_string(self::$_link, array_shift($arg_list)) . "'";
                 if ($ss == '@l') // строка без кавычек
-                    $val = mysql_escape_string(array_shift($arg_list));
+                    $val = mysqli_real_escape_string(self::$_link, array_shift($arg_list));
                 if ($ss == '@f') // дробное
                     $val = floatval(array_shift($arg_list));
                 if ($ss == '@a') { // массив целых
@@ -182,7 +182,7 @@ class Db {
                     $val = '(' . implode($tmp, ', ') . ')';
                 }
                 if ($ss == '@n') // строка в обратных кавычках
-                    $val = "`" . mysql_escape_string(array_shift($arg_list)) . "`";
+                    $val = "`" . mysqli_real_escape_string(self::$_link, array_shift($arg_list)) . "`";
 
                 $result .= $val;
                 $i++;
@@ -197,7 +197,7 @@ class Db {
         if (!self::justQuery('CREATE DATABASE @n', get_config('db_db_name')))
             return false;
 
-        return mysql_select_db(get_config('db_db_name'), self::$_link);
+        return mysqli_select_db(self::$_link, get_config('db_db_name'));
     }
 
     private static function _checkTables() {
